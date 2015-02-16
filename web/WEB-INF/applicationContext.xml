@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<!-- ========================= RESOURCE DEFINITIONS ========================= -->
+
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="/WEB-INF/jdbc.properties"/>
+	</bean>
+
+	<!-- Local DataSource that works in any environment -->
+	<!-- Note that DriverManagerDataSource does not pool; it is not intended for production -->
+	<!-- See JPetStore for an example of using Commons DBCP BasicDataSource as alternative -->
+	<!-- See Image Database for an example of using C3P0 ComboPooledDataSource as alternative -->
+
+	<!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >-->
+       <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+
+		<property name="driverClassName" value="${jdbc.driverClassName}"/>
+		<property name="url" value="${jdbc.url}"/>
+		<property name="username" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+
+
+	</bean>
+
+	<!-- Hibernate SessionFactory -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="mappingDirectoryLocations">
+			<value>/WEB-INF/classes/</value>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.use_sql_comments">false</prop>
+				<prop key="hibernate.generate_statistics">true</prop>
+				<prop key="hibernate.cache.provider_class">net.sf.ehcache.hibernate.SingletonEhCacheProvider</prop>
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="hibernate.max_fetch_depth">5</prop>
+			</props>
+		</property>
+		<property name="eventListeners">
+			<map>
+				<entry key="merge">
+					<bean class="org.springframework.orm.hibernate3.support.IdTransferringMergeEventListener"/>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<bean id="baseTransactionProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		  abstract="true">
+		<property name="transactionManager" ref="transactionManager"/>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+    <!-- ========================= SERVICE OBJECTS ========================= -->
+	<bean id="verifierService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="org.haftrust.verifier.service.VerifierServiceImpl">
+				<property name="verifierDao" ref="verifierDao"/>
+                                <property name="countryDao" ref="countryDao"/>
+                                <property name="regionDao" ref="regionDao"/>
+                                <property name="districtDao" ref="districtDao"/>
+                                <property name="staticDataDao" ref="staticDataDao"/>
+                                <property name="addressDao" ref="addressDao"/>
+                                <property name="identityDocumentDao" ref="identityDocumentDao"/>
+                                <property name="bankDao" ref="bankDao"/>
+                                <property name="referenceDao" ref="referenceDao"/>
+                                <property name="imageDao" ref="imageDao"/>
+                                <property name="fomDao" ref="fomDao"/>
+                                <property name="interviewDao" ref="interviewDao"/>
+                                <property name="deviceDao" ref="deviceDao"/>
+			</bean>
+		</property>
+
+	</bean>
+
+        <bean id="imageService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="org.haftrust.verifier.service.ImageServiceImpl">
+                                <property name="imageDao" ref="imageDao"/>
+			</bean>
+		</property>
+	</bean>
+
+	<!-- ========================= DAO DEFINITIONS: HIBERNATE IMPLEMENTATIONS ========================= -->
+
+	<bean id="verifierDao" class="org.haftrust.verifier.dao.VerifierDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+        <bean id="countryDao" class="org.haftrust.verifier.dao.CountryDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+        <bean id="regionDao" class="org.haftrust.verifier.dao.RegionDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+        <bean id="districtDao" class="org.haftrust.verifier.dao.DistrictDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+        <bean id="staticDataDao" class="org.haftrust.verifier.dao.StaticDataDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+        <bean id="addressDao" class="org.haftrust.verifier.dao.AddressDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+        <bean id="identityDocumentDao" class="org.haftrust.verifier.dao.IdentityDocumentDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+        <bean id="bankDao" class="org.haftrust.verifier.dao.BankDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+        <bean id="referenceDao" class="org.haftrust.verifier.dao.ReferenceDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+        <bean id="imageDao" class="org.haftrust.verifier.dao.ImageDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+        <bean id="fomDao" class="org.haftrust.verifier.dao.FomDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+        <bean id="interviewDao" class="org.haftrust.verifier.dao.InterviewDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+        <bean id="deviceDao" class="org.haftrust.verifier.dao.DeviceDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+       <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+            <!-- one of the properties available; the maximum file size in bytes -->
+            <property name="maxUploadSize" value="1000000"/>
+       </bean>
+
+</beans>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
+
+    <!--
+    Most controllers will use the ControllerClassNameHandlerMapping above, but
+    for the index controller we are using ParameterizableViewController, so we must
+    define an explicit mapping for it.
+    -->
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="index.htm">indexController</prop>
+                <prop key="noVerifierFound.htm">noVerifierFoundController</prop>
+                <prop key="noDeviceFound.htm">noDeviceFoundController</prop>
+                <prop key="noVerifierForVerification.htm">noVerifierForVerificationController</prop>
+                <prop key="preregisterverifier.htm">preregisterverifierController</prop>
+                <prop key="registerVerifier.htm">registerVerifierController</prop>
+                <prop key="verifyVerifier.htm">verifyVerifierController</prop>
+                <prop key="allocateDevice.htm">allocateDeviceController</prop>
+                <prop key="imageDisplay.htm">imageDisplayController</prop>
+
+            </props>
+        </property>
+
+    </bean>
+
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:prefix="/WEB-INF/jsp/"
+          p:suffix=".jsp" />
+
+    <!--
+    The index controller.
+    -->
+<bean name="indexController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="index" />
+
+<bean name="noVerifierFoundController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="noVerifierFound" />
+
+<bean name="noDeviceFoundController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="noDeviceFound" />
+
+<bean name="noVerifierForVerificationController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="noVerifierForVerification" />
+
+<bean name="imageDisplayController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="imageDisplay" />
+
+ <bean name="preregisterverifierController" class="org.haftrust.verifier.controller.PreRegisterVerifierController"
+    p:verifierService-ref="verifierService" p:formView="preregisterverifier" p:successView="preregisterverifierconfirmation">
+    <property name="commandName" value="prvBean"/>
+    <property name="commandClass" value="org.haftrust.verifier.view.PreRegisterVerifierBean"  />
+    <property name="requireSession" value="true"/>
+    <property name="validator">
+        <bean class="org.haftrust.verifier.validator.PreRegisterVerifierValidator" >
+            <property name="verifierService" ref="verifierService"/>
+        </bean>
+     </property>
+  </bean>
+
+ <bean name="registerVerifierController" class="org.haftrust.verifier.controller.RegisterController">
+    <property name="pages">
+        <list>
+            <value>logIn</value>
+            <value>selectCountry</value>
+            <value>selectRegion</value>
+            <value>selectDistrict</value>
+            <value>createVerifier</value>
+            <value>createIdentityDocument</value>
+            <value>createBank</value>
+            <value>createReference</value>
+            <value>saveConfirmation</value>
+            <value>cancelRegister</value>
+            <value>createReference2</value>
+            <value>saveRegister</value>
+        </list>
+    </property>
+    <property name="pageAttribute" value="page"/>
+    <property name="commandName" value="rvBean"/>
+    <property name="commandClass" value="org.haftrust.verifier.view.RegisterVerifierBean"  />
+    <property name="verifierService" ref="verifierService"/>
+    <property name="successView" value="registerConfirmation"/>
+    <property name="cancelView" value="cancelConfirmation"/>
+    <!--<property name="saveView" value="saveConfirmation"/>-->
+     <property name="validators">
+        <list>
+            <ref local="logInValidator"/>
+            <ref local="selectCountryValidator"/>
+            <ref local="bankValidator"/>
+            <ref local="reference1Validator"/>
+            <ref local="verifierValidator"/>
+            <ref local="identityDocumentValidator"/>
+            <ref local="reference2Validator"/>
+        </list>
+     </property>
+     <!--<property name="validateOnBinding" value="true"/>-->
+  </bean>
+
+   <bean id="allocateDeviceController" class="org.haftrust.verifier.controller.AllocateDeviceController">
+    <property name="pages">
+        <list>
+            <value>selectAllocateDeviceCountry</value>
+            <value>searchAllocateDeviceVerifier</value>
+            <value>selectAllocateDeviceVerifier</value>
+            <value>allocateDeviceVerifier</value>
+            <value>cancelAllocateDevice</value>
+        </list>
+    </property>
+    <property name="pageAttribute" value="page"/>
+    <property name="commandName" value="adBean"/>
+    <property name="commandClass" value="org.haftrust.verifier.view.AllocateDeviceBean"  />
+    <property name="verifierService" ref="verifierService"/>
+    <property name="successView" value="allocateDeviceConfirmation"/>
+    <property name="cancelView" value="cancelAllocateDeviceConfirmation"/>
+   </bean>
+
+  <bean name="verifyVerifierController" class="org.haftrust.verifier.controller.VerifyVerifierController">
+    <property name="pages">
+        <list>
+            <value>selectVerifyCountry</value>
+            <value>searchVerifier</value>
+            <value>selectVerifier</value>
+            <value>viewVerifier</value>
+            <value>cancelVerification</value>
+            <value>deleteVerification</value>
+        </list>
+    </property>
+    <property name="pageAttribute" value="page"/>
+    <property name="commandName" value="vvBean"/>
+    <property name="commandClass" value="org.haftrust.verifier.view.VerifyVerifierBean"/>
+     <property name="verifierService" ref="verifierService"/>
+    <property name="successView" value="verificationConfirmation"/>
+    <property name="cancelView" value="cancelVerificationConfirmation"/>
+    <property name="saveView" value="saveVerificationConfirmation"/>
+    <property name="deleteView" value="deleteVerificationConfirmation"/>
+    <property name="validators">
+        <list>
+            <ref local="verifyVerifierValidator"/>
+        </list>
+     </property>
+  </bean>
+
+ <!-- <bean name="imageController" class="org.haftrust.verifier.controller.ImageController">
+     <property name="imageService" ref="imageService"/>
+  </bean>
+-->
+  <bean id="logInValidator" class="org.haftrust.verifier.validator.LogInValidator">
+      <property name="verifierService" ref="verifierService"/>
+  </bean>
+  <bean id="selectCountryValidator" class="org.haftrust.verifier.validator.SelectCountryValidator"/>
+  <bean id="verifierValidator" class="org.haftrust.verifier.validator.VerifierValidator"/>
+  <bean id="bankValidator" class="org.haftrust.verifier.validator.BankValidator"/>
+  <bean id="reference1Validator" class="org.haftrust.verifier.validator.Reference1Validator"/>
+  <bean id="reference2Validator" class="org.haftrust.verifier.validator.Reference2Validator"/>
+  <bean id="identityDocumentValidator" class="org.haftrust.verifier.validator.IdentityDocumentValidator"/>
+  <bean id="verifyVerifierValidator" class="org.haftrust.verifier.validator.VerifyVerifierValidator"/>
+  <!--<bean id="fileValidator" class="org.haftrust.verifier.validator.FileValidator"/>-->
+
+</beans>
