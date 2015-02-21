@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.haftrust.verifier.model;
 
 import java.sql.Date;
@@ -11,15 +10,15 @@ import java.sql.Date;
  *
  * @author LabClass
  */
-public class Bank implements java.io.Serializable
-{
+public class Bank implements java.io.Serializable {
+
     private int id;
-    private String accountNumber ;
-    private String bankName ;
-    private String address ;
-    private String sortcode ;
-    private String iban ;
-    private String contactNumber ;
+    private String accountNumber;
+    private String bankName;
+    private String address;
+    private String sortcode;
+    private String iban;
+    private String contactNumber;
     private String verificationStatus;
     private Date verificationDate;
     private String verificationComment;

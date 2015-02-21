@@ -2,15 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.haftrust.verifier.model;
 
 /**
  *
  * @author Miroslav
  */
-public class StaticData implements java.io.Serializable
-{
+public class StaticData implements java.io.Serializable {
+
     private int id;
     private String type;
     private String value;

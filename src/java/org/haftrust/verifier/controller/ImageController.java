@@ -35,7 +35,6 @@ public class ImageController extends HttpServlet {
     ImageDAO imageDao;
     VerifierDAO verifierDao;
 
-
     public void init(ServletConfig config) throws ServletException {
         ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext(
                 new String[]{"classpath*:applicationContext.xml"});
@@ -72,9 +71,9 @@ public class ImageController extends HttpServlet {
         System.out.println("--------------------------------------- image controller doGet method");
         // Get ID from request.
         String imageId = request.getParameter("id");
-      Image image =  imageDao.find(Integer.parseInt(imageId));
+        Image image = imageDao.find(Integer.parseInt(imageId));
         System.out.println("image = " + image.getPhoto());
-      image.getPhoto();
+        image.getPhoto();
         System.out.println("--------------------------------------- image controller doGet method imageId: " + imageId);
         // Check if ID is supplied to the request.
         if (imageId == null) {
@@ -89,7 +88,6 @@ public class ImageController extends HttpServlet {
         //Image image = new Image();
         //image = this.imageService.find(Integer.parseInt(imageId.trim()));
         System.out.println("--------------------------------------- image controller doGet method byets lenght: " + image.getPhoto().length);
-
 
         // Check if image is actually retrieved from database.
         if (image == null) {

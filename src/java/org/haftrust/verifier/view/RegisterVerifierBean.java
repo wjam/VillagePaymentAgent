@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.haftrust.verifier.view;
 
 import java.sql.Date;
@@ -24,8 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author Miroslav
  */
-public class RegisterVerifierBean
-{
+public class RegisterVerifierBean {
+
     private String target;
     private int page;
 
@@ -49,7 +48,7 @@ public class RegisterVerifierBean
     private String educationType;
     private String educationLevel;
     private Verifier verifier;
-    
+
     private int idAddress;
     private String street;
     private String village;
@@ -117,9 +116,7 @@ public class RegisterVerifierBean
         return sqlIdentityDocumentIssueDate;
     }
 
-    public void setSqlIdentityDocumentIssueDate(Date sqlIdentityDocumentIssueDate)
-    {
-
+    public void setSqlIdentityDocumentIssueDate(Date sqlIdentityDocumentIssueDate) {
 
         this.sqlIdentityDocumentIssueDate = sqlIdentityDocumentIssueDate;
     }
@@ -192,27 +189,24 @@ public class RegisterVerifierBean
         return identityDocumentExpiryDate;
     }
 
-    public void setIdentityDocumentExpiryDate(String identityDocumentExpiryDate) 
-    {
+    public void setIdentityDocumentExpiryDate(String identityDocumentExpiryDate) {
         Calendar cal = Calendar.getInstance();
         int year = 0;
         int month = 0;
         int day = 0;
-        String[] strSplit =  identityDocumentExpiryDate.split("-");
+        String[] strSplit = identityDocumentExpiryDate.split("-");
 
-        try
-        {
+        try {
             day = Integer.parseInt(strSplit[0]);
             month = Integer.parseInt(strSplit[1]);
             year = Integer.parseInt(strSplit[2]);
-        }catch(NumberFormatException exc)
-        {
+        } catch (NumberFormatException exc) {
             System.out.println(exc.getMessage());
         }
 
-        cal.set(year, month-1, day);
+        cal.set(year, month - 1, day);
         java.util.Date today = cal.getTime();
-        SimpleDateFormat dateFmt =new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd");
         this.sqlIdentityDocumentExpiryDate = java.sql.Date.valueOf(dateFmt.format(today));
 
         this.identityDocumentExpiryDate = identityDocumentExpiryDate;
@@ -222,27 +216,24 @@ public class RegisterVerifierBean
         return identityDocumentIssueDate;
     }
 
-    public void setIdentityDocumentIssueDate(String identityDocumentIssueDate) 
-    {
+    public void setIdentityDocumentIssueDate(String identityDocumentIssueDate) {
         Calendar cal = Calendar.getInstance();
         int year = 0;
         int month = 0;
         int day = 0;
-        String[] strSplit =  identityDocumentIssueDate.split("-");
+        String[] strSplit = identityDocumentIssueDate.split("-");
 
-        try
-        {
+        try {
             day = Integer.parseInt(strSplit[0]);
             month = Integer.parseInt(strSplit[1]);
             year = Integer.parseInt(strSplit[2]);
-        }catch(NumberFormatException exc)
-        {
+        } catch (NumberFormatException exc) {
             System.out.println(exc.getMessage());
         }
 
-        cal.set(year, month-1, day);
+        cal.set(year, month - 1, day);
         java.util.Date today = cal.getTime();
-        SimpleDateFormat dateFmt =new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd");
         this.sqlIdentityDocumentIssueDate = java.sql.Date.valueOf(dateFmt.format(today));
 
         this.identityDocumentIssueDate = identityDocumentIssueDate;
@@ -263,7 +254,6 @@ public class RegisterVerifierBean
     public void setIdentityDocumentType(String identityDocumentType) {
         this.identityDocumentType = identityDocumentType;
     }
-
 
     public String getBankAccountNumber() {
         return bankAccountNumber;
@@ -509,27 +499,24 @@ public class RegisterVerifierBean
         return dob;
     }
 
-    public void setDob(String dob) 
-    {
+    public void setDob(String dob) {
         Calendar cal = Calendar.getInstance();
         int year = 0;
         int month = 0;
         int day = 0;
-        String[] strSplit =  dob.split("-");
+        String[] strSplit = dob.split("-");
 
-        try
-        {
+        try {
             day = Integer.parseInt(strSplit[0]);
             month = Integer.parseInt(strSplit[1]);
             year = Integer.parseInt(strSplit[2]);
-        }catch(NumberFormatException exc)
-        {
+        } catch (NumberFormatException exc) {
             System.out.println(exc.getMessage());
         }
-        
-        cal.set(year, month-1, day);
+
+        cal.set(year, month - 1, day);
         java.util.Date today = cal.getTime();
-        SimpleDateFormat dateFmt =new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd");
         this.sqlDob = java.sql.Date.valueOf(dateFmt.format(today));
 
         this.dob = dob;

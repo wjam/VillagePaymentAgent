@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.haftrust.verifier.view;
 
 import java.util.ArrayList;
@@ -16,8 +15,8 @@ import org.haftrust.verifier.model.Verifier;
  *
  * @author Miroslav
  */
-public class AllocateDeviceBean
-{
+public class AllocateDeviceBean {
+
     private String target;
 
     private int idCountry;
@@ -121,12 +120,10 @@ public class AllocateDeviceBean
         return vBean;
     }
 
-    public void setvBean(List<Verifier> v)
-    {
+    public void setvBean(List<Verifier> v) {
         //this.vBean.clear();
         List<VBean> vbl = new ArrayList<VBean>();
-        for(int i=0; i<v.size(); i++)
-        {
+        for (int i = 0; i < v.size(); i++) {
             String s;
 
             String date;
@@ -134,7 +131,7 @@ public class AllocateDeviceBean
             int year = 0;
             int month = 0;
             int day = 0;
-            String[] strSplit =  date.split("-");
+            String[] strSplit = date.split("-");
             day = Integer.parseInt(strSplit[2]);
             month = Integer.parseInt(strSplit[1]);
             year = Integer.parseInt(strSplit[0]);
@@ -148,7 +145,7 @@ public class AllocateDeviceBean
             vbl.add(vb);
         }
 
-         this.vBean = vbl;
+        this.vBean = vbl;
     }
 
     public int getIdRegion() {
@@ -183,8 +180,8 @@ public class AllocateDeviceBean
         this.idCountry = idCountry;
     }
 
-    class VBean
-    {
+    class VBean {
+
         Verifier ver = new Verifier();
         String label;
         int id;
