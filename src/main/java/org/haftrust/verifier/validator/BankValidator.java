@@ -87,7 +87,6 @@ public class BankValidator implements Validator {
                 errors.rejectValue("bankAccountNumber",
                         "required.bankAccountNumber", "Account Number cannot be 0.");
             }
-
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(
