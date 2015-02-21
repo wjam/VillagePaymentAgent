@@ -4,8 +4,6 @@
  */
 package org.haftrust.verifier.validator;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import org.haftrust.verifier.view.RegisterVerifierBean;
 import org.slf4j.Logger;
@@ -22,10 +20,12 @@ public class IdentityDocumentValidator implements Validator {
 
     private static final Logger LOG = LoggerFactory.getLogger(IdentityDocumentValidator.class);
 
+    @Override
     public boolean supports(Class clazz) {
         return clazz.equals(RegisterVerifierBean.class);
     }
 
+    @Override
     public void validate(Object command, Errors errors) {
         RegisterVerifierBean rvBean = (RegisterVerifierBean) command;
 

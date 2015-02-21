@@ -78,9 +78,10 @@ public class PreRegisterVerifierValidator implements Validator {
         char c[] = prvBean.getPassword().toCharArray();
         boolean intB = false;
 
-        for (int i = 0; i < c.length; i++) {
+        CHARS: for (int i = 0; i < c.length; i++) {
             if (Character.isDigit(c[i]) == true) {
                 intB = true;
+                break CHARS;
             }
         }
 

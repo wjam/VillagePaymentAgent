@@ -15,7 +15,6 @@ import org.haftrust.verifier.model.IdentityDocument;
 import org.haftrust.verifier.model.Image;
 import org.haftrust.verifier.model.Reference;
 import org.haftrust.verifier.model.Region;
-import org.haftrust.verifier.model.StaticData;
 import org.haftrust.verifier.model.Verifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -653,4 +652,11 @@ public class RegisterVerifierBean {
     public void setIdCountry(int idCountry) {
         this.idCountry = idCountry;
     }
+
+    @Override
+    public String toString() {
+        return "RegisterVerifierBean{" + "target=" + target + ", page=" + page + ", idCountry=" + idCountry + ", country=" + country + ", idRegion=" + idRegion + ", region=" + region + ", idDistrict=" + idDistrict + ", district=" + district + ", idVerifier=" + idVerifier + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName + ", gender=" + gender + ", dob=" + dob + ", sqlDob=" + sqlDob + ", email=" + email + ", telephoneNumber=" + telephoneNumber + ", password=" + password + ", educationType=" + educationType + ", educationLevel=" + educationLevel + ", verifier=" + verifier + ", idAddress=" + idAddress + ", street=" + street + ", village=" + village + ", postcode=" + postcode + ", town=" + town + ", city=" + city + ", address=" + address + ", file=" + file + ", image=" + image + ", idReference1=" + idReference1 + ", reference1Title=" + reference1Title + ", reference1FullName=" + reference1FullName + ", reference1OrganisationName=" + reference1OrganisationName + ", reference1Designation=" + reference1Designation + ", reference1ContactNumber=" + reference1ContactNumber + ", reference1Email=" + reference1Email + ", reference1Address=" + reference1Address + ", reference1=" + reference1 + ", idReference2=" + idReference2 + ", reference2Title=" + reference2Title + ", reference2FullName=" + reference2FullName + ", reference2OrganisationName=" + reference2OrganisationName + ", reference2Designation=" + reference2Designation + ", reference2ContactNumber=" + reference2ContactNumber + ", reference2Email=" + reference2Email + ", reference2Address=" + reference2Address + ", reference2=" + reference2 + ", bankAccountNumber=" + bankAccountNumber + ", bankName=" + bankName + ", bankContactNumber=" + bankContactNumber + ", bankAddress=" + bankAddress + ", bankSortCode=" + bankSortCode + ", bankIban=" + bankIban + ", bank=" + bank + ", identityDocumentType=" + identityDocumentType + ", identityDocumentNumber=" + identityDocumentNumber + ", sqlIdentityDocumentIssueDate=" + sqlIdentityDocumentIssueDate + ", identityDocumentIssueDate=" + identityDocumentIssueDate + ", sqlIdentityDocumentExpiryDate=" + sqlIdentityDocumentExpiryDate + ", identityDocumentExpiryDate=" + identityDocumentExpiryDate + ", identityDocument=" + identityDocument + '}';
+    }
+    
+    
 }
