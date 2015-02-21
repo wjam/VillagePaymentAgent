@@ -1,39 +1,25 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package org.haftrust.verifier.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.haftrust.verifier.model.Address;
-import org.haftrust.verifier.model.Bank;
-import org.haftrust.verifier.model.IdentityDocument;
-import org.haftrust.verifier.model.Reference;
-import org.haftrust.verifier.model.Verifier;
+import org.haftrust.verifier.model.*;
 import org.haftrust.verifier.service.VerifierService;
 import org.haftrust.verifier.view.RegisterVerifierBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractWizardFormController;
 
-/**
- *
- * @author Miroslav
- */
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
+
 public class RegisterController extends AbstractWizardFormController {
 
     private static final Logger LOG = LoggerFactory.getLogger(RegisterController.class);
@@ -76,15 +62,14 @@ public class RegisterController extends AbstractWizardFormController {
     }
 
     protected Map referenceData(HttpServletRequest request, Object command, Errors errors, int page) throws Exception {
-        Map<Object, Object> dataMap = new HashMap<Object, Object>();
-        RegisterVerifierBean rvBean = (RegisterVerifierBean) command;
+        final Map<Object, Object> dataMap = new HashMap<>();
+        final RegisterVerifierBean rvBean = (RegisterVerifierBean) command;
 
         if (page == 1) {
             dataMap.put("countryList", this.verifierService.getCountryList());
             LOG.debug("------------------------ controller register verifier reference data country list");
 
-            Verifier verifier = new Verifier();
-            verifier = this.verifierService.logInVerifier(rvBean.getEmail(), rvBean.getPassword());
+            Verifier verifier = this.verifierService.logInVerifier(rvBean.getEmail(), rvBean.getPassword());
             rvBean.setVerifier(verifier);
             rvBean.setFirstName(verifier.getFirstName());
             LOG.debug("----------------------- rvBean frst name: {}", rvBean.getFirstName());
