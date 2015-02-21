@@ -62,8 +62,8 @@ public class RegisterController extends AbstractWizardFormController {
     }
 
     protected Map referenceData(HttpServletRequest request, Object command, Errors errors, int page) throws Exception {
-        Map<Object, Object> dataMap = new HashMap<>();
-        RegisterVerifierBean rvBean = (RegisterVerifierBean) command;
+        final Map<Object, Object> dataMap = new HashMap<>();
+        final RegisterVerifierBean rvBean = (RegisterVerifierBean) command;
 
         if (page == 1) {
             dataMap.put("countryList", this.verifierService.getCountryList());
