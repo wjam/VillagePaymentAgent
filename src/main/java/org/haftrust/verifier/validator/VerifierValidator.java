@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.haftrust.verifier.view.RegisterVerifierBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -20,6 +20,8 @@ import org.springframework.validation.Validator;
  * @author Miroslav
  */
 public class VerifierValidator implements Validator {
+
+    private static final Logger LOG = LoggerFactory.getLogger(VerifierValidator.class);
 
     public boolean supports(Class clazz) {
         return clazz.equals(RegisterVerifierBean.class);
@@ -75,7 +77,7 @@ public class VerifierValidator implements Validator {
         java.util.Date today = cal.getTime();
         SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd");
         java.sql.Date sqlDate = java.sql.Date.valueOf(dateFmt.format(today));
-        System.out.println("------------------------sql date validator = " + sqlDate);
+        LOG.debug("------------------------sql date validator = " + sqlDate);
         GregorianCalendar gc = new GregorianCalendar();
         try {
             dobOK = true;
@@ -120,7 +122,7 @@ public class VerifierValidator implements Validator {
             errors.rejectValue("postcode", "required.postcode", "Postcode is required to be maximum 10 characters long.");
         }
 
-        System.out.println("-------------------- verifier validator rv bean image: " + rvBean.getImage());
+        LOG.debug("-------------------- verifier validator rv bean image: " + rvBean.getImage());
 
         if (rvBean.getImage() == null) {
             if (rvBean.getFile().isEmpty()) {
@@ -131,7 +133,7 @@ public class VerifierValidator implements Validator {
                         errors.rejectValue("file", "rvBean.file", "Photo is required to be greather than 0KB.");
                     }
                 } catch (IOException ex) {
-                    Logger.getLogger(VerifierValidator.class.getName()).log(Level.SEVERE, null, ex);
+                    LOG.error("describeme", ex);
                 }
 
             if (!rvBean.getFile().getContentType().startsWith("image")) {
@@ -142,10 +144,10 @@ public class VerifierValidator implements Validator {
                 errors.rejectValue("file", "rvBean.file", "Photo's size is required to be less than 100kb.");
             }
 
-            System.out.println("==================================================== file name; " + rvBean.getFile().getOriginalFilename());
-            System.out.println("====================================================");
+            LOG.debug("==================================================== file name; {}", rvBean.getFile().getOriginalFilename());
+            LOG.debug("====================================================");
         } else {
-            System.out.println("-------------------- verifier validator else rv bean image: " + rvBean.getImage());
+            LOG.debug("-------------------- verifier validator else rv bean image: {}", rvBean.getImage());
 
             if (rvBean.getImage().getPhoto().length < 1) {
                 if (rvBean.getFile().isEmpty()) {
@@ -156,7 +158,7 @@ public class VerifierValidator implements Validator {
                             errors.rejectValue("file", "rvBean.file", "Photo is required to be greather than 0KB.");
                         }
                     } catch (IOException ex) {
-                        Logger.getLogger(VerifierValidator.class.getName()).log(Level.SEVERE, null, ex);
+                        LOG.error("describeme", ex);
                     }
 
                 if (!rvBean.getFile().getContentType().startsWith("image")) {
@@ -167,8 +169,8 @@ public class VerifierValidator implements Validator {
                     errors.rejectValue("file", "rvBean.file", "Photo's size is required to be less than 100kb.");
                 }
 
-                System.out.println("==================================================== file name; " + rvBean.getFile().getOriginalFilename());
-                System.out.println("====================================================");
+                LOG.debug("==================================================== file name; {}", rvBean.getFile().getOriginalFilename());
+                LOG.debug("====================================================");
             }
         }
     }

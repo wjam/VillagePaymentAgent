@@ -9,6 +9,8 @@ import java.util.List;
 import org.haftrust.verifier.model.Bank;
 import org.haftrust.verifier.service.VerifierService;
 import org.haftrust.verifier.view.RegisterVerifierBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -18,6 +20,8 @@ import org.springframework.validation.Validator;
  * @author Miroslav
  */
 public class BankValidator implements Validator {
+
+    private static final Logger LOG = LoggerFactory.getLogger(BankValidator.class);
 
     private VerifierService verifierService;
 
@@ -64,7 +68,7 @@ public class BankValidator implements Validator {
                             "required.bankAccountNumber", "Account Number already registered.");
                 }
             } catch (Exception e) {
-                System.out.println("--------- bank validator, is bank account registered exception");
+                LOG.error("--------- bank validator, is bank account registered exception", e);
             }
 
             if (rvBean.getBankAccountNumber().length() < 7) {

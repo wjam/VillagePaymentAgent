@@ -5,6 +5,8 @@
 package org.haftrust.verifier.validator;
 
 import org.haftrust.verifier.view.RegisterVerifierBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -15,6 +17,8 @@ import org.springframework.validation.Validator;
  */
 public class SelectCountryValidator implements Validator {
 
+    private static final Logger LOG = LoggerFactory.getLogger(SelectCountryValidator.class);
+
     public boolean supports(Class clazz) {
         return clazz.equals(RegisterVerifierBean.class);
     }
@@ -22,7 +26,7 @@ public class SelectCountryValidator implements Validator {
     public void validate(Object command, Errors errors) {
         RegisterVerifierBean rvBean = (RegisterVerifierBean) command;
 
-        System.out.println("--------------------------login validator validate method");
+        LOG.debug("--------------------------login validator validate method");
 
         ValidationUtils.rejectIfEmptyOrWhitespace(
                 errors, "idCountry", "required.idCountry",

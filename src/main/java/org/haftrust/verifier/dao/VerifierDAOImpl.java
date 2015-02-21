@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.haftrust.verifier.model.Address;
 import org.haftrust.verifier.model.Verifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
@@ -16,10 +18,12 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  */
 public class VerifierDAOImpl extends HibernateDaoSupport implements VerifierDAO {
 
+    private static final Logger LOG = LoggerFactory.getLogger(VerifierDAOImpl.class);
+
     public boolean getVerifierByEmail(String email) {
         List l = getHibernateTemplate().find("from Verifier v where v.email=?", email);
 
-        System.out.println("verifier email list size: " + l.size());
+        LOG.debug("verifier email list size: ", l.size());
         if (l.size() > 0) {
             return true;
         }
@@ -31,17 +35,17 @@ public class VerifierDAOImpl extends HibernateDaoSupport implements VerifierDAO 
         try {
             if (verifier.getId() < 1) {
                 getHibernateTemplate().save(verifier);
-                System.out.println("------------------------ verifier saved");
-                System.out.println("------------------------ verifier save id: " + verifier.getId());
+                LOG.debug("------------------------ verifier saved");
+                LOG.debug("------------------------ verifier save id: {}", verifier.getId());
             } else {
                 getHibernateTemplate().saveOrUpdate(verifier);
-                System.out.println("------------------------ verifier saved or updated");
-                System.out.println("------------------------ verifier save id: " + verifier.getId());
+                LOG.debug("------------------------ verifier saved or updated");
+                LOG.debug("------------------------ verifier save id: {}", verifier.getId());
             }
         } catch (NullPointerException exc) {
             getHibernateTemplate().save(verifier);
-            System.out.println("------------------------ verifier saved NullPointerException");
-            System.out.println("------------------------ verifier save id: " + verifier.getId());
+            LOG.debug("------------------------ verifier saved NullPointerException");
+            LOG.debug("------------------------ verifier save id: {}", verifier.getId());
         }
 
         return verifier;
@@ -51,7 +55,7 @@ public class VerifierDAOImpl extends HibernateDaoSupport implements VerifierDAO 
         Object[] param = {address, status};
         List l = getHibernateTemplate().find("from Verifier v where v.address=? and v.status=?", param);
         List<Verifier> verifierList = new ArrayList<Verifier>();
-        System.out.println("verifier list size: " + l.size());
+        LOG.debug("verifier list size: {}", l.size());
         if (l.size() > 0) {
             for (int i = 0; i < l.size(); i++) {
                 Verifier v = (Verifier) l.get(i);
@@ -66,7 +70,7 @@ public class VerifierDAOImpl extends HibernateDaoSupport implements VerifierDAO 
         Object[] param = {email, password, status};
         List l = getHibernateTemplate().find("from Verifier v where v.email=? and v.password=? and v.status=?", param);
         List<Verifier> verifierList = new ArrayList<Verifier>();
-        System.out.println("verifier list size: " + l.size());
+        LOG.debug("verifier list size: {}", l.size());
         if (l.size() > 0) {
             for (int i = 0; i < l.size(); i++) {
                 Verifier v = (Verifier) l.get(i);

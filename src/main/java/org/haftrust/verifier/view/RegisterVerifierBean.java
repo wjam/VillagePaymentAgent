@@ -17,6 +17,8 @@ import org.haftrust.verifier.model.Reference;
 import org.haftrust.verifier.model.Region;
 import org.haftrust.verifier.model.StaticData;
 import org.haftrust.verifier.model.Verifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -24,6 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Miroslav
  */
 public class RegisterVerifierBean {
+
+    private static final Logger LOG = LoggerFactory.getLogger(RegisterVerifierBean.class);
 
     private String target;
     private int page;
@@ -201,7 +205,7 @@ public class RegisterVerifierBean {
             month = Integer.parseInt(strSplit[1]);
             year = Integer.parseInt(strSplit[2]);
         } catch (NumberFormatException exc) {
-            System.out.println(exc.getMessage());
+            LOG.error("Surely we shouldn't just be catching this exception?", exc);
         }
 
         cal.set(year, month - 1, day);
@@ -228,7 +232,7 @@ public class RegisterVerifierBean {
             month = Integer.parseInt(strSplit[1]);
             year = Integer.parseInt(strSplit[2]);
         } catch (NumberFormatException exc) {
-            System.out.println(exc.getMessage());
+            LOG.error("Surely we shouldn't just be catching this exception?", exc);
         }
 
         cal.set(year, month - 1, day);
@@ -511,7 +515,7 @@ public class RegisterVerifierBean {
             month = Integer.parseInt(strSplit[1]);
             year = Integer.parseInt(strSplit[2]);
         } catch (NumberFormatException exc) {
-            System.out.println(exc.getMessage());
+            LOG.error("Surely we should do more than just catching this exception?", exc);
         }
 
         cal.set(year, month - 1, day);

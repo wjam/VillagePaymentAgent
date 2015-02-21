@@ -23,6 +23,8 @@ import org.haftrust.verifier.dao.ImageDAOImpl;
 import org.haftrust.verifier.dao.VerifierDAO;
 import org.haftrust.verifier.model.Image;
 import org.haftrust.verifier.service.ImageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -30,6 +32,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author Miroslav
  */
 public class ImageController extends HttpServlet {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ImageController.class);
 
     ImageService imageService;
     ImageDAO imageDao;
@@ -68,13 +72,13 @@ public class ImageController extends HttpServlet {
     // Actions ------------------------------------------------------------------------------------
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("--------------------------------------- image controller doGet method");
+        LOG.debug("--------------------------------------- image controller doGet method");
         // Get ID from request.
         String imageId = request.getParameter("id");
         Image image = imageDao.find(Integer.parseInt(imageId));
-        System.out.println("image = " + image.getPhoto());
+        LOG.debug("image = ", image);
         image.getPhoto();
-        System.out.println("--------------------------------------- image controller doGet method imageId: " + imageId);
+        LOG.debug("--------------------------------------- image controller doGet method imageId: {}", imageId);
         // Check if ID is supplied to the request.
         if (imageId == null) {
             // Do your thing if the ID is not supplied to the request.
@@ -87,7 +91,7 @@ public class ImageController extends HttpServlet {
         // Do your "SELECT * FROM Image WHERE ImageID" thing.
         //Image image = new Image();
         //image = this.imageService.find(Integer.parseInt(imageId.trim()));
-        System.out.println("--------------------------------------- image controller doGet method byets lenght: " + image.getPhoto().length);
+        LOG.debug("--------------------------------------- image controller doGet method byets lenght: {}", image.getPhoto().length);
 
         // Check if image is actually retrieved from database.
         if (image == null) {
