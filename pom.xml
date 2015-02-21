@@ -202,8 +202,8 @@
     </scm>
 
     <issueManagement>
-        <system>TODO</system>
-        <url>https://localhost/</url>
+        <system>GitHub</system>
+        <url>https://github.com/kittylyst/VillagePaymentAgent/issues</url>
     </issueManagement>
 
     <ciManagement>
