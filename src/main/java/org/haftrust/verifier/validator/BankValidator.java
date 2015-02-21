@@ -4,7 +4,6 @@
  */
 package org.haftrust.verifier.validator;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.haftrust.verifier.model.Bank;
 import org.haftrust.verifier.service.VerifierService;
@@ -33,10 +32,12 @@ public class BankValidator implements Validator {
         this.verifierService = verifierService;
     }
 
+    @Override
     public boolean supports(Class clazz) {
         return clazz.equals(RegisterVerifierBean.class);
     }
 
+    @Override
     public void validate(Object command, Errors errors) {
         RegisterVerifierBean rvBean = (RegisterVerifierBean) command;
 
@@ -58,7 +59,7 @@ public class BankValidator implements Validator {
                         "required.bankAccountNumber", "Account Number is required in numeric format. ");
             }
 
-            List<Bank> bankList = new ArrayList<>();
+            List<Bank> bankList;
 
             try {
                 bankList = this.verifierService.isBankAccountRegistered(rvBean.getBankAccountNumber());
