@@ -166,5 +166,5 @@ public interface VerifierService {
 
     public void failVerification(String strVerifierVerificationComment);
 
-    public List<Bank> isBankAccountRegistered(String account);
+    public List<Bank> getBanksWhereAccountIsRegistered(String account);
 }

@@ -4,7 +4,6 @@
  */
 package org.haftrust.verifier.validator;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.haftrust.verifier.model.Bank;
 import org.haftrust.verifier.service.VerifierService;
@@ -59,7 +58,7 @@ public class BankValidator implements Validator {
             List<Bank> bankList;
 
             try {
-                bankList = this.verifierService.isBankAccountRegistered(rvBean.getBankAccountNumber());
+                bankList = this.verifierService.getBanksWhereAccountIsRegistered(rvBean.getBankAccountNumber());
 
                 if (bankList.size() > 0) {
                     errors.rejectValue("bankAccountNumber",
@@ -79,6 +78,7 @@ public class BankValidator implements Validator {
                         "required.bankAccountNumber", "Account Number exceeds the maximum value of 10 digits.");
             }
 
+            // TODO: Is this actually necessary? It will fail due to being too short (see two if's above)
             if (rvBean.getBankAccountNumber().equals("0")) {
                 errors.rejectValue("bankAccountNumber",
                         "required.bankAccountNumber", "Account Number cannot be 0.");
