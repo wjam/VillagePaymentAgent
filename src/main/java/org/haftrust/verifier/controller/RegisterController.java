@@ -69,8 +69,7 @@ public class RegisterController extends AbstractWizardFormController {
             dataMap.put("countryList", this.verifierService.getCountryList());
             LOG.debug("------------------------ controller register verifier reference data country list");
 
-            Verifier verifier = new Verifier();
-            verifier = this.verifierService.logInVerifier(rvBean.getEmail(), rvBean.getPassword());
+            Verifier verifier = this.verifierService.logInVerifier(rvBean.getEmail(), rvBean.getPassword());
             rvBean.setVerifier(verifier);
             rvBean.setFirstName(verifier.getFirstName());
             LOG.debug("----------------------- rvBean frst name: {}", rvBean.getFirstName());
