@@ -57,7 +57,6 @@
 
     <build>
         <plugins>
-            <!-- Note about Java 8 and Javadoc lint -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -66,6 +65,7 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
+            <!-- Create Javadoc during every build to enforce Javadoc standards otherwise javadoc lint will only fail during release -->
             <plugin>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
