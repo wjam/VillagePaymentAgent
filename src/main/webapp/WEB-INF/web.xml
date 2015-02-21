@@ -20,17 +20,9 @@
         <servlet-name>imageController</servlet-name>
         <url-pattern>/image/*</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>PreRegisterVerifierController</servlet-name>
-        <servlet-class>org.haftrust.verifier.controller.PreRegisterVerifierController</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>PreRegisterVerifierController</servlet-name>
-        <url-pattern>/PreRegisterVerifierController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

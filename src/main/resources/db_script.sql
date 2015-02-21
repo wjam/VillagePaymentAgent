@@ -1,6 +1,3 @@
-DROP database HaftrustVerifierdb;
-DROP schema kj905;
-CREATE database HaftrustVerifierdb;
 CREATE schema kj905;
 
 create table kj905.ht_device (
@@ -14,7 +11,7 @@ primary key (imei)
 );
 
 create table kj905.ht_fom (
-idFom int not null generated always as identity (start with 1, increment by 1),
+idFom int not null auto_increment,
 first_name varchar(45) not null,
 last_name varchar(45) not null,
 email varchar(45) not null,
@@ -23,7 +20,7 @@ primary key (idFom)
 );
 
 create table kj905.ht_image (
-idImage int not null generated always as identity (start with 1, increment by 1),
+idImage int not null auto_increment,
 "DATE" date not null,
 photo blob not null,
 verification_status varchar(45) default null,
@@ -34,14 +31,14 @@ primary key (idImage)
 );
 
 create table kj905.ht_country (
-idCountry int not null generated always as identity (start with 1, increment by 1),
+idCountry int not null auto_increment,
 title varchar(45) not null,
 description varchar(45) not null,
 primary key (idCountry)
 );
 
 create table kj905.ht_region (
-idRegion int not null generated always as identity (start with 1, increment by 1),
+idRegion int not null auto_increment,
 title varchar(45) not null,
 description varchar(45) not null,
 ht_country_idCountry int not null,
@@ -50,7 +47,7 @@ constraint fk_ht_country_idCountry foreign key (ht_country_idCountry) references
 );
 
 create table kj905.ht_district (
-idDistrict int not null generated always as identity (start with 1, increment by 1),
+idDistrict int not null auto_increment,
 title varchar(45) not null,
 description varchar(45) not null,
 ht_region_idRegion int not null,
@@ -59,7 +56,7 @@ constraint fk_ht_region_idRegion foreign key (ht_region_idRegion) references ht_
 );
 
 create table kj905.ht_verifier (
-idVerifier int not null generated always as identity (start with 1, increment by 1),
+idVerifier int not null auto_increment,
 first_name varchar(45) default null,
 middle_name varchar(45) default null,
 last_name varchar(45) default null,
@@ -85,7 +82,7 @@ constraint fk_ht_image_idImage foreign key (ht_image_idImage) references ht_imag
 );
 
 create table kj905.ht_identity_document (
-idIdentityDocument int not null generated always as identity (start with 1, increment by 1),
+idIdentityDocument int not null auto_increment,
 "NUMBER" varchar(25) not null,
 type varchar(25) not null,
 issue_date date not null,
@@ -100,7 +97,7 @@ constraint fk_emp_id_identity_document foreign key (emp_id) references ht_verifi
 );
 
 create table kj905.ht_interview (
-idInterview int not null generated always as identity (start with 1, increment by 1),
+idInterview int not null auto_increment,
 "DATE" date default null,
 address varchar(100) default null,
 status varchar(45) not null,
@@ -114,7 +111,7 @@ constraint fk_ht_fom_idFom_interview foreign key (ht_fom_idFom) references ht_fo
 );
 
 create table kj905.ht_address (
-idAddress int not null generated always as identity (start with 1, increment by 1),
+idAddress int not null auto_increment,
 street varchar(45) default null,
 village varchar(45) default null,
 postcode varchar(45) not null,
@@ -136,7 +133,7 @@ constraint fk_ht_district_idDistrict_address foreign key (ht_district_idDistrict
 );
 
 create table kj905.ht_reference (
-idReference int not null generated always as identity (start with 1, increment by 1),
+idReference int not null auto_increment,
 organisation_name varchar(45) not null,
 contact_number varchar(25) not null,
 address varchar(100) not null,
@@ -154,7 +151,7 @@ constraint fk_ht_verifier_idVerifier_reference foreign key (emp_id) references h
 );
 
 create table kj905.ht_bank (
-idBank int not null generated always as identity (start with 1, increment by 1),
+idBank int not null auto_increment,
 accountNumber varchar(15) not null,
 bank_name varchar(45) not null,
 address varchar(100) not null,
@@ -171,7 +168,7 @@ constraint fk_ht_verifier_idVerifier_bank foreign key (emp_id) references ht_ver
 );
 
 create table kj905.ht_static_data (
-idStaticData int not null generated always as identity (start with 1, increment by 1),
+idStaticData int not null auto_increment,
 type varchar(45) not null,
 value varchar(45) not null,
 description varchar(45) not null,
