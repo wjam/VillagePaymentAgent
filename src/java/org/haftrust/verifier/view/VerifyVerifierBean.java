@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.haftrust.verifier.view;
 
 import java.awt.image.BufferedImage;
@@ -21,8 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author Miroslav
  */
-public class VerifyVerifierBean
-{
+public class VerifyVerifierBean {
+
     private String target;
 
     private int idCountry;
@@ -35,7 +34,7 @@ public class VerifyVerifierBean
     private List<Fom> fomList = new ArrayList<Fom>();
     private List<FomBean> fBean = new ArrayList<FomBean>();
     private int idFom;
-    
+
     private Fom filedOperativeManager = new Fom();
     private Interview interview = new Interview();
 
@@ -52,7 +51,7 @@ public class VerifyVerifierBean
     private String verifierVerificationStatus;
     private String verifierVerificationComment;
     //private Verifier verifier;
-    
+
     private int idAddress;
     private String street;
     private String village;
@@ -149,12 +148,10 @@ public class VerifyVerifierBean
         return fBean;
     }
 
-    public void setfBean(List<Fom> f)
-    {
+    public void setfBean(List<Fom> f) {
         //this.fBean.clear();
         List<FomBean> fbl = new ArrayList<FomBean>();
-        for(int i=0; i<f.size(); i++)
-        {
+        for (int i = 0; i < f.size(); i++) {
             String s;
 
             s = f.get(i).getFirstName() + " " + f.get(i).getLastName();
@@ -328,7 +325,7 @@ public class VerifyVerifierBean
     public void setDistrict(String district) {
         this.district = district;
     }
-    
+
     public String getBankAccountNumber() {
         return bankAccountNumber;
     }
@@ -677,12 +674,10 @@ public class VerifyVerifierBean
         return vBean;
     }
 
-    public void setvBean(List<Verifier> v)
-    {
+    public void setvBean(List<Verifier> v) {
         //this.vBean.clear();
         List<VBean> vbl = new ArrayList<VBean>();
-        for(int i=0; i<v.size(); i++)
-        {
+        for (int i = 0; i < v.size(); i++) {
             String s;
 
             String date;
@@ -690,7 +685,7 @@ public class VerifyVerifierBean
             int year = 0;
             int month = 0;
             int day = 0;
-            String[] strSplit =  date.split("-");
+            String[] strSplit = date.split("-");
             day = Integer.parseInt(strSplit[2]);
             month = Integer.parseInt(strSplit[1]);
             year = Integer.parseInt(strSplit[0]);
@@ -704,7 +699,7 @@ public class VerifyVerifierBean
             vbl.add(vb);
         }
 
-         this.vBean = vbl;
+        this.vBean = vbl;
     }
 
     public int getIdVerifier() {
@@ -764,8 +759,8 @@ public class VerifyVerifierBean
         this.target = target;
     }
 
-    class FomBean
-    {
+    class FomBean {
+
         Fom f = new Fom();
         String label;
         int id;
@@ -795,8 +790,8 @@ public class VerifyVerifierBean
         }
     }
 
-    class VBean
-    {
+    class VBean {
+
         Verifier ver = new Verifier();
         String label;
         int id;

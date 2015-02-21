@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.haftrust.verifier.model;
 
 import java.sql.Date;
@@ -11,14 +10,14 @@ import java.sql.Date;
  *
  * @author LabClass
  */
-public class Device implements java.io.Serializable
-{
+public class Device implements java.io.Serializable {
+
     private long imei;
     private String productNumber;
     private String modelNumber;
     private String htMobileNumber;
     private String allocation;
-    private Date allocationDate ;
+    private Date allocationDate;
 
     public String getAllocation() {
         return allocation;

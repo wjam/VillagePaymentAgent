@@ -2,15 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.haftrust.verifier.model;
 
 /**
  *
  * @author LabClass
  */
-public class Fom implements java.io.Serializable
-{
+public class Fom implements java.io.Serializable {
+
     private int id;
     private String firstName;
     private String lastName;

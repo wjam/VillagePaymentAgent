@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.haftrust.verifier.model;
 
 import java.sql.Date;
@@ -11,8 +10,8 @@ import java.sql.Date;
  *
  * @author LabClass
  */
-public class Verifier implements java.io.Serializable
-{
+public class Verifier implements java.io.Serializable {
+
     private int id;
     private String firstName;
     private String middleName;

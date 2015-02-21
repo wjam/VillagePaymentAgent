@@ -2,15 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.haftrust.verifier.view;
 
 /**
  *
  * @author Miroslav
  */
-public class PreRegisterVerifierBean
-{
+public class PreRegisterVerifierBean {
+
     private int idVerifier;
     private String email;
     private String password;

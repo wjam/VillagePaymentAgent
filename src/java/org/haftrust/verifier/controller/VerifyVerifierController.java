@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.haftrust.verifier.controller;
 
 import java.awt.Color;
@@ -49,8 +48,8 @@ import org.springframework.web.servlet.mvc.AbstractWizardFormController;
  *
  * @author Miroslav
  */
-public class VerifyVerifierController extends AbstractWizardFormController
-{
+public class VerifyVerifierController extends AbstractWizardFormController {
+
     private VerifierService verifierService;
     private String cancelView;
     private String successView;
@@ -99,25 +98,21 @@ public class VerifyVerifierController extends AbstractWizardFormController
         this.verifierService = verifierService;
     }
 
-    protected Map referenceData(HttpServletRequest request, Object command, Errors errors, int page) throws Exception
-    {
+    protected Map referenceData(HttpServletRequest request, Object command, Errors errors, int page) throws Exception {
         Map<Object, Object> dataMap = new HashMap<Object, Object>();
         VerifyVerifierBean vvBean = (VerifyVerifierBean) command;
 
-        if(page == 0)
-        {
+        if (page == 0) {
             dataMap.put("countryList", this.verifierService.getCountryList());
             System.out.println("------------------------ controller verify verifier reference data country list");
         }
 
-        if(page == 1)
-        {
+        if (page == 1) {
             dataMap.put("regionList", this.verifierService.getRegionList());
             System.out.println("------------------------ controller verify verifier reference data region list");
         }
 
-        if(page == 3)
-        {
+        if (page == 3) {
             this.verificationStatusList = this.verifierService.getVerificationStatusList();
             dataMap.put("verificationStatusList", this.verificationStatusList);
         }
@@ -125,34 +120,29 @@ public class VerifyVerifierController extends AbstractWizardFormController
         return dataMap;
     }
 
-    protected void validatePage(Object command, Errors errors, int page)
-    {
+    protected void validatePage(Object command, Errors errors, int page) {
         VerifyVerifierBean vvBean = (VerifyVerifierBean) command;
 
         System.out.println("----------------------- validate page method");
-        if (page == 5)
-        {
-            System.out.println("----------------------- validate page login country" +  getValidators()[0].getClass());
+        if (page == 5) {
+            System.out.println("----------------------- validate page login country" + getValidators()[0].getClass());
             //getValidators()[0].validate(command, errors);
 
             /*if(vvBean.getVerifierVerificationComment().equals(""))
-            {
-                errors.rejectValue("verifierVerificationComment", "required.verifierVerificationComment", "Verification Comment is required.");
-            }*/
+             {
+             errors.rejectValue("verifierVerificationComment", "required.verifierVerificationComment", "Verification Comment is required.");
+             }*/
         }
     }
 
-    protected void postProcessPage(HttpServletRequest request, Object command, Errors errors, int page) throws Exception
-    {
+    protected void postProcessPage(HttpServletRequest request, Object command, Errors errors, int page) throws Exception {
         VerifyVerifierBean vvBean = (VerifyVerifierBean) command;
 
-        if(page == 0 && request.getParameter("_target1") !=null)
-        {
+        if (page == 0 && request.getParameter("_target1") != null) {
             vvBean.setCountry(this.verifierService.setVerifierCountry(vvBean.getIdCountry()));
         }
 
-        if(page == 1 && request.getParameter("_target2") !=null)
-        {
+        if (page == 1 && request.getParameter("_target2") != null) {
             System.out.println("------------------------- post process page search verifier");
             vvBean.setRegion(this.verifierService.setVerifierRegion(vvBean.getIdRegion()));
 
@@ -164,8 +154,7 @@ public class VerifyVerifierController extends AbstractWizardFormController
             vvBean.setvBean(v);
         }
 
-        if(page == 2 && request.getParameter("_target3") !=null)
-        {
+        if (page == 2 && request.getParameter("_target3") != null) {
             this.verifierService.getRegisteredVerifierDetails(vvBean.getIdVerifier());
 
             Verifier verifier = new Verifier();
@@ -174,14 +163,13 @@ public class VerifyVerifierController extends AbstractWizardFormController
             vvBean.setMiddleName(verifier.getMiddleName());
             vvBean.setLastName(verifier.getLastName());
             vvBean.setGender(verifier.getGender().toUpperCase());
-            if(verifier.getDob() != null)
-            {
+            if (verifier.getDob() != null) {
                 String date;
                 date = verifier.getDob().toString();
                 int year = 0;
                 int month = 0;
                 int day = 0;
-                String[] strSplit =  date.split("-");
+                String[] strSplit = date.split("-");
                 day = Integer.parseInt(strSplit[2]);
                 month = Integer.parseInt(strSplit[1]);
                 year = Integer.parseInt(strSplit[0]);
@@ -221,124 +209,115 @@ public class VerifyVerifierController extends AbstractWizardFormController
             image = this.verifierService.getImage();
 
             /*for(int i=0; i<image.getPhoto().length; i++)
-            {
-                System.out.println("=================== photo byte: " + image.getPhoto()[i]);
-            }*/
+             {
+             System.out.println("=================== photo byte: " + image.getPhoto()[i]);
+             }*/
             vvBean.setFile(image.getPhoto());
             vvBean.setImage(image);
 
             /*InputStream in = new ByteArrayInputStream(image.getPhoto());
-            //OutputStream out = new ByteArrayOutputStream();
-            BufferedImage bi = ImageIO.read(in);
-            java.awt.Image i = bi.getScaledInstance(bi.getWidth(), bi.getHeight(), bi.TYPE_INT_RGB);
-            //RenderedImage ri
-            //ImageIO.write(bi, "jpg",new File("c:\\snap.jpg"));
-            //ImageIO.
-            System.out.println("================== bi: " + bi);
-            System.out.println("================== bi type : " + bi.getType());
-            System.out.println("================== i: " + i);
-            vvBean.setFileBi(bi);
-            // Create an image to save
-            RenderedImage rendImage = myCreateImage(image.getPhoto());
+             //OutputStream out = new ByteArrayOutputStream();
+             BufferedImage bi = ImageIO.read(in);
+             java.awt.Image i = bi.getScaledInstance(bi.getWidth(), bi.getHeight(), bi.TYPE_INT_RGB);
+             //RenderedImage ri
+             //ImageIO.write(bi, "jpg",new File("c:\\snap.jpg"));
+             //ImageIO.
+             System.out.println("================== bi: " + bi);
+             System.out.println("================== bi type : " + bi.getType());
+             System.out.println("================== i: " + i);
+             vvBean.setFileBi(bi);
+             // Create an image to save
+             RenderedImage rendImage = myCreateImage(image.getPhoto());
 
-            // Write generated image to a file
-            try {
-                // Save as PNG
-                File file = new File("C:\\newimage.png");
-                ImageIO.write(rendImage, "png", file);
+             // Write generated image to a file
+             try {
+             // Save as PNG
+             File file = new File("C:\\newimage.png");
+             ImageIO.write(rendImage, "png", file);
 
-                // Save as JPEG
-                file = new File("C:\\newimage.jpg");
-                ImageIO.write(rendImage, "jpg", file);
-            } catch (IOException e) {
-            }*/
-
-
-
+             // Save as JPEG
+             file = new File("C:\\newimage.jpg");
+             ImageIO.write(rendImage, "jpg", file);
+             } catch (IOException e) {
+             }*/
              //try{
 
-                    /*BufferedImage originalImage =
-                           ImageIO.read(new File("c:\\image\\mypic.jpg"));
+            /*BufferedImage originalImage =
+             ImageIO.read(new File("c:\\image\\mypic.jpg"));
 
-                    //convert BufferedImage to byte array
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    ImageIO.write( originalImage, "jpg", baos );
-                    baos.flush();
-                    byte[] imageInByte = baos.toByteArray();
-                    baos.close();*/
-
+             //convert BufferedImage to byte array
+             ByteArrayOutputStream baos = new ByteArrayOutputStream();
+             ImageIO.write( originalImage, "jpg", baos );
+             baos.flush();
+             byte[] imageInByte = baos.toByteArray();
+             baos.close();*/
                     //convert byte array back to BufferedImage
-                    //InputStream in = new ByteArrayInputStream(image.getPhoto());
-                    //BufferedImage bImageFromConvert = ImageIO.read(in);
-
+            //InputStream in = new ByteArrayInputStream(image.getPhoto());
+            //BufferedImage bImageFromConvert = ImageIO.read(in);
                     //ImageIO.write(bImageFromConvert, "jpg",
-                     //    new File("c:\\snap.jpg"));
-
+            //    new File("c:\\snap.jpg"));
               // }catch(IOException e){
-               //     System.out.println(e.getMessage());
-              // }
-
+            //     System.out.println(e.getMessage());
+            // }
             //BufferedImage imag=ImageIO.read(new ByteArrayInputStream(image.getPhoto()));
             //ImageIO.write(imag, "jpg", new File("images/","snap.jpg"));
 
             /*try {
 
-                                    // display the image
-                                    response.setContentType("image/gif");
+             // display the image
+             response.setContentType("image/gif");
 
-                                    OutputStream o = response.getOutputStream();
+             OutputStream o = response.getOutputStream();
 
-                                    o.write(((VerifyVerifierBean) request.getAttribute("vvBean")).getFile());
+             o.write(((VerifyVerifierBean) request.getAttribute("vvBean")).getFile());
 
-                                    o.flush();
+             o.flush();
 
-                                    o.close();
+             o.close();
 
-                                    } catch (Exception e) {
+             } catch (Exception e) {
 
-                                    out.println("Unable To Display image");
+             out.println("Unable To Display image");
 
-                                    out.println("Image Display Error=" + e.getMessage());
+             out.println("Image Display Error=" + e.getMessage());
 
-                                    return;
+             return;
 
-                                    } */
+             } */
 
             /*ByteArrayInputStream bis = new ByteArrayInputStream(image.getPhoto());
-            Iterator<?> readers = ImageIO.getImageReadersByFormatName("jpg");
-            //ImageIO is a class containing static convenience methods for locating ImageReaders
-            //and ImageWriters, and performing simple encoding and decoding.
+             Iterator<?> readers = ImageIO.getImageReadersByFormatName("jpg");
+             //ImageIO is a class containing static convenience methods for locating ImageReaders
+             //and ImageWriters, and performing simple encoding and decoding.
 
-            ImageReader reader = (ImageReader) readers.next();
-            Object source = bis; // File or InputStream, it seems file is OK
+             ImageReader reader = (ImageReader) readers.next();
+             Object source = bis; // File or InputStream, it seems file is OK
 
-            ImageInputStream iis = ImageIO.createImageInputStream(source);
-            //Returns an ImageInputStream that will take its input from the given Object
+             ImageInputStream iis = ImageIO.createImageInputStream(source);
+             //Returns an ImageInputStream that will take its input from the given Object
 
-            reader.setInput(iis, true);
-            ImageReadParam param = reader.getDefaultReadParam();
+             reader.setInput(iis, true);
+             ImageReadParam param = reader.getDefaultReadParam();
 
-            Image iimage = reader.read(0, param);
-            //got an image file
+             Image iimage = reader.read(0, param);
+             //got an image file
 
-            BufferedImage bufferedImage = new BufferedImage(iimage.getWidth(null), iimage.getHeight(null), BufferedImage.TYPE_INT_RGB);
-            //bufferedImage is the RenderedImage to be written
-            Graphics2D g2 = bufferedImage.createGraphics();
-            g2.drawImage(iimage, null, null);
-            File imageFile = new File("C:\\snap.jpg");
-            ImageIO.write(bufferedImage, "jpg", imageFile);
-            //"jpg" is the format of the image
-            //imageFile is the file to be written to.
+             BufferedImage bufferedImage = new BufferedImage(iimage.getWidth(null), iimage.getHeight(null), BufferedImage.TYPE_INT_RGB);
+             //bufferedImage is the RenderedImage to be written
+             Graphics2D g2 = bufferedImage.createGraphics();
+             g2.drawImage(iimage, null, null);
+             File imageFile = new File("C:\\snap.jpg");
+             ImageIO.write(bufferedImage, "jpg", imageFile);
+             //"jpg" is the format of the image
+             //imageFile is the file to be written to.
 
-            System.out.println(imageFile.getPath());*/
-
-
+             System.out.println(imageFile.getPath());*/
             vvBean.setFileVerificationStatus(image.getVerificationStatus());
             vvBean.setFileVerificationComment(image.getVerificationComment());
-           
+
             Bank bank = new Bank();
             bank = this.verifierService.getBank();
-            System.out.println("------------ verifier controller bank: " + bank );
+            System.out.println("------------ verifier controller bank: " + bank);
             vvBean.setBankAccountNumber(bank.getAccountNumber());
             vvBean.setBankName(bank.getBankName());
             vvBean.setBankContactNumber(bank.getContactNumber());
@@ -376,14 +355,13 @@ public class VerifyVerifierController extends AbstractWizardFormController
             id = this.verifierService.getIdentityDocument();
             vvBean.setIdentityDocumentType(id.getType().toUpperCase());
             vvBean.setIdentityDocumentNumber(id.getNumber());
-            if(id.getIssueDate() != null)
-            {
+            if (id.getIssueDate() != null) {
                 String date;
                 date = id.getIssueDate().toString();
                 int year = 0;
                 int month = 0;
                 int day = 0;
-                String[] strSplit =  date.split("-");
+                String[] strSplit = date.split("-");
                 day = Integer.parseInt(strSplit[2]);
                 month = Integer.parseInt(strSplit[1]);
                 year = Integer.parseInt(strSplit[0]);
@@ -391,14 +369,13 @@ public class VerifyVerifierController extends AbstractWizardFormController
 
                 vvBean.setIdentityDocumentIssueDate(date);
             }
-            if(id.getExpiryDate() != null)
-            {
+            if (id.getExpiryDate() != null) {
                 String date;
                 date = id.getExpiryDate().toString();
                 int year = 0;
                 int month = 0;
                 int day = 0;
-                String[] strSplit =  date.split("-");
+                String[] strSplit = date.split("-");
                 day = Integer.parseInt(strSplit[2]);
                 month = Integer.parseInt(strSplit[1]);
                 year = Integer.parseInt(strSplit[0]);
@@ -417,75 +394,67 @@ public class VerifyVerifierController extends AbstractWizardFormController
         }
 
         // cancel allocate device select country page
-        if(page == 0 && request.getParameter("_target4") !=null)
-        {
+        if (page == 0 && request.getParameter("_target4") != null) {
             vvBean.setTarget("_target0");
         }
 
         // cancel registration select region page
-        if(page == 1 && request.getParameter("_target4") !=null)
-        {
+        if (page == 1 && request.getParameter("_target4") != null) {
             vvBean.setTarget("_target1");
         }
 
         // cancel registration select district page
-        if(page == 2 && request.getParameter("_target4") !=null)
-        {
+        if (page == 2 && request.getParameter("_target4") != null) {
             vvBean.setTarget("_target2");
         }
 
         // cancel registration select district page
-        if(page == 3 && request.getParameter("_target4") !=null)
-        {
+        if (page == 3 && request.getParameter("_target4") != null) {
             vvBean.setTarget("_target3");
         }
     }
 
     // Returns a generated image.
     /*public RenderedImage myCreateImage(byte b[]) {
-        int width = 100;
-        int height = 100;
+     int width = 100;
+     int height = 100;
 
-        // Create a buffered image in which to draw
-        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+     // Create a buffered image in which to draw
+     BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-         //InputStream in = new ByteArrayInputStream(b);
-         //InputStream in = new ByteArrayInputStream(image.getPhoto());
-            //OutputStream out = new ByteArrayOutputStream();
-         try{
-              //BufferedImage bi = ImageIO.read(in);
-         }catch(Exception ex)
-         {
+     //InputStream in = new ByteArrayInputStream(b);
+     //InputStream in = new ByteArrayInputStream(image.getPhoto());
+     //OutputStream out = new ByteArrayOutputStream();
+     try{
+     //BufferedImage bi = ImageIO.read(in);
+     }catch(Exception ex)
+     {
 
-         }
+     }
 
-        //java.awt.Image i = bi.getScaledInstance(bi.getWidth(), bi.getHeight(), bi.TYPE_INT_RGB);
-        // Create a graphics contents on the buffered image
-        Graphics2D g2d = bufferedImage.createGraphics();
+     //java.awt.Image i = bi.getScaledInstance(bi.getWidth(), bi.getHeight(), bi.TYPE_INT_RGB);
+     // Create a graphics contents on the buffered image
+     Graphics2D g2d = bufferedImage.createGraphics();
 
-        // Draw graphics
-        g2d.setColor(Color.white);
-        g2d.fillRect(0, 0, width, height);
-        g2d.setColor(Color.black);
-        g2d.fillOval(0, 0, width, height);
+     // Draw graphics
+     g2d.setColor(Color.white);
+     g2d.fillRect(0, 0, width, height);
+     g2d.setColor(Color.black);
+     g2d.fillOval(0, 0, width, height);
 
-        // Graphics context no longer needed so dispose it
-        g2d.dispose();
+     // Graphics context no longer needed so dispose it
+     g2d.dispose();
 
-        return bufferedImage;
-    }*/
-
-    protected ModelAndView processCancel(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception
-    {
+     return bufferedImage;
+     }*/
+    protected ModelAndView processCancel(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
         VerifyVerifierBean vvBean = (VerifyVerifierBean) command;
         vvBean = new VerifyVerifierBean();
 
         return new ModelAndView(this.getCancelView(), "vvBean", vvBean);
     }
 
-
-    protected ModelAndView processFinish(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception
-    {
+    protected ModelAndView processFinish(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
         VerifyVerifierBean vvBean = (VerifyVerifierBean) command;
 
         Fom fom = new Fom();
@@ -494,8 +463,7 @@ public class VerifyVerifierController extends AbstractWizardFormController
         boolean verified = true;
         StaticData sdVerified = new StaticData();
 
-        if(request.getParameter("_finish").equals("Confirm"))
-        {
+        if (request.getParameter("_finish").equals("Confirm")) {
             this.verifierService.failVerification(vvBean.getVerifierVerificationComment());
             System.out.println("---------------------- verify verifier controller, delete verification");
 
@@ -510,40 +478,35 @@ public class VerifyVerifierController extends AbstractWizardFormController
         sl.add(vvBean.getReference1VerificationStatus());
         sl.add(vvBean.getReference2VerificationStatus());
 
-        for(int i=0; i<this.verificationStatusList.size(); i++)
-        {
-            if(this.verificationStatusList.get(i).getDescription().equals("Verified"))
-            {
+        for (int i = 0; i < this.verificationStatusList.size(); i++) {
+            if (this.verificationStatusList.get(i).getDescription().equals("Verified")) {
                 sdVerified = this.verificationStatusList.get(i);
             }
         }
 
-        for(int i=0; i<sl.size(); i++)
-        {
-            if(!sl.get(i).equals(sdVerified.getValue()))
-            {
+        for (int i = 0; i < sl.size(); i++) {
+            if (!sl.get(i).equals(sdVerified.getValue())) {
                 verified = false;
             }
         }
 
-        if(verified)
-        {
+        if (verified) {
             fom = this.verifierService.setVerifyVerifierDetils(vvBean.getVerifierVerificationStatus(),
-                                                            vvBean.getVerifierVerificationComment(),
-                                                            vvBean.getAddressVerificationStatus(),
-                                                            vvBean.getAddressVerificationComment(),
-                                                            vvBean.getFileVerificationStatus(),
-                                                            vvBean.getFileVerificationComment(),
-                                                            vvBean.getIdentityDocumentVerificationStatus(),
-                                                            vvBean.getIdentityDocumentVerificationComment(),
-                                                            vvBean.getBankVerificationStatus(),
-                                                            vvBean.getBankVerificationComment(),
-                                                            vvBean.getReference1VerificationStatus(),
-                                                            vvBean.getReference1VerificationComment(),
-                                                            vvBean.getReference2VerificationStatus(),
-                                                            vvBean.getReference2VerificationComment(),
-                                                            vvBean.getIdFom(),
-                                                            verified);
+                    vvBean.getVerifierVerificationComment(),
+                    vvBean.getAddressVerificationStatus(),
+                    vvBean.getAddressVerificationComment(),
+                    vvBean.getFileVerificationStatus(),
+                    vvBean.getFileVerificationComment(),
+                    vvBean.getIdentityDocumentVerificationStatus(),
+                    vvBean.getIdentityDocumentVerificationComment(),
+                    vvBean.getBankVerificationStatus(),
+                    vvBean.getBankVerificationComment(),
+                    vvBean.getReference1VerificationStatus(),
+                    vvBean.getReference1VerificationComment(),
+                    vvBean.getReference2VerificationStatus(),
+                    vvBean.getReference2VerificationComment(),
+                    vvBean.getIdFom(),
+                    verified);
 
             vvBean.setFiledOperativeManager(fom);
 
@@ -554,25 +517,23 @@ public class VerifyVerifierController extends AbstractWizardFormController
             vvBean.setInterview(i);
             System.out.println("---------------------- verify verifier controller, verification");
             return new ModelAndView(this.getSuccessView(), "vvBean", vvBean);
-        }
-        else
-        {
+        } else {
             this.verifierService.setVerifyVerifierDetils(vvBean.getVerifierVerificationStatus(),
-                                                         vvBean.getVerifierVerificationComment(),
-                                                         vvBean.getAddressVerificationStatus(),
-                                                         vvBean.getAddressVerificationComment(),
-                                                         vvBean.getFileVerificationStatus(),
-                                                         vvBean.getFileVerificationComment(),
-                                                         vvBean.getIdentityDocumentVerificationStatus(),
-                                                         vvBean.getIdentityDocumentVerificationComment(),
-                                                         vvBean.getBankVerificationStatus(),
-                                                         vvBean.getBankVerificationComment(),
-                                                         vvBean.getReference1VerificationStatus(),
-                                                         vvBean.getReference1VerificationComment(),
-                                                         vvBean.getReference2VerificationStatus(),
-                                                         vvBean.getReference2VerificationComment(),
-                                                         vvBean.getIdFom(),
-                                                         verified);
+                    vvBean.getVerifierVerificationComment(),
+                    vvBean.getAddressVerificationStatus(),
+                    vvBean.getAddressVerificationComment(),
+                    vvBean.getFileVerificationStatus(),
+                    vvBean.getFileVerificationComment(),
+                    vvBean.getIdentityDocumentVerificationStatus(),
+                    vvBean.getIdentityDocumentVerificationComment(),
+                    vvBean.getBankVerificationStatus(),
+                    vvBean.getBankVerificationComment(),
+                    vvBean.getReference1VerificationStatus(),
+                    vvBean.getReference1VerificationComment(),
+                    vvBean.getReference2VerificationStatus(),
+                    vvBean.getReference2VerificationComment(),
+                    vvBean.getIdFom(),
+                    verified);
 
             this.verifierService.saveVerifyVerifier();
 

@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.haftrust.verifier.controller;
 
 import java.util.ArrayList;
@@ -23,8 +22,8 @@ import org.springframework.web.servlet.mvc.AbstractWizardFormController;
  *
  * @author Miroslav
  */
-public class AllocateDeviceController extends AbstractWizardFormController
-{
+public class AllocateDeviceController extends AbstractWizardFormController {
+
     private VerifierService verifierService;
     private String cancelView;
     private String successView;
@@ -53,46 +52,38 @@ public class AllocateDeviceController extends AbstractWizardFormController
         this.verifierService = verifierService;
     }
 
-    protected Map referenceData(HttpServletRequest request, Object command, Errors errors, int page) throws Exception
-    {
+    protected Map referenceData(HttpServletRequest request, Object command, Errors errors, int page) throws Exception {
         Map<Object, Object> dataMap = new HashMap<Object, Object>();
 
-        if(page == 0)
-        {
+        if (page == 0) {
             dataMap.put("countryList", this.verifierService.getCountryList());
             System.out.println("------------------------ controller allocate device reference data country list");
         }
 
-        if(page == 1)
-        {
+        if (page == 1) {
             dataMap.put("regionList", this.verifierService.getRegionList());
             System.out.println("------------------------ controller allocate device reference data region list");
         }
 
-        if(page == 3)
-        {
+        if (page == 3) {
             dataMap.put("unallocatedDeviceList", this.verifierService.getUnallocatedDeviceList());
         }
 
         return dataMap;
     }
 
-    protected void validatePage(Object command, Errors errors, int page)
-    {
-        
+    protected void validatePage(Object command, Errors errors, int page) {
+
     }
 
-    protected void postProcessPage(HttpServletRequest request, Object command, Errors errors, int page) throws Exception
-    {
+    protected void postProcessPage(HttpServletRequest request, Object command, Errors errors, int page) throws Exception {
         AllocateDeviceBean adBean = (AllocateDeviceBean) command;
 
-        if(page == 0 && request.getParameter("_target1") !=null)
-        {
+        if (page == 0 && request.getParameter("_target1") != null) {
             adBean.setCountry(this.verifierService.setVerifierCountry(adBean.getIdCountry()));
         }
 
-        if(page == 1 && request.getParameter("_target2") !=null)
-        {
+        if (page == 1 && request.getParameter("_target2") != null) {
             System.out.println("------------------------- post process page search verifier");
             adBean.setRegion(this.verifierService.setVerifierRegion(adBean.getIdRegion()));
 
@@ -103,8 +94,7 @@ public class AllocateDeviceController extends AbstractWizardFormController
             adBean.setvBean(v);
         }
 
-        if(page == 2 && request.getParameter("_target3") !=null)
-        {
+        if (page == 2 && request.getParameter("_target3") != null) {
             this.verifierService.getEmployedVerifierDetails(adBean.getIdVerifier());
 
             Verifier verifier = new Verifier();
@@ -112,14 +102,13 @@ public class AllocateDeviceController extends AbstractWizardFormController
             adBean.setFirstName(verifier.getFirstName());
             adBean.setMiddleName(verifier.getMiddleName());
             adBean.setLastName(verifier.getLastName());
-            if(verifier.getDob() != null)
-            {
+            if (verifier.getDob() != null) {
                 String date;
                 date = verifier.getDob().toString();
                 int year = 0;
                 int month = 0;
                 int day = 0;
-                String[] strSplit =  date.split("-");
+                String[] strSplit = date.split("-");
                 day = Integer.parseInt(strSplit[2]);
                 month = Integer.parseInt(strSplit[1]);
                 year = Integer.parseInt(strSplit[0]);
@@ -131,40 +120,34 @@ public class AllocateDeviceController extends AbstractWizardFormController
         }
 
         // cancel allocate device select country page
-        if(page == 0 && request.getParameter("_target4") !=null)
-        {
+        if (page == 0 && request.getParameter("_target4") != null) {
             adBean.setTarget("_target0");
         }
 
         // cancel registration select region page
-        if(page == 1 && request.getParameter("_target4") !=null)
-        {
+        if (page == 1 && request.getParameter("_target4") != null) {
             adBean.setTarget("_target1");
         }
 
         // cancel registration select district page
-        if(page == 2 && request.getParameter("_target4") !=null)
-        {
+        if (page == 2 && request.getParameter("_target4") != null) {
             adBean.setTarget("_target2");
         }
 
         // cancel registration select district page
-        if(page == 3 && request.getParameter("_target4") !=null)
-        {
+        if (page == 3 && request.getParameter("_target4") != null) {
             adBean.setTarget("_target3");
         }
     }
 
-    protected ModelAndView processCancel(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception
-    {
+    protected ModelAndView processCancel(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
         AllocateDeviceBean adBean = (AllocateDeviceBean) command;
         adBean = new AllocateDeviceBean();
 
         return new ModelAndView(this.getCancelView(), "adBean", adBean);
     }
 
-    protected ModelAndView processFinish(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception
-    {
+    protected ModelAndView processFinish(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
         AllocateDeviceBean adBean = (AllocateDeviceBean) command;
 
         adBean.setDevice(this.verifierService.setVerifierDevice(adBean.getImei()));
