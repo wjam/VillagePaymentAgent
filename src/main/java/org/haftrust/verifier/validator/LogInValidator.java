@@ -9,6 +9,8 @@ import java.util.List;
 import org.haftrust.verifier.model.Verifier;
 import org.haftrust.verifier.service.VerifierService;
 import org.haftrust.verifier.view.RegisterVerifierBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -18,6 +20,8 @@ import org.springframework.validation.Validator;
  * @author Miroslav
  */
 public class LogInValidator implements Validator {
+
+    private static final Logger LOG = LoggerFactory.getLogger(LogInValidator.class);
 
     private VerifierService verifierService;
 
@@ -36,13 +40,13 @@ public class LogInValidator implements Validator {
     public void validate(Object command, Errors errors) {
         RegisterVerifierBean rvBean = (RegisterVerifierBean) command;
 
-        System.out.println("--------------------------login validator validate method");
+        LOG.debug("--------------------------login validator validate method");
 
         ValidationUtils.rejectIfEmptyOrWhitespace(
                 errors, "email", "required.email",
                 "Email is required.");
 
-        System.out.println("--------------------------login validator validate get field error:" + errors.getFieldError("email"));
+        LOG.debug("--------------------------login validator validate get field error:{}", errors.getFieldError("email"));
         errors.getFieldError("email");
 
         ValidationUtils.rejectIfEmptyOrWhitespace(
@@ -54,13 +58,13 @@ public class LogInValidator implements Validator {
 
             vl = this.verifierService.isVerifier(rvBean.getEmail(), rvBean.getPassword());
 
-            System.out.println("--------------------------login validator list size:" + vl.size());
+            LOG.debug("--------------------------login validator list size:{}", vl.size());
 
             if (vl.isEmpty()) {
                 errors.rejectValue("email", "required.email", "The Email or Password entered is incorrect.");
             }
         }
 
-        System.out.println("--------------------------login validator validate get error count:" + errors.getErrorCount());
+        LOG.debug("--------------------------login validator validate get error count:{}", errors.getErrorCount());
     }
 }

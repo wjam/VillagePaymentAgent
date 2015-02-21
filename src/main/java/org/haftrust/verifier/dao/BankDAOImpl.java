@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.haftrust.verifier.model.Bank;
 import org.haftrust.verifier.model.Verifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
@@ -15,6 +17,8 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  * @author Miroslav
  */
 public class BankDAOImpl extends HibernateDaoSupport implements BankDAO {
+
+    private static final Logger LOG = LoggerFactory.getLogger(BankDAOImpl.class);
 
     public List<Bank> getBankByAccountNumber(String account) {
         List<Bank> bankList = new ArrayList<Bank>();
@@ -34,8 +38,8 @@ public class BankDAOImpl extends HibernateDaoSupport implements BankDAO {
 
     public Bank saveBank(Bank bank) {
         getHibernateTemplate().saveOrUpdate(bank);
-        System.out.println("------------------------ bank saved");
-        System.out.println("------------------------ bank save id: " + bank.getAccountNumber());
+        LOG.debug("------------------------ bank saved");
+        LOG.debug("------------------------ bank save id: {}", bank.getAccountNumber());
 
         return bank;
     }
@@ -44,7 +48,7 @@ public class BankDAOImpl extends HibernateDaoSupport implements BankDAO {
         Object[] param = {ver, employeeType};
         List l = getHibernateTemplate().find("from Bank b where b.verifier=? and b.employeeType=?", param);
         List<Bank> bankList = new ArrayList<Bank>();
-        System.out.println("bank list size: " + l.size());
+        LOG.debug("bank list size: {}", l.size());
         if (l.size() > 0) {
             for (int i = 0; i < l.size(); i++) {
                 Bank bank = (Bank) l.get(i);
