@@ -1,10 +1,7 @@
-1. create database called HaftrustVerifierdb.
-   username = kj905
-   password = kj905;
-
-2. create schema kj905;
-
-3. create tables
+DROP database HaftrustVerifierdb;
+DROP schema kj905;
+CREATE database HaftrustVerifierdb;
+CREATE schema kj905;
 
 create table kj905.ht_device (
 imei BIGINT not null,
@@ -181,7 +178,6 @@ description varchar(45) not null,
 primary key (idStaticData)
 );
 
-4. insert dummy data
 
 INSERT INTO KJ905.HT_DEVICE (IMEI, PRODUCT_NUMBER, MODEL_NUMBER, HT_MOBILE_NUMBER, ALLOCATION) VALUES (123, '3456', '345678', '07944169877', 'no');
 INSERT INTO KJ905.HT_DEVICE (IMEI, PRODUCT_NUMBER, MODEL_NUMBER, HT_MOBILE_NUMBER, ALLOCATION) VALUES (333, '4545566', '6867565', '789999999', 'no');
