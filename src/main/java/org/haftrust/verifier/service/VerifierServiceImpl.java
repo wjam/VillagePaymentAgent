@@ -1,48 +1,17 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.haftrust.verifier.service;
+
+import org.haftrust.verifier.dao.*;
+import org.haftrust.verifier.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import org.haftrust.verifier.dao.AddressDAO;
-import org.haftrust.verifier.dao.BankDAO;
-import org.haftrust.verifier.dao.CountryDAO;
-import org.haftrust.verifier.dao.DeviceDAO;
-import org.haftrust.verifier.dao.DistrictDAO;
-import org.haftrust.verifier.dao.FomDAO;
-import org.haftrust.verifier.dao.IdentityDocumentDAO;
-import org.haftrust.verifier.dao.ImageDAO;
-import org.haftrust.verifier.dao.InterviewDAO;
-import org.haftrust.verifier.dao.ReferenceDAO;
-import org.haftrust.verifier.dao.RegionDAO;
-import org.haftrust.verifier.dao.StaticDataDAO;
-import org.haftrust.verifier.dao.VerifierDAO;
-import org.haftrust.verifier.model.Address;
-import org.haftrust.verifier.model.Bank;
-import org.haftrust.verifier.model.Country;
-import org.haftrust.verifier.model.Device;
-import org.haftrust.verifier.model.District;
-import org.haftrust.verifier.model.Fom;
-import org.haftrust.verifier.model.IdentityDocument;
-import org.haftrust.verifier.model.Image;
-import org.haftrust.verifier.model.Interview;
-import org.haftrust.verifier.model.Reference;
-import org.haftrust.verifier.model.Region;
-import org.haftrust.verifier.model.StaticData;
-import org.haftrust.verifier.model.Verifier;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.multipart.MultipartFile;
 
-/**
- *
- * @author Miroslav
- */
 public class VerifierServiceImpl implements VerifierService {
 
     private static final Logger LOG = LoggerFactory.getLogger(VerifierServiceImpl.class);
