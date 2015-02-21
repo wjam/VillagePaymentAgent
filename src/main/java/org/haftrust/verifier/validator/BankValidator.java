@@ -37,11 +37,6 @@ public class BankValidator implements Validator {
         return clazz.equals(RegisterVerifierBean.class);
     }
 
-    /**
-     *
-     * @param command
-     * @param errors
-     */
     public void validate(Object command, Errors errors) {
         RegisterVerifierBean rvBean = (RegisterVerifierBean) command;
 
