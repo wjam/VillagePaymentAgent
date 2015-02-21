@@ -4,8 +4,6 @@
  */
 package org.haftrust.verifier.validator;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import org.haftrust.verifier.view.RegisterVerifierBean;
 import org.springframework.validation.Errors;
@@ -18,10 +16,22 @@ import org.springframework.validation.Validator;
  */
 public class IdentityDocumentValidator implements Validator {
 
+    /**
+     *
+     * @param clazz
+     * @return
+     */
+    @Override
     public boolean supports(Class clazz) {
         return clazz.equals(RegisterVerifierBean.class);
     }
 
+    /**
+     *
+     * @param command
+     * @param errors
+     */
+    @Override
     public void validate(Object command, Errors errors) {
         RegisterVerifierBean rvBean = (RegisterVerifierBean) command;
 

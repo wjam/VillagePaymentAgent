@@ -14,7 +14,6 @@ import org.haftrust.verifier.model.Image;
 import org.haftrust.verifier.model.Interview;
 import org.haftrust.verifier.model.Region;
 import org.haftrust.verifier.model.Verifier;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -28,11 +27,11 @@ public class VerifyVerifierBean {
     private Country country;
     private int idRegion;
     private Region region;
-    private List<Verifier> verifierList = new ArrayList<Verifier>();
-    private List<VBean> vBean = new ArrayList<VBean>();
+    private List<Verifier> verifierList = new ArrayList<>();
+    private List<VBean> vBean = new ArrayList<>();
     private int idVerifier;
-    private List<Fom> fomList = new ArrayList<Fom>();
-    private List<FomBean> fBean = new ArrayList<FomBean>();
+    private List<Fom> fomList = new ArrayList<>();
+    private List<FomBean> fBean = new ArrayList<>();
     private int idFom;
 
     private Fom filedOperativeManager = new Fom();
@@ -150,15 +149,14 @@ public class VerifyVerifierBean {
 
     public void setfBean(List<Fom> f) {
         //this.fBean.clear();
-        List<FomBean> fbl = new ArrayList<FomBean>();
-        for (int i = 0; i < f.size(); i++) {
+        List<FomBean> fbl = new ArrayList<>();
+        for (Fom f1 : f) {
             String s;
-
-            s = f.get(i).getFirstName() + " " + f.get(i).getLastName();
+            s = f1.getFirstName() + " " + f1.getLastName();
             FomBean fb = new FomBean();
-            fb.setF(f.get(i));
+            fb.setF(f1);
             fb.setLabel(s);
-            fb.setId(f.get(i).getId());
+            fb.setId(f1.getId());
             fbl.add(fb);
         }
 
@@ -790,7 +788,8 @@ public class VerifyVerifierBean {
         }
     }
 
-    class VBean {
+    // FIXME Is this a Dupe? -BE
+    static class VBean {
 
         Verifier ver = new Verifier();
         String label;
@@ -819,5 +818,10 @@ public class VerifyVerifierBean {
         public void setVer(Verifier ver) {
             this.ver = ver;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "VerifyVerifierBean{" + "target=" + target + ", idCountry=" + idCountry + ", country=" + country + ", idRegion=" + idRegion + ", region=" + region + ", verifierList=" + verifierList + ", vBean=" + vBean + ", idVerifier=" + idVerifier + ", fomList=" + fomList + ", fBean=" + fBean + ", idFom=" + idFom + ", filedOperativeManager=" + filedOperativeManager + ", interview=" + interview + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName + ", gender=" + gender + ", dob=" + dob + ", email=" + email + ", telephoneNumber=" + telephoneNumber + ", password=" + password + ", educationType=" + educationType + ", educationLevel=" + educationLevel + ", verifierVerificationStatus=" + verifierVerificationStatus + ", verifierVerificationComment=" + verifierVerificationComment + ", idAddress=" + idAddress + ", street=" + street + ", village=" + village + ", postcode=" + postcode + ", town=" + town + ", city=" + city + ", district=" + district + ", addressRegion=" + addressRegion + ", addressCountry=" + addressCountry + ", address=" + address + ", addressVerificationStatus=" + addressVerificationStatus + ", addressVerificationComment=" + addressVerificationComment + ", fileBi=" + fileBi + ", file=" + file + ", fileVerificationStatus=" + fileVerificationStatus + ", fileVerificationComment=" + fileVerificationComment + ", image=" + image + ", idReference1=" + idReference1 + ", reference1Title=" + reference1Title + ", reference1FullName=" + reference1FullName + ", reference1OrganisationName=" + reference1OrganisationName + ", reference1Designation=" + reference1Designation + ", reference1ContactNumber=" + reference1ContactNumber + ", reference1Email=" + reference1Email + ", reference1Address=" + reference1Address + ", reference1VerificationStatus=" + reference1VerificationStatus + ", reference1VerificationComment=" + reference1VerificationComment + ", idReference2=" + idReference2 + ", reference2Title=" + reference2Title + ", reference2FullName=" + reference2FullName + ", reference2OrganisationName=" + reference2OrganisationName + ", reference2Designation=" + reference2Designation + ", reference2ContactNumber=" + reference2ContactNumber + ", reference2Email=" + reference2Email + ", reference2Address=" + reference2Address + ", reference2VerificationStatus=" + reference2VerificationStatus + ", reference2VerificationComment=" + reference2VerificationComment + ", bankAccountNumber=" + bankAccountNumber + ", bankName=" + bankName + ", bankContactNumber=" + bankContactNumber + ", bankAddress=" + bankAddress + ", bankSortCode=" + bankSortCode + ", bankIban=" + bankIban + ", bankVerificationStatus=" + bankVerificationStatus + ", bankVerificationComment=" + bankVerificationComment + ", identityDocumentType=" + identityDocumentType + ", identityDocumentNumber=" + identityDocumentNumber + ", identityDocumentIssueDate=" + identityDocumentIssueDate + ", identityDocumentExpiryDate=" + identityDocumentExpiryDate + ", identityDocumentVerificationStatus=" + identityDocumentVerificationStatus + ", identityDocumentVerificationComment=" + identityDocumentVerificationComment + '}';
     }
 }

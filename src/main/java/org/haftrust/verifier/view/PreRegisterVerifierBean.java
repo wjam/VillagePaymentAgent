@@ -46,4 +46,9 @@ public class PreRegisterVerifierBean {
     public void setRepassword(String repassword) {
         this.repassword = repassword;
     }
+
+    @Override
+    public String toString() {
+        return "PreRegisterVerifierBean{" + "idVerifier=" + idVerifier + ", email=" + email + ", password=" + password + ", repassword=" + repassword + '}';
+    }
 }

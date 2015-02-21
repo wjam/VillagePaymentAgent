@@ -6,7 +6,6 @@ package org.haftrust.verifier.validator;
 
 import org.haftrust.verifier.view.VerifyVerifierBean;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**

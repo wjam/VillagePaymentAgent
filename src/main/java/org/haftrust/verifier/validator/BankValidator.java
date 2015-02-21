@@ -33,6 +33,11 @@ public class BankValidator implements Validator {
         return clazz.equals(RegisterVerifierBean.class);
     }
 
+    /**
+     *
+     * @param command
+     * @param errors
+     */
     public void validate(Object command, Errors errors) {
         RegisterVerifierBean rvBean = (RegisterVerifierBean) command;
 
@@ -54,7 +59,7 @@ public class BankValidator implements Validator {
                         "required.bankAccountNumber", "Account Number is required in numeric format. ");
             }
 
-            List<Bank> bankList = new ArrayList<Bank>();
+            List<Bank> bankList = new ArrayList<>();
 
             try {
                 bankList = this.verifierService.isBankAccountRegistered(rvBean.getBankAccountNumber());

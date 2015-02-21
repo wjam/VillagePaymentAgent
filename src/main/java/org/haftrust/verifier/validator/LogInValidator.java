@@ -50,7 +50,7 @@ public class LogInValidator implements Validator {
                 "Password is required.");
 
         if (!rvBean.getEmail().isEmpty() && !rvBean.getPassword().isEmpty()) {
-            List<Verifier> vl = new ArrayList<Verifier>();
+            List<Verifier> vl = new ArrayList<>();
 
             vl = this.verifierService.isVerifier(rvBean.getEmail(), rvBean.getPassword());
 
