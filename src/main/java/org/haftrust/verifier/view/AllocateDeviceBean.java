@@ -24,8 +24,8 @@ public class AllocateDeviceBean {
     private int idRegion;
     private Region region;
     private int idVerifier;
-    private List<Verifier> verifierList = new ArrayList<Verifier>();
-    private List<VBean> vBean = new ArrayList<VBean>();
+    private List<Verifier> verifierList = new ArrayList<>();
+    private List<VBean> vBean = new ArrayList<>();
 
     private String firstName;
     private String middleName;
@@ -180,11 +180,11 @@ public class AllocateDeviceBean {
         this.idCountry = idCountry;
     }
 
-    class VBean {
+    static class VBean {
 
-        Verifier ver = new Verifier();
-        String label;
-        int id;
+        private Verifier ver = new Verifier();
+        private String label;
+        private int id;
 
         public int getId() {
             return id;
@@ -210,4 +210,10 @@ public class AllocateDeviceBean {
             this.ver = ver;
         }
     }
+
+    @Override
+    public String toString() {
+        return "AllocateDeviceBean{" + "target=" + target + ", idCountry=" + idCountry + ", country=" + country + ", idRegion=" + idRegion + ", region=" + region + ", idVerifier=" + idVerifier + ", verifierList=" + verifierList + ", vBean=" + vBean + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName + ", dob=" + dob + ", email=" + email + ", imei=" + imei + ", device=" + device + '}';
+    }
+    
 }
