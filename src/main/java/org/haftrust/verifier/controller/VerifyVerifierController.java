@@ -38,6 +38,8 @@ import org.haftrust.verifier.model.StaticData;
 import org.haftrust.verifier.model.Verifier;
 import org.haftrust.verifier.service.VerifierService;
 import org.haftrust.verifier.view.VerifyVerifierBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -49,6 +51,8 @@ import org.springframework.web.servlet.mvc.AbstractWizardFormController;
  * @author Miroslav
  */
 public class VerifyVerifierController extends AbstractWizardFormController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(VerifyVerifierController.class);
 
     private VerifierService verifierService;
     private String cancelView;
@@ -104,12 +108,12 @@ public class VerifyVerifierController extends AbstractWizardFormController {
 
         if (page == 0) {
             dataMap.put("countryList", this.verifierService.getCountryList());
-            System.out.println("------------------------ controller verify verifier reference data country list");
+            LOG.debug("------------------------ controller verify verifier reference data country list");
         }
 
         if (page == 1) {
             dataMap.put("regionList", this.verifierService.getRegionList());
-            System.out.println("------------------------ controller verify verifier reference data region list");
+            LOG.debug("------------------------ controller verify verifier reference data region list");
         }
 
         if (page == 3) {
@@ -123,9 +127,9 @@ public class VerifyVerifierController extends AbstractWizardFormController {
     protected void validatePage(Object command, Errors errors, int page) {
         VerifyVerifierBean vvBean = (VerifyVerifierBean) command;
 
-        System.out.println("----------------------- validate page method");
+        LOG.debug("----------------------- validate page method");
         if (page == 5) {
-            System.out.println("----------------------- validate page login country" + getValidators()[0].getClass());
+            LOG.debug("----------------------- validate page login country{}", getValidators()[0].getClass());
             //getValidators()[0].validate(command, errors);
 
             /*if(vvBean.getVerifierVerificationComment().equals(""))
@@ -143,13 +147,13 @@ public class VerifyVerifierController extends AbstractWizardFormController {
         }
 
         if (page == 1 && request.getParameter("_target2") != null) {
-            System.out.println("------------------------- post process page search verifier");
+            LOG.debug("------------------------- post process page search verifier");
             vvBean.setRegion(this.verifierService.setVerifierRegion(vvBean.getIdRegion()));
 
             List<Verifier> v = new ArrayList<Verifier>();
             //vvBean.setVerifierList(this.verifierService.getRegisteredVerifiers());
             v = this.verifierService.getRegisteredVerifiers();
-            System.out.println("------------------------- post process page search verifier, v list size: " + v.size());
+            LOG.debug("------------------------- post process page search verifier, v list size: {}", v.size());
             vvBean.setVerifierList(v);
             vvBean.setvBean(v);
         }
@@ -178,7 +182,7 @@ public class VerifyVerifierController extends AbstractWizardFormController {
                 vvBean.setDob(date);
             }
             vvBean.setEmail(verifier.getEmail());
-            System.out.println("--------------------verify verifier controller post process page verifier email: " + vvBean.getEmail());
+            LOG.debug("--------------------verify verifier controller post process page verifier email: {}", vvBean.getEmail());
             vvBean.setTelephoneNumber(verifier.getTelephoneNumber());
             vvBean.setEducationType(verifier.getEducationType().toUpperCase());
             vvBean.setEducationLevel(verifier.getEducationLevel().toUpperCase());
@@ -197,7 +201,7 @@ public class VerifyVerifierController extends AbstractWizardFormController {
 
             District district = new District();
             district = this.verifierService.getVerifierDistrict();
-            System.out.println("--------------------------------- district: " + district);
+            LOG.debug("--------------------------------- district: {}", district);
             vvBean.setDistrict(district.getDescription());
             vvBean.setAddressRegion(this.verifierService.getVerifierRegion().getDescription());
             vvBean.setAddressCountry(this.verifierService.getVerifierCountry().getDescription());
@@ -210,7 +214,7 @@ public class VerifyVerifierController extends AbstractWizardFormController {
 
             /*for(int i=0; i<image.getPhoto().length; i++)
              {
-             System.out.println("=================== photo byte: " + image.getPhoto()[i]);
+             LOG.debug("=================== photo byte: " + image.getPhoto()[i]);
              }*/
             vvBean.setFile(image.getPhoto());
             vvBean.setImage(image);
@@ -222,9 +226,9 @@ public class VerifyVerifierController extends AbstractWizardFormController {
              //RenderedImage ri
              //ImageIO.write(bi, "jpg",new File("c:\\snap.jpg"));
              //ImageIO.
-             System.out.println("================== bi: " + bi);
-             System.out.println("================== bi type : " + bi.getType());
-             System.out.println("================== i: " + i);
+             LOG.debug("================== bi: " + bi);
+             LOG.debug("================== bi type : " + bi.getType());
+             LOG.debug("================== i: " + i);
              vvBean.setFileBi(bi);
              // Create an image to save
              RenderedImage rendImage = myCreateImage(image.getPhoto());
@@ -257,7 +261,7 @@ public class VerifyVerifierController extends AbstractWizardFormController {
                     //ImageIO.write(bImageFromConvert, "jpg",
             //    new File("c:\\snap.jpg"));
               // }catch(IOException e){
-            //     System.out.println(e.getMessage());
+            //     LOG.debug(e.getMessage());
             // }
             //BufferedImage imag=ImageIO.read(new ByteArrayInputStream(image.getPhoto()));
             //ImageIO.write(imag, "jpg", new File("images/","snap.jpg"));
@@ -311,13 +315,13 @@ public class VerifyVerifierController extends AbstractWizardFormController {
              //"jpg" is the format of the image
              //imageFile is the file to be written to.
 
-             System.out.println(imageFile.getPath());*/
+             LOG.debug(imageFile.getPath());*/
             vvBean.setFileVerificationStatus(image.getVerificationStatus());
             vvBean.setFileVerificationComment(image.getVerificationComment());
 
             Bank bank = new Bank();
             bank = this.verifierService.getBank();
-            System.out.println("------------ verifier controller bank: " + bank);
+            LOG.debug("------------ verifier controller bank: {}", bank);
             vvBean.setBankAccountNumber(bank.getAccountNumber());
             vvBean.setBankName(bank.getBankName());
             vvBean.setBankContactNumber(bank.getContactNumber());
@@ -465,7 +469,7 @@ public class VerifyVerifierController extends AbstractWizardFormController {
 
         if (request.getParameter("_finish").equals("Confirm")) {
             this.verifierService.failVerification(vvBean.getVerifierVerificationComment());
-            System.out.println("---------------------- verify verifier controller, delete verification");
+            LOG.debug("---------------------- verify verifier controller, delete verification");
 
             return new ModelAndView(this.getDeleteView(), "vvBean", vvBean);
         }
@@ -515,7 +519,7 @@ public class VerifyVerifierController extends AbstractWizardFormController {
             i = this.verifierService.verifyVerifier();
 
             vvBean.setInterview(i);
-            System.out.println("---------------------- verify verifier controller, verification");
+            LOG.debug("---------------------- verify verifier controller, verification");
             return new ModelAndView(this.getSuccessView(), "vvBean", vvBean);
         } else {
             this.verifierService.setVerifyVerifierDetils(vvBean.getVerifierVerificationStatus(),
@@ -537,7 +541,7 @@ public class VerifyVerifierController extends AbstractWizardFormController {
 
             this.verifierService.saveVerifyVerifier();
 
-            System.out.println("---------------------- verify verifier controller, save");
+            LOG.debug("---------------------- verify verifier controller, save");
             return new ModelAndView(this.getSaveView(), "vvBean", vvBean);
         }
     }

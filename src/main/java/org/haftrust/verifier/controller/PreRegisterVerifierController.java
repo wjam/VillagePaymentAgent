@@ -6,6 +6,8 @@ package org.haftrust.verifier.controller;
 
 import org.haftrust.verifier.service.VerifierService;
 import org.haftrust.verifier.view.PreRegisterVerifierBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
@@ -14,6 +16,8 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
  * @author Miroslav
  */
 public class PreRegisterVerifierController extends SimpleFormController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(PreRegisterVerifierController.class);
 
     private VerifierService verifierService;
 
@@ -26,7 +30,7 @@ public class PreRegisterVerifierController extends SimpleFormController {
     }
 
     protected ModelAndView onSubmit(Object command) throws Exception {
-        System.out.println("------------------------ controller preregister verifier onSubmit");
+        LOG.debug("------------------------ controller preregister verifier onSubmit");
 
         PreRegisterVerifierBean prvBean = (PreRegisterVerifierBean) command;
         int id = 0;

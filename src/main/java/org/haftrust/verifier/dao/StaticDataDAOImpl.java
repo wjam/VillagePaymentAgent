@@ -7,6 +7,8 @@ package org.haftrust.verifier.dao;
 import java.util.ArrayList;
 import java.util.List;
 import org.haftrust.verifier.model.StaticData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
@@ -15,11 +17,13 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  */
 public class StaticDataDAOImpl extends HibernateDaoSupport implements StaticDataDAO {
 
+    private static final Logger LOG = LoggerFactory.getLogger(StaticDataDAOImpl.class);
+
     public StaticData getDeviceAllocation(String description) {
         Object[] param = {"device allocation", description};
         List l = getHibernateTemplate().find("from StaticData s where s.type=? and s.description=?", param);
         List<StaticData> staticDataList = new ArrayList<StaticData>();
-        System.out.println("static data interview status list size: " + l.size());
+        LOG.debug("static data interview status list size: {}", l.size());
         if (l.size() > 0) {
             for (int i = 0; i < l.size(); i++) {
                 StaticData staticData = (StaticData) l.get(i);
@@ -33,7 +37,7 @@ public class StaticDataDAOImpl extends HibernateDaoSupport implements StaticData
         Object[] param = {"interview status", description};
         List l = getHibernateTemplate().find("from StaticData s where s.type=? and s.description=?", param);
         List<StaticData> staticDataList = new ArrayList<StaticData>();
-        System.out.println("static data interview status list size: " + l.size());
+        LOG.debug("static data interview status list size: {}", l.size());
         if (l.size() > 0) {
             for (int i = 0; i < l.size(); i++) {
                 StaticData staticData = (StaticData) l.get(i);
@@ -47,7 +51,7 @@ public class StaticDataDAOImpl extends HibernateDaoSupport implements StaticData
         Object[] param = {"verification status", description};
         List l = getHibernateTemplate().find("from StaticData s where s.type=? and s.description=?", param);
         List<StaticData> staticDataList = new ArrayList<StaticData>();
-        System.out.println("static data verification status list size: " + l.size());
+        LOG.debug("static data verification status list size: {}", l.size());
         if (l.size() > 0) {
             for (int i = 0; i < l.size(); i++) {
                 StaticData staticData = (StaticData) l.get(i);
@@ -61,7 +65,7 @@ public class StaticDataDAOImpl extends HibernateDaoSupport implements StaticData
         Object[] param = {"employment status", description};
         List l = getHibernateTemplate().find("from StaticData s where s.type=? and s.description=?", param);
         List<StaticData> staticDataList = new ArrayList<StaticData>();
-        System.out.println("static data employment status list size: " + l.size());
+        LOG.debug("static data employment status list size: {}", l.size());
         if (l.size() > 0) {
             for (int i = 0; i < l.size(); i++) {
                 StaticData staticData = (StaticData) l.get(i);
@@ -75,7 +79,7 @@ public class StaticDataDAOImpl extends HibernateDaoSupport implements StaticData
         Object[] param = {"employee type", description};
         List l = getHibernateTemplate().find("from StaticData s where s.type=? and s.description=?", param);
         List<StaticData> staticDataList = new ArrayList<StaticData>();
-        System.out.println("static data employee type list size: " + l.size());
+        LOG.debug("static data employee type list size: {}", l.size());
         if (l.size() > 0) {
             for (int i = 0; i < l.size(); i++) {
                 StaticData staticData = (StaticData) l.get(i);
@@ -88,7 +92,7 @@ public class StaticDataDAOImpl extends HibernateDaoSupport implements StaticData
     public List<StaticData> getVerificationStatusTypes() {
         List l = getHibernateTemplate().find("from StaticData s where s.type=?", "verification status");
         List<StaticData> staticDataList = new ArrayList<StaticData>();
-        System.out.println("static data gender list size: " + l.size());
+        LOG.debug("static data gender list size: {}", l.size());
         if (l.size() > 0) {
             for (int i = 0; i < l.size(); i++) {
                 StaticData staticData = (StaticData) l.get(i);
@@ -101,7 +105,7 @@ public class StaticDataDAOImpl extends HibernateDaoSupport implements StaticData
     public List<StaticData> getGenders() {
         List l = getHibernateTemplate().find("from StaticData s where s.type=?", "gender");
         List<StaticData> staticDataList = new ArrayList<StaticData>();
-        System.out.println("static data gender list size: " + l.size());
+        LOG.debug("static data gender list size: {}", l.size());
         if (l.size() > 0) {
             for (int i = 0; i < l.size(); i++) {
                 StaticData staticData = (StaticData) l.get(i);
@@ -114,7 +118,7 @@ public class StaticDataDAOImpl extends HibernateDaoSupport implements StaticData
     public List<StaticData> getEducationLevels() {
         List l = getHibernateTemplate().find("from StaticData s where s.type=?", "education level");
         List<StaticData> staticDataList = new ArrayList<StaticData>();
-        System.out.println("static data education level list size: " + l.size());
+        LOG.debug("static data education level list size: {}", l.size());
         if (l.size() > 0) {
             for (int i = 0; i < l.size(); i++) {
                 StaticData staticData = (StaticData) l.get(i);
@@ -127,7 +131,7 @@ public class StaticDataDAOImpl extends HibernateDaoSupport implements StaticData
     public List<StaticData> getEducationTypes() {
         List l = getHibernateTemplate().find("from StaticData s where s.type=?", "education type");
         List<StaticData> staticDataList = new ArrayList<StaticData>();
-        System.out.println("static data education type list size: " + l.size());
+        LOG.debug("static data education type list size: {}", l.size());
         if (l.size() > 0) {
             for (int i = 0; i < l.size(); i++) {
                 StaticData staticData = (StaticData) l.get(i);
@@ -140,7 +144,7 @@ public class StaticDataDAOImpl extends HibernateDaoSupport implements StaticData
     public List<StaticData> getIdentityDocumentTypes() {
         List l = getHibernateTemplate().find("from StaticData s where s.type=?", "identity document type");
         List<StaticData> staticDataList = new ArrayList<StaticData>();
-        System.out.println("static data identity document type list size: " + l.size());
+        LOG.debug("static data identity document type list size: {}", l.size());
         if (l.size() > 0) {
             for (int i = 0; i < l.size(); i++) {
                 StaticData staticData = (StaticData) l.get(i);
@@ -153,7 +157,7 @@ public class StaticDataDAOImpl extends HibernateDaoSupport implements StaticData
     public List<StaticData> getTitles() {
         List l = getHibernateTemplate().find("from StaticData s where s.type=?", "title");
         List<StaticData> staticDataList = new ArrayList<StaticData>();
-        System.out.println("static data title list size: " + l.size());
+        LOG.debug("static data title list size: {}", l.size());
         if (l.size() > 0) {
             for (int i = 0; i < l.size(); i++) {
                 StaticData staticData = (StaticData) l.get(i);

@@ -7,6 +7,8 @@ package org.haftrust.verifier.dao;
 import java.util.ArrayList;
 import java.util.List;
 import org.haftrust.verifier.model.Image;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
@@ -15,11 +17,13 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  */
 public class ImageDAOImpl extends HibernateDaoSupport implements ImageDAO {
 
+    private static final Logger LOG = LoggerFactory.getLogger(ImageDAOImpl.class);
+
     public Image find(int imageId) {
         List l = getHibernateTemplate().find("from Image i where i.id=?", imageId);
         List<Image> imageList = new ArrayList<Image>();
 
-        System.out.println("image list size: " + l.size());
+        LOG.debug("image list size: {}", l.size());
         if (l.size() > 0) {
             for (int i = 0; i < l.size(); i++) {
                 Image image = (Image) l.get(i);
@@ -34,17 +38,17 @@ public class ImageDAOImpl extends HibernateDaoSupport implements ImageDAO {
         try {
             if (image.getId() < 1) {
                 getHibernateTemplate().save(image);
-                System.out.println("------------------------ image saved");
-                System.out.println("------------------------ image save id: " + image.getId());
+                LOG.debug("------------------------ image saved");
+                LOG.debug("------------------------ image save id: {}", image.getId());
             } else {
                 getHibernateTemplate().saveOrUpdate(image);
-                System.out.println("------------------------ image saved or updated");
-                System.out.println("------------------------ image save id: " + image.getId());
+                LOG.debug("------------------------ image saved or updated");
+                LOG.debug("------------------------ image save id: {}", image.getId());
             }
         } catch (NullPointerException exc) {
             getHibernateTemplate().save(image);
-            System.out.println("------------------------ image saved NullPointerException");
-            System.out.println("------------------------ image save id: " + image.getId());
+            LOG.debug("------------------------ image saved NullPointerException");
+            LOG.debug("------------------------ image save id: {}", image.getId());
         }
 
         return image;
