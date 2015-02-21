@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package org.haftrust.verifier.controller;
 
 import org.haftrust.verifier.model.*;
@@ -23,9 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author Miroslav
- */
 public class RegisterController extends AbstractWizardFormController {
 
     private static final Logger LOG = LoggerFactory.getLogger(RegisterController.class);
