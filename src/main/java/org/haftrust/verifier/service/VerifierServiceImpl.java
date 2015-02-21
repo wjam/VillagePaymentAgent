@@ -925,7 +925,7 @@ public class VerifierServiceImpl implements VerifierService {
         return sqlDate;
     }
 
-    public List<Bank> isBankAccountRegistered(String account) {
+    public List<Bank> getBanksWhereAccountIsRegistered(String account) {
         List<Bank> bankList = new ArrayList<Bank>();
         bankList = this.bankDao.getBankByAccountNumber(account);
 
