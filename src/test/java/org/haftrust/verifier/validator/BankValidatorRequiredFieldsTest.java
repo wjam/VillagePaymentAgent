@@ -6,31 +6,15 @@
 package org.haftrust.verifier.validator;
 
 import org.haftrust.verifier.view.RegisterVerifierBean;
-import static org.haftrust.verifier.validator.RegisterVerifierBeanBuilder.getValidBean;
 import org.junit.Test;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.Errors;
 import static org.junit.Assert.*;
-import org.junit.Before;
 import org.springframework.validation.FieldError;
 
 /**
  *
  * @author amarinperez
  */
-public class BankValidatorRequiredFieldsTest {
-
-    private BankValidator validator;
-    private RegisterVerifierBean bean;
-    private Errors errors;
-
-    @Before
-    public void setup() {
-        validator = new BankValidator();
-        bean = getValidBean();
-
-        errors = new BeanPropertyBindingResult(bean, "registerVerifierBean");
-    }
+public class BankValidatorRequiredFieldsTest extends BankValidatorTestBase {
 
     @Test
     public void testBankAccountNumber() {
@@ -55,10 +39,9 @@ public class BankValidatorRequiredFieldsTest {
         bean.setBankAddress(null);
         validateWithMissingField(bean, "bankAddress");
     }
-    
+
     @Test
-    public void testBankIban()
-    {
+    public void testBankIban() {
         bean.setBankIban(null);
         validateWithMissingField(bean, "bankIban");
     }

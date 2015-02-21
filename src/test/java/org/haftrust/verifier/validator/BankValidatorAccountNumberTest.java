@@ -8,32 +8,14 @@ package org.haftrust.verifier.validator;
 import java.util.Arrays;
 import org.haftrust.verifier.model.Bank;
 import org.haftrust.verifier.service.VerifierService;
-import org.haftrust.verifier.view.RegisterVerifierBean;
-import static org.junit.Assert.*;
 import org.junit.Test;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.Errors;
-import static org.hamcrest.Matchers.*;
-import org.junit.Before;
 import static org.mockito.Mockito.*;
-import org.springframework.validation.FieldError;
 
 /**
  *
  * @author amarinperez
  */
-public class BankValidatorAccountNumberTest {
-
-    private RegisterVerifierBean bean;
-    private Errors errors;
-    private BankValidator validator;
-
-    @Before
-    public void setup() {
-        bean = RegisterVerifierBeanBuilder.getValidBean();
-        errors = new BeanPropertyBindingResult(bean, "registerVerifierBean");
-        validator = new BankValidator();
-    }
+public class BankValidatorAccountNumberTest extends BankValidatorTestBase {
 
     @Test
     public void testNonNumericAccountNumber() {
@@ -41,17 +23,17 @@ public class BankValidatorAccountNumberTest {
 
         validator.validate(bean, errors);
 
-        assertErrorWithMessage("numeric format");
+        assertErrorContainingMessage("numeric format");
     }
 
     @Test
-    public void testAccountIsRegistered() {
+    public void testAccountIsAlreadyRegistered() {
         VerifierService service = getVerifierServiceWhichAlwaysFindsABank();
         validator.setVerifierService(service);
 
         validator.validate(bean, errors);
 
-        assertErrorWithMessage("already registered");
+        assertErrorContainingMessage("already registered");
     }
 
     @Test
@@ -59,7 +41,7 @@ public class BankValidatorAccountNumberTest {
         bean.setBankAccountNumber("123456");
         validator.validate(bean, errors);
 
-        assertErrorWithMessage("less than 7 digits");
+        assertErrorContainingMessage("less than 7 digits");
     }
 
     @Test
@@ -67,15 +49,9 @@ public class BankValidatorAccountNumberTest {
         bean.setBankAccountNumber("12345678901");
         validator.validate(bean, errors);
 
-        assertErrorWithMessage("maximum value");
-        assertErrorWithMessage("10 digits");
+        assertErrorContainingMessage("maximum value");
+        assertErrorContainingMessage("10 digits");
 
-    }
-
-    private void assertErrorWithMessage(final String errorMessage) {
-        assertThat(errors.getErrorCount(), greaterThanOrEqualTo(1));
-        FieldError error = errors.getFieldError();
-        assertThat(error.getDefaultMessage(), containsString(errorMessage));
     }
 
     private VerifierService getVerifierServiceWhichAlwaysFindsABank() {
