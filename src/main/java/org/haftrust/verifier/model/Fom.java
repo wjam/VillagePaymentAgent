@@ -16,12 +16,12 @@ public class Fom implements java.io.Serializable {
     private String email;
     private String password;
 
-    public String getEmail() {
-        return email;
+    public int getId() {
+        return id;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -32,20 +32,20 @@ public class Fom implements java.io.Serializable {
         this.firstName = firstName;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getLastName() {
         return lastName;
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -56,4 +56,9 @@ public class Fom implements java.io.Serializable {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "Fom{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", password=" + password + '}';
+    }
+    
 }

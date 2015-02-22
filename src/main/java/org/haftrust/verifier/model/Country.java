@@ -14,6 +14,14 @@ public class Country implements java.io.Serializable {
     private String title;
     private String description;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -30,11 +38,8 @@ public class Country implements java.io.Serializable {
         this.description = description;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    @Override
+    public String toString() {
+        return "Country{" + "id=" + id + ", title=" + title + ", description=" + description + '}';
     }
 }

@@ -23,60 +23,12 @@ public class IdentityDocument implements java.io.Serializable {
     private String employeeType;
     private Verifier verifier;
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Date getVerificationDate() {
-        return verificationDate;
-    }
-
-    public void setVerificationDate(Date verificationDate) {
-        this.verificationDate = verificationDate;
-    }
-
-    public Verifier getVerifier() {
-        return verifier;
-    }
-
-    public void setVerifier(Verifier verifier) {
-        this.verifier = verifier;
-    }
-
-    public String getEmployeeType() {
-        return employeeType;
-    }
-
-    public void setEmployeeType(String employeeType) {
-        this.employeeType = employeeType;
-    }
-
-    public Date getExpiryDate() {
-        return expiryDate;
-    }
-
-    public void setExpiryDate(Date expiryDate) {
-        this.expiryDate = expiryDate;
-    }
-
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Date getIssueDate() {
-        return issueDate;
-    }
-
-    public void setIssueDate(Date issueDate) {
-        this.issueDate = issueDate;
     }
 
     public String getNumber() {
@@ -87,12 +39,28 @@ public class IdentityDocument implements java.io.Serializable {
         this.number = number;
     }
 
-    public String getVerificationComment() {
-        return verificationComment;
+    public String getType() {
+        return type;
     }
 
-    public void setVerificationComment(String verificationComment) {
-        this.verificationComment = verificationComment;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Date getIssueDate() {
+        return issueDate;
+    }
+
+    public void setIssueDate(Date issueDate) {
+        this.issueDate = issueDate;
+    }
+
+    public Date getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(Date expiryDate) {
+        this.expiryDate = expiryDate;
     }
 
     public String getVerificationStatus() {
@@ -102,4 +70,41 @@ public class IdentityDocument implements java.io.Serializable {
     public void setVerificationStatus(String verificationStatus) {
         this.verificationStatus = verificationStatus;
     }
+
+    public Date getVerificationDate() {
+        return verificationDate;
+    }
+
+    public void setVerificationDate(Date verificationDate) {
+        this.verificationDate = verificationDate;
+    }
+
+    public String getVerificationComment() {
+        return verificationComment;
+    }
+
+    public void setVerificationComment(String verificationComment) {
+        this.verificationComment = verificationComment;
+    }
+
+    public String getEmployeeType() {
+        return employeeType;
+    }
+
+    public void setEmployeeType(String employeeType) {
+        this.employeeType = employeeType;
+    }
+
+    public Verifier getVerifier() {
+        return verifier;
+    }
+
+    public void setVerifier(Verifier verifier) {
+        this.verifier = verifier;
+    }
+
+    @Override
+    public String toString() {
+        return "IdentityDocument{" + "id=" + id + ", number=" + number + ", type=" + type + ", issueDate=" + issueDate + ", expiryDate=" + expiryDate + ", verificationStatus=" + verificationStatus + ", verificationDate=" + verificationDate + ", verificationComment=" + verificationComment + ", employeeType=" + employeeType + ", verifier=" + verifier + '}';
+    }    
 }

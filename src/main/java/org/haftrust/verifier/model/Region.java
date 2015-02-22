@@ -15,22 +15,6 @@ public class Region implements java.io.Serializable {
     private String description;
     private Country country;
 
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public int getId() {
         return id;
     }
@@ -47,4 +31,25 @@ public class Region implements java.io.Serializable {
         this.title = title;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    @Override
+    public String toString() {
+        return "Region{" + "id=" + id + ", title=" + title + ", description=" + description + ", country=" + country + '}';
+    }
+    
 }

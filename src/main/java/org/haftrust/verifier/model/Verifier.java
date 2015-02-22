@@ -33,52 +33,12 @@ public class Verifier implements java.io.Serializable {
     private Device mobileDevice;
     private Image image;
 
-    public Image getImage() {
-        return image;
+    public int getId() {
+        return id;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
-    }
-
-    public Date getVerificationDate() {
-        return verificationDate;
-    }
-
-    public void setVerificationDate(Date verificationDate) {
-        this.verificationDate = verificationDate;
-    }
-
-    public Date getDob() {
-        return dob;
-    }
-
-    public void setDob(Date dob) {
-        this.dob = dob;
-    }
-
-    public String getEducationLevel() {
-        return educationLevel;
-    }
-
-    public void setEducationLevel(String educationLevel) {
-        this.educationLevel = educationLevel;
-    }
-
-    public String getEducationType() {
-        return educationType;
-    }
-
-    public void setEducationType(String educationType) {
-        this.educationType = educationType;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -89,20 +49,12 @@ public class Verifier implements java.io.Serializable {
         this.firstName = firstName;
     }
 
-    public String getGender() {
-        return gender;
+    public String getMiddleName() {
+        return middleName;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 
     public String getLastName() {
@@ -113,20 +65,36 @@ public class Verifier implements java.io.Serializable {
         this.lastName = lastName;
     }
 
-    public String getMiddleName() {
-        return middleName;
+    public String getGender() {
+        return gender;
     }
 
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
-    public Device getMobileDevice() {
-        return mobileDevice;
+    public Date getDob() {
+        return dob;
     }
 
-    public void setMobileDevice(Device mobileDevice) {
-        this.mobileDevice = mobileDevice;
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelephoneNumber() {
+        return telephoneNumber;
+    }
+
+    public void setTelephoneNumber(String telephoneNumber) {
+        this.telephoneNumber = telephoneNumber;
     }
 
     public String getPassword() {
@@ -137,12 +105,20 @@ public class Verifier implements java.io.Serializable {
         this.password = password;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public String getEducationType() {
+        return educationType;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setEducationType(String educationType) {
+        this.educationType = educationType;
+    }
+
+    public String getEducationLevel() {
+        return educationLevel;
+    }
+
+    public void setEducationLevel(String educationLevel) {
+        this.educationLevel = educationLevel;
     }
 
     public String getStatus() {
@@ -161,12 +137,12 @@ public class Verifier implements java.io.Serializable {
         this.statusDate = statusDate;
     }
 
-    public String getTelephoneNumber() {
-        return telephoneNumber;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setTelephoneNumber(String telephoneNumber) {
-        this.telephoneNumber = telephoneNumber;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
     public int getVacancyId() {
@@ -177,6 +153,22 @@ public class Verifier implements java.io.Serializable {
         this.vacancyId = vacancyId;
     }
 
+    public String getVerificationStatus() {
+        return verificationStatus;
+    }
+
+    public void setVerificationStatus(String verificationStatus) {
+        this.verificationStatus = verificationStatus;
+    }
+
+    public Date getVerificationDate() {
+        return verificationDate;
+    }
+
+    public void setVerificationDate(Date verificationDate) {
+        this.verificationDate = verificationDate;
+    }
+
     public String getVerificationComment() {
         return verificationComment;
     }
@@ -185,11 +177,26 @@ public class Verifier implements java.io.Serializable {
         this.verificationComment = verificationComment;
     }
 
-    public String getVerificationStatus() {
-        return verificationStatus;
+    public Device getMobileDevice() {
+        return mobileDevice;
     }
 
-    public void setVerificationStatus(String verificationStatus) {
-        this.verificationStatus = verificationStatus;
+    public void setMobileDevice(Device mobileDevice) {
+        this.mobileDevice = mobileDevice;
     }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return "Verifier{" + "id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName + ", gender=" + gender + ", dob=" + dob + ", email=" + email + ", telephoneNumber=" + telephoneNumber + ", password=" + password + ", educationType=" + educationType + ", educationLevel=" + educationLevel + ", status=" + status + ", statusDate=" + statusDate + ", startDate=" + startDate + ", vacancyId=" + vacancyId + ", verificationStatus=" + verificationStatus + ", verificationDate=" + verificationDate + ", verificationComment=" + verificationComment + ", mobileDevice=" + mobileDevice + ", image=" + image + '}';
+    }
+
+    
 }

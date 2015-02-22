@@ -15,20 +15,28 @@ public class District implements java.io.Serializable {
     private String description;
     private Region region;
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Region getRegion() {
@@ -39,11 +47,9 @@ public class District implements java.io.Serializable {
         this.region = region;
     }
 
-    public String getTitle() {
-        return title;
+    @Override
+    public String toString() {
+        return "District{" + "id=" + id + ", title=" + title + ", description=" + description + ", region=" + region + '}';
     }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    
 }
