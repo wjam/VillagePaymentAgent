@@ -26,12 +26,20 @@ public class Reference implements java.io.Serializable {
     private String employeeType;
     private Verifier verifier;
 
-    public String getAddress() {
-        return address;
+    public int getId() {
+        return id;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getOrganisationName() {
+        return organisationName;
+    }
+
+    public void setOrganisationName(String organisationName) {
+        this.organisationName = organisationName;
     }
 
     public String getContactNumber() {
@@ -40,6 +48,30 @@ public class Reference implements java.io.Serializable {
 
     public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getDesignation() {
@@ -58,52 +90,12 @@ public class Reference implements java.io.Serializable {
         this.email = email;
     }
 
-    public String getEmployeeType() {
-        return employeeType;
+    public String getVerificationStatus() {
+        return verificationStatus;
     }
 
-    public void setEmployeeType(String employeeType) {
-        this.employeeType = employeeType;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getOrganisationName() {
-        return organisationName;
-    }
-
-    public void setOrganisationName(String organisationName) {
-        this.organisationName = organisationName;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getVerificationComment() {
-        return verificationComment;
-    }
-
-    public void setVerificationComment(String verificationComment) {
-        this.verificationComment = verificationComment;
+    public void setVerificationStatus(String verificationStatus) {
+        this.verificationStatus = verificationStatus;
     }
 
     public Date getVerificationDate() {
@@ -114,12 +106,20 @@ public class Reference implements java.io.Serializable {
         this.verificationDate = verificationDate;
     }
 
-    public String getVerificationStatus() {
-        return verificationStatus;
+    public String getVerificationComment() {
+        return verificationComment;
     }
 
-    public void setVerificationStatus(String verificationStatus) {
-        this.verificationStatus = verificationStatus;
+    public void setVerificationComment(String verificationComment) {
+        this.verificationComment = verificationComment;
+    }
+
+    public String getEmployeeType() {
+        return employeeType;
+    }
+
+    public void setEmployeeType(String employeeType) {
+        this.employeeType = employeeType;
     }
 
     public Verifier getVerifier() {
@@ -129,4 +129,10 @@ public class Reference implements java.io.Serializable {
     public void setVerifier(Verifier verifier) {
         this.verifier = verifier;
     }
+
+    @Override
+    public String toString() {
+        return "Reference{" + "id=" + id + ", organisationName=" + organisationName + ", contactNumber=" + contactNumber + ", address=" + address + ", title=" + title + ", fullName=" + fullName + ", designation=" + designation + ", email=" + email + ", verificationStatus=" + verificationStatus + ", verificationDate=" + verificationDate + ", verificationComment=" + verificationComment + ", employeeType=" + employeeType + ", verifier=" + verifier + '}';
+    }
+    
 }

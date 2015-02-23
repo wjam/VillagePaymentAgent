@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.haftrust.verifier.model.District;
 import org.haftrust.verifier.model.Region;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
@@ -16,10 +18,12 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  */
 public class DistrictDAOImpl extends HibernateDaoSupport implements DistrictDAO {
 
+    private static final Logger LOG = LoggerFactory.getLogger(DistrictDAOImpl.class);
+
     public List<District> getDistricts(Region r) {
         List l = getHibernateTemplate().find("from District d where d.region=?", r);
         List<District> districtList = new ArrayList<District>();
-        System.out.println("district list size: " + l.size());
+        LOG.debug("district list size: {}", l.size());
         if (l.size() > 0) {
             for (int i = 0; i < l.size(); i++) {
                 District district = (District) l.get(i);
@@ -32,7 +36,7 @@ public class DistrictDAOImpl extends HibernateDaoSupport implements DistrictDAO 
     public District getDistricts(District d) {
         List l = getHibernateTemplate().find("from District d where d.id=?", d);
         List<District> districtList = new ArrayList<District>();
-        System.out.println("district list size: " + l.size());
+        LOG.debug("district list size: {}", l.size());
         if (l.size() > 0) {
             for (int i = 0; i < l.size(); i++) {
                 District district = (District) l.get(i);

@@ -6,6 +6,8 @@ package org.haftrust.verifier.validator;
 
 import java.util.GregorianCalendar;
 import org.haftrust.verifier.view.RegisterVerifierBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -16,21 +18,13 @@ import org.springframework.validation.Validator;
  */
 public class IdentityDocumentValidator implements Validator {
 
-    /**
-     *
-     * @param clazz
-     * @return
-     */
+    private static final Logger LOG = LoggerFactory.getLogger(IdentityDocumentValidator.class);
+
     @Override
     public boolean supports(Class clazz) {
         return clazz.equals(RegisterVerifierBean.class);
     }
 
-    /**
-     *
-     * @param command
-     * @param errors
-     */
     @Override
     public void validate(Object command, Errors errors) {
         RegisterVerifierBean rvBean = (RegisterVerifierBean) command;
@@ -44,7 +38,7 @@ public class IdentityDocumentValidator implements Validator {
                 errors.rejectValue("identityDocumentNumber", "required.identityDocumentNumber", "Number is required to be maximum 25 characters long.");
             }
         } catch (Exception e) {
-            System.out.println("------------- identity document validator, number length");
+            LOG.error("------------- identity document validator, number length", e);
         }
 
         boolean issueDateOK = true;

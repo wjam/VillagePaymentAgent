@@ -1,38 +1,28 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package org.haftrust.verifier.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.haftrust.verifier.model.Address;
-import org.haftrust.verifier.model.Bank;
-import org.haftrust.verifier.model.IdentityDocument;
-import org.haftrust.verifier.model.Reference;
-import org.haftrust.verifier.model.Verifier;
+import org.haftrust.verifier.model.*;
 import org.haftrust.verifier.service.VerifierService;
 import org.haftrust.verifier.view.RegisterVerifierBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractWizardFormController;
 
-/**
- *
- * @author Miroslav
- */
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
+
 public class RegisterController extends AbstractWizardFormController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(RegisterController.class);
 
     private VerifierService verifierService;
     private String successView;
@@ -72,18 +62,17 @@ public class RegisterController extends AbstractWizardFormController {
     }
 
     protected Map referenceData(HttpServletRequest request, Object command, Errors errors, int page) throws Exception {
-        Map<Object, Object> dataMap = new HashMap<Object, Object>();
-        RegisterVerifierBean rvBean = (RegisterVerifierBean) command;
+        final Map<Object, Object> dataMap = new HashMap<>();
+        final RegisterVerifierBean rvBean = (RegisterVerifierBean) command;
 
         if (page == 1) {
             dataMap.put("countryList", this.verifierService.getCountryList());
-            System.out.println("------------------------ controller register verifier reference data country list");
+            LOG.debug("------------------------ controller register verifier reference data country list");
 
-            Verifier verifier = new Verifier();
-            verifier = this.verifierService.logInVerifier(rvBean.getEmail(), rvBean.getPassword());
+            Verifier verifier = this.verifierService.logInVerifier(rvBean.getEmail(), rvBean.getPassword());
             rvBean.setVerifier(verifier);
             rvBean.setFirstName(verifier.getFirstName());
-            System.out.println("----------------------- rvBean frst name: " + rvBean.getFirstName());
+            LOG.debug("----------------------- rvBean frst name: {}", rvBean.getFirstName());
             rvBean.setMiddleName(verifier.getMiddleName());
             rvBean.setLastName(verifier.getLastName());
             rvBean.setGender(verifier.getGender());
@@ -102,7 +91,7 @@ public class RegisterController extends AbstractWizardFormController {
                 rvBean.setDob(date);
             }
             rvBean.setEmail(verifier.getEmail());
-            System.out.println("--------------------register verifier controller post process page verifier email: " + rvBean.getEmail());
+            LOG.debug("--------------------register verifier controller post process page verifier email: {}", rvBean.getEmail());
             rvBean.setTelephoneNumber(verifier.getTelephoneNumber());
             rvBean.setEducationType(verifier.getEducationType());
             rvBean.setEducationLevel(verifier.getEducationLevel());
@@ -110,12 +99,12 @@ public class RegisterController extends AbstractWizardFormController {
             if (verifier.getImage() != null) {
                 rvBean.setImage(verifier.getImage());
             }
-            System.out.println("---------------- login verifier id: " + rvBean.getVerifier().getId());
+            LOG.debug("---------------- login verifier id: {}" + rvBean.getVerifier().getId());
 
             Address address = new Address();
             address = this.verifierService.getAddress();
             rvBean.setStreet(address.getStreet());
-            System.out.println("----------------------- rvBean street: " + rvBean.getStreet());
+            LOG.debug("----------------------- rvBean street: {}", rvBean.getStreet());
             rvBean.setVillage(address.getVillage());
             rvBean.setPostcode(address.getPostcode());
             rvBean.setTown(address.getTown());
@@ -137,7 +126,7 @@ public class RegisterController extends AbstractWizardFormController {
             bank = this.verifierService.getBank();
             rvBean.setBankAccountNumber(bank.getAccountNumber());
             rvBean.setBankName(bank.getBankName());
-            System.out.println("----------------------- rvBean bank name: " + rvBean.getBankName());
+            LOG.debug("----------------------- rvBean bank name: {}", rvBean.getBankName());
             rvBean.setBankContactNumber(bank.getContactNumber());
             rvBean.setBankAddress(bank.getAddress());
             rvBean.setBankSortCode(bank.getSortcode());
@@ -147,7 +136,7 @@ public class RegisterController extends AbstractWizardFormController {
             reference1 = this.verifierService.getReference1();
             rvBean.setReference1Title(reference1.getTitle());
             rvBean.setReference1FullName(reference1.getFullName());
-            System.out.println("----------------------- rvBean reference 1 full name: " + rvBean.getReference1FullName());
+            LOG.debug("----------------------- rvBean reference 1 full name: {}", rvBean.getReference1FullName());
             rvBean.setReference1OrganisationName(reference1.getOrganisationName());
             rvBean.setReference1Designation(reference1.getDesignation());
             rvBean.setReference1ContactNumber(reference1.getContactNumber());
@@ -158,7 +147,7 @@ public class RegisterController extends AbstractWizardFormController {
             reference2 = this.verifierService.getReference2();
             rvBean.setReference2Title(reference2.getTitle());
             rvBean.setReference2FullName(reference2.getFullName());
-            System.out.println("----------------------- rvBean reference 2 full name: " + rvBean.getReference2FullName());
+            LOG.debug("----------------------- rvBean reference 2 full name: {}", rvBean.getReference2FullName());
             rvBean.setReference2OrganisationName(reference2.getOrganisationName());
             rvBean.setReference2Designation(reference2.getDesignation());
             rvBean.setReference2ContactNumber(reference2.getContactNumber());
@@ -203,12 +192,12 @@ public class RegisterController extends AbstractWizardFormController {
 
         if (page == 2) {
             dataMap.put("regionList", this.verifierService.getRegionList());
-            System.out.println("------------------------ controller register verifier reference data region list");
+            LOG.debug("------------------------ controller register verifier reference data region list");
         }
 
         if (page == 3) {
             dataMap.put("districtList", this.verifierService.getDistrictList());
-            System.out.println("------------------------ controller register verifier reference data district list");
+            LOG.debug("------------------------ controller register verifier reference data district list");
         }
 
         if (page == 4) {
@@ -248,34 +237,34 @@ public class RegisterController extends AbstractWizardFormController {
     protected void validatePage(Object command, Errors errors, int page) {
         RegisterVerifierBean rvBean = (RegisterVerifierBean) command;
 
-        System.out.println("----------------------- validate page method");
+        LOG.debug("----------------------- validate page method");
         if (page == 0) {
-            System.out.println("----------------------- validate page login country" + getValidators()[0].getClass());
+            LOG.debug("----------------------- validate page login country{}", getValidators()[0].getClass());
             getValidators()[0].validate(command, errors);
         }
 
         if (page == 1) {
-            System.out.println("----------------------- validate page select country");
+            LOG.debug("----------------------- validate page select country");
             getValidators()[1].validate(command, errors);
         }
 
         if (page == 4) {
-            System.out.println("----------------------- validate page create verifier");
+            LOG.debug("----------------------- validate page create verifier");
             getValidators()[4].validate(command, errors);
         }
 
         if (page == 5) {
-            System.out.println("----------------------- validate page create identity document");
+            LOG.debug("----------------------- validate page create identity document");
             getValidators()[5].validate(command, errors);
         }
 
         if (page == 6) {
-            System.out.println("----------------------- validate page create bank");
+            LOG.debug("----------------------- validate page create bank");
             getValidators()[2].validate(command, errors);
         }
 
         if (page == 7) {
-            System.out.println("----------------------- validate page create reference");
+            LOG.debug("----------------------- validate page create reference");
             getValidators()[3].validate(command, errors);
 
         }
@@ -322,9 +311,9 @@ public class RegisterController extends AbstractWizardFormController {
 
             MultipartFile file = rvBean.getFile();
             if (file == null) {
-                System.out.println("--------------------------- register verifier controller file is empty");
+                LOG.debug("--------------------------- register verifier controller file is empty");
             } else {
-                System.out.println("--------------------------- register verifier controller file: " + file);
+                LOG.debug("--------------------------- register verifier controller file: {}", file);
             }
             this.verifierService.setImageDetails(rvBean.getFile());
             rvBean.setImage(this.verifierService.getImage());
@@ -613,7 +602,7 @@ public class RegisterController extends AbstractWizardFormController {
             rvBean.setTarget("_target7");
         }
 
-        System.out.println("---------------------------- page number " + page);
+        LOG.debug("---------------------------- page number {}", page);
     }
 
     protected ModelAndView processCancel(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {

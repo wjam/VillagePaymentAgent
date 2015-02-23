@@ -1,47 +1,20 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.haftrust.verifier.service;
+
+import org.haftrust.verifier.dao.*;
+import org.haftrust.verifier.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import org.haftrust.verifier.dao.AddressDAO;
-import org.haftrust.verifier.dao.BankDAO;
-import org.haftrust.verifier.dao.CountryDAO;
-import org.haftrust.verifier.dao.DeviceDAO;
-import org.haftrust.verifier.dao.DistrictDAO;
-import org.haftrust.verifier.dao.FomDAO;
-import org.haftrust.verifier.dao.IdentityDocumentDAO;
-import org.haftrust.verifier.dao.ImageDAO;
-import org.haftrust.verifier.dao.InterviewDAO;
-import org.haftrust.verifier.dao.ReferenceDAO;
-import org.haftrust.verifier.dao.RegionDAO;
-import org.haftrust.verifier.dao.StaticDataDAO;
-import org.haftrust.verifier.dao.VerifierDAO;
-import org.haftrust.verifier.model.Address;
-import org.haftrust.verifier.model.Bank;
-import org.haftrust.verifier.model.Country;
-import org.haftrust.verifier.model.Device;
-import org.haftrust.verifier.model.District;
-import org.haftrust.verifier.model.Fom;
-import org.haftrust.verifier.model.IdentityDocument;
-import org.haftrust.verifier.model.Image;
-import org.haftrust.verifier.model.Interview;
-import org.haftrust.verifier.model.Reference;
-import org.haftrust.verifier.model.Region;
-import org.haftrust.verifier.model.StaticData;
-import org.haftrust.verifier.model.Verifier;
-import org.springframework.web.multipart.MultipartFile;
 
-/**
- *
- * @author Miroslav
- */
 public class VerifierServiceImpl implements VerifierService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(VerifierServiceImpl.class);
 
     private VerifierDAO verifierDao;
     private CountryDAO countryDao;
@@ -365,12 +338,12 @@ public class VerifierServiceImpl implements VerifierService {
             if (aList.get(i).getVerifier().getStatus().equals(this.sdStatus.getValue())) {
                 if (aList.get(i).getVerifier().getMobileDevice() == null) {
                     this.employedVerifiersList.add(aList.get(i).getVerifier());
-                    System.out.println("------------------- adsress list, employed verifier id: " + aList.get(i).getVerifier().getId());
+                    LOG.debug("------------------- adsress list, employed verifier id: {}", aList.get(i).getVerifier().getId());
                 }
             }
         }
 
-        System.out.println("------------------- employed verifier list size: " + this.employedVerifiersList.size());
+        LOG.debug("------------------- employed verifier list size: {}", this.employedVerifiersList.size());
 
         this.employedVerifierAddressList = aList;
 
@@ -388,11 +361,11 @@ public class VerifierServiceImpl implements VerifierService {
         for (int i = 0; i < aList.size(); i++) {
             if (aList.get(i).getVerifier().getStatus().equals(this.sdStatus.getValue())) {
                 this.registeredVerifiersList.add(aList.get(i).getVerifier());
-                System.out.println("------------------- adsress list, registered verifier id: " + aList.get(i).getVerifier().getId());
+                LOG.debug("------------------- adsress list, registered verifier id: {}", aList.get(i).getVerifier().getId());
             }
         }
 
-        System.out.println("------------------- registered verifier list size: " + this.registeredVerifiersList.size());
+        LOG.debug("------------------- registered verifier list size: {}", this.registeredVerifiersList.size());
 
         this.registeredVerifierAddressList = aList;
 
@@ -428,7 +401,7 @@ public class VerifierServiceImpl implements VerifierService {
             this.verifier = verifierList.get(0);
             this.sdVerifierType = this.staticDataDao.getEmployeeType("Verifier");
 
-            System.out.println("------------- LogInVerifier in verifierService verifier id: " + verifier.getId());
+            LOG.debug("------------- LogInVerifier in verifierService verifier id: {}", verifier.getId());
 
             if (this.verifier.getImage() != null) {
                 this.image = this.verifier.getImage();
@@ -454,12 +427,12 @@ public class VerifierServiceImpl implements VerifierService {
                 this.bank = new Bank();
             }
 
-            System.out.println("------------- LogInVerifier in verifierService before reference verifier id: " + verifier.getId());
-            System.out.println("------------- LogInVerifier in verifierService before reference verifier employee type: " + this.sdVerifierType.getValue());
+            LOG.debug("------------- LogInVerifier in verifierService before reference verifier id: {}", verifier.getId());
+            LOG.debug("------------- LogInVerifier in verifierService before reference verifier employee type: {}", this.sdVerifierType.getValue());
             List<Reference> referenceList = new ArrayList<Reference>();
             referenceList = this.referenceDao.getReferences(this.verifier, this.sdVerifierType.getValue());
 
-            System.out.println("------------- LogInVerifier in verifierService before referenceList size: " + referenceList.size());
+            LOG.debug("------------- LogInVerifier in verifierService before referenceList size: {}", referenceList.size());
             if (!referenceList.isEmpty()) {
                 if (referenceList.size() == 2) {
                     this.reference1 = referenceList.get(0);
@@ -471,7 +444,7 @@ public class VerifierServiceImpl implements VerifierService {
                 }
             }
 
-            System.out.println("------------------ end of LoginVerifier in verifierService");
+            LOG.debug("------------------ end of LoginVerifier in verifierService");
 
             return this.verifier;
         }
@@ -491,7 +464,7 @@ public class VerifierServiceImpl implements VerifierService {
         Date today = cal.getTime();
         SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd");
         java.sql.Date sqlDate = java.sql.Date.valueOf(dateFmt.format(today));
-        System.out.println("------------------------sql date = " + sqlDate);
+        LOG.debug("------------------------sql date = {}", sqlDate);
 
         ver.setStatusDate(sqlDate);
 
@@ -579,12 +552,12 @@ public class VerifierServiceImpl implements VerifierService {
         Date today = cal.getTime();
         SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd");
         java.sql.Date sqlDate = java.sql.Date.valueOf(dateFmt.format(today));
-        System.out.println("------------------------sql date = " + sqlDate);
+        LOG.debug("------------------------sql date = {}", sqlDate);
         return sqlDate;
     }
 
     public void saveImage() {
-        System.out.println("------------------------save image = " + this.image);
+        LOG.debug("------------------------save image = {}", this.image);
 
         this.image.setVerificationDate(this.todaysDate());
         this.image.setEmployeeType(this.sdVerifierType.getValue());
@@ -608,7 +581,7 @@ public class VerifierServiceImpl implements VerifierService {
         this.address.setEmployeeType(this.sdVerifierType.getValue());
         this.address.setVerifier(this.verifier);
 
-        System.out.println("----------- save address, address country id: " + address.getCountry().getId());
+        LOG.debug("----------- save address, address country id: {}", address.getCountry().getId());
         this.address = this.addressDao.saveAddress(this.address);
     }
 
@@ -797,10 +770,10 @@ public class VerifierServiceImpl implements VerifierService {
         Date today = cal.getTime();
         SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd");
         java.sql.Date sqlDate = java.sql.Date.valueOf(dateFmt.format(today));
-        System.out.println("------------------------sql date = " + sqlDate);
+        LOG.debug("------------------------sql date = {}", sqlDate);
 
         this.image.setDate(sqlDate);
-        System.out.println("------------------------verifier service set image details mFile: = " + mFile);
+        LOG.debug("------------------------verifier service set image details mFile: = {}", mFile);
 
         byte[] bFile = new byte[(int) mFile.getSize()];
 
@@ -811,7 +784,7 @@ public class VerifierServiceImpl implements VerifierService {
         }
 
         for (int i = 0; i < bFile.length; i++) {
-            System.out.println("------------------------------- bFile: " + bFile[i]);
+            LOG.debug("------------------------------- bFile: {}", bFile[i]);
         }
 
         this.image.setPhoto(bFile);
@@ -854,13 +827,13 @@ public class VerifierServiceImpl implements VerifierService {
     }
 
     public List<Region> getRegionList(/*Country c*/) {
-        System.out.println("---------------- verifier country: " + this.verifierCountry.getDescription());
+        LOG.debug("---------------- verifier country: {}", this.verifierCountry.getDescription());
         this.regionList = this.regionDao.getRegions(this.verifierCountry);
         return regionList;
     }
 
     public List<District> getDistrictList() {
-        System.out.println("---------------- verifier region: " + this.verifierRegion.getDescription());
+        LOG.debug("---------------- verifier region: {}", this.verifierRegion.getDescription());
         this.districtList = this.districtDao.getDistricts(this.verifierRegion);
         return districtList;
     }
@@ -886,7 +859,7 @@ public class VerifierServiceImpl implements VerifierService {
     }
 
     public Region setVerifierRegion(int idRegion) {
-        System.out.println("---------------- verifier region id: " + idRegion);
+        LOG.debug("---------------- verifier region id: {}", idRegion);
         for (int i = 0; i < this.regionList.size(); i++) {
             if (idRegion == this.regionList.get(i).getId()) {
                 this.verifierRegion = this.regionList.get(i);
@@ -897,7 +870,7 @@ public class VerifierServiceImpl implements VerifierService {
     }
 
     public District setVerifierDistrict(int idDistrict) {
-        System.out.println("---------------- verifier district id: " + idDistrict);
+        LOG.debug("---------------- verifier district id: {}", idDistrict);
         for (int i = 0; i < this.districtList.size(); i++) {
             if (idDistrict == this.districtList.get(i).getId()) {
                 this.verifierDistrict = this.districtList.get(i);
@@ -916,12 +889,12 @@ public class VerifierServiceImpl implements VerifierService {
         Date today = cal.getTime();
         SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd");
         java.sql.Date sqlDate = java.sql.Date.valueOf(dateFmt.format(today));
-        System.out.println("------------------------sql date = " + sqlDate);
+        LOG.debug("------------------------sql date = {}", sqlDate);
 
         return sqlDate;
     }
 
-    public List<Bank> isBankAccountRegistered(String account) {
+    public List<Bank> getBanksWhereAccountIsRegistered(String account) {
         List<Bank> bankList = new ArrayList<Bank>();
         bankList = this.bankDao.getBankByAccountNumber(account);
 

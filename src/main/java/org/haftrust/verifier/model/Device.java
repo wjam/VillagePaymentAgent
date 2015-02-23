@@ -19,6 +19,38 @@ public class Device implements java.io.Serializable {
     private String allocation;
     private Date allocationDate;
 
+    public long getImei() {
+        return imei;
+    }
+
+    public void setImei(long imei) {
+        this.imei = imei;
+    }
+
+    public String getProductNumber() {
+        return productNumber;
+    }
+
+    public void setProductNumber(String productNumber) {
+        this.productNumber = productNumber;
+    }
+
+    public String getModelNumber() {
+        return modelNumber;
+    }
+
+    public void setModelNumber(String modelNumber) {
+        this.modelNumber = modelNumber;
+    }
+
+    public String getHtMobileNumber() {
+        return htMobileNumber;
+    }
+
+    public void setHtMobileNumber(String htMobileNumber) {
+        this.htMobileNumber = htMobileNumber;
+    }
+
     public String getAllocation() {
         return allocation;
     }
@@ -35,36 +67,9 @@ public class Device implements java.io.Serializable {
         this.allocationDate = allocationDate;
     }
 
-    public String getHtMobileNumber() {
-        return htMobileNumber;
-    }
-
-    public void setHtMobileNumber(String htMobileNumber) {
-        this.htMobileNumber = htMobileNumber;
-    }
-
-    public long getImei() {
-        return imei;
-    }
-
-    public void setImei(long imei) {
-        this.imei = imei;
-    }
-
-    public String getModelNumber() {
-        return modelNumber;
-    }
-
-    public void setModelNumber(String modelNumber) {
-        this.modelNumber = modelNumber;
-    }
-
-    public String getProductNumber() {
-        return productNumber;
-    }
-
-    public void setProductNumber(String productNumber) {
-        this.productNumber = productNumber;
+    @Override
+    public String toString() {
+        return "Device{" + "imei=" + imei + ", productNumber=" + productNumber + ", modelNumber=" + modelNumber + ", htMobileNumber=" + htMobileNumber + ", allocation=" + allocation + ", allocationDate=" + allocationDate + '}';
     }
 
 }

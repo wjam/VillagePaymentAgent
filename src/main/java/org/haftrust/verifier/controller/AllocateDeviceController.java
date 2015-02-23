@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.haftrust.verifier.model.Verifier;
 import org.haftrust.verifier.service.VerifierService;
 import org.haftrust.verifier.view.AllocateDeviceBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,6 +25,8 @@ import org.springframework.web.servlet.mvc.AbstractWizardFormController;
  * @author Miroslav
  */
 public class AllocateDeviceController extends AbstractWizardFormController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(AllocateDeviceController.class);
 
     private VerifierService verifierService;
     private String cancelView;
@@ -57,12 +61,12 @@ public class AllocateDeviceController extends AbstractWizardFormController {
 
         if (page == 0) {
             dataMap.put("countryList", this.verifierService.getCountryList());
-            System.out.println("------------------------ controller allocate device reference data country list");
+            LOG.debug("------------------------ controller allocate device reference data country list");
         }
 
         if (page == 1) {
             dataMap.put("regionList", this.verifierService.getRegionList());
-            System.out.println("------------------------ controller allocate device reference data region list");
+            LOG.debug("------------------------ controller allocate device reference data region list");
         }
 
         if (page == 3) {
@@ -84,12 +88,12 @@ public class AllocateDeviceController extends AbstractWizardFormController {
         }
 
         if (page == 1 && request.getParameter("_target2") != null) {
-            System.out.println("------------------------- post process page search verifier");
+            LOG.debug("------------------------- post process page search verifier");
             adBean.setRegion(this.verifierService.setVerifierRegion(adBean.getIdRegion()));
 
             List<Verifier> v = new ArrayList<Verifier>();
             v = this.verifierService.getEmployedVerifiersWithoutDevice();
-            System.out.println("------------------------- post process page search verifier, v list size: " + v.size());
+            LOG.debug("------------------------- post process page search verifier, v list size: {}", v);
             adBean.setVerifierList(v);
             adBean.setvBean(v);
         }

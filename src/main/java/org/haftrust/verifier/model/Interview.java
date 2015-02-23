@@ -21,28 +21,12 @@ public class Interview implements java.io.Serializable {
     private Verifier verifier;
     private Fom fom;
 
-    public Fom getFom() {
-        return fom;
+    public int getId() {
+        return id;
     }
 
-    public void setFom(Fom fom) {
-        this.fom = fom;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Date getDate() {
@@ -53,20 +37,12 @@ public class Interview implements java.io.Serializable {
         this.date = date;
     }
 
-    public String getEmployeeType() {
-        return employeeType;
+    public String getAddress() {
+        return address;
     }
 
-    public void setEmployeeType(String employeeType) {
-        this.employeeType = employeeType;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getStatus() {
@@ -77,6 +53,22 @@ public class Interview implements java.io.Serializable {
         this.status = status;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getEmployeeType() {
+        return employeeType;
+    }
+
+    public void setEmployeeType(String employeeType) {
+        this.employeeType = employeeType;
+    }
+
     public Verifier getVerifier() {
         return verifier;
     }
@@ -84,4 +76,18 @@ public class Interview implements java.io.Serializable {
     public void setVerifier(Verifier verifier) {
         this.verifier = verifier;
     }
+
+    public Fom getFom() {
+        return fom;
+    }
+
+    public void setFom(Fom fom) {
+        this.fom = fom;
+    }
+
+    @Override
+    public String toString() {
+        return "Interview{" + "id=" + id + ", date=" + date + ", address=" + address + ", status=" + status + ", comment=" + comment + ", employeeType=" + employeeType + ", verifier=" + verifier + ", fom=" + fom + '}';
+    }
+
 }

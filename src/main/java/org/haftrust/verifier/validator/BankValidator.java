@@ -4,11 +4,12 @@
  */
 package org.haftrust.verifier.validator;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.haftrust.verifier.model.Bank;
 import org.haftrust.verifier.service.VerifierService;
 import org.haftrust.verifier.view.RegisterVerifierBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -18,6 +19,8 @@ import org.springframework.validation.Validator;
  * @author Miroslav
  */
 public class BankValidator implements Validator {
+
+    private static final Logger LOG = LoggerFactory.getLogger(BankValidator.class);
 
     private VerifierService verifierService;
 
@@ -29,15 +32,12 @@ public class BankValidator implements Validator {
         this.verifierService = verifierService;
     }
 
+    @Override
     public boolean supports(Class clazz) {
         return clazz.equals(RegisterVerifierBean.class);
     }
 
-    /**
-     *
-     * @param command
-     * @param errors
-     */
+    @Override
     public void validate(Object command, Errors errors) {
         RegisterVerifierBean rvBean = (RegisterVerifierBean) command;
 
@@ -59,17 +59,17 @@ public class BankValidator implements Validator {
                         "required.bankAccountNumber", "Account Number is required in numeric format. ");
             }
 
-            List<Bank> bankList = new ArrayList<>();
+            List<Bank> bankList;
 
             try {
-                bankList = this.verifierService.isBankAccountRegistered(rvBean.getBankAccountNumber());
+                bankList = this.verifierService.getBanksWhereAccountIsRegistered(rvBean.getBankAccountNumber());
 
                 if (bankList.size() > 0) {
                     errors.rejectValue("bankAccountNumber",
                             "required.bankAccountNumber", "Account Number already registered.");
                 }
             } catch (Exception e) {
-                System.out.println("--------- bank validator, is bank account registered exception");
+                LOG.error("--------- bank validator, is bank account registered exception", e);
             }
 
             if (rvBean.getBankAccountNumber().length() < 7) {
@@ -82,11 +82,11 @@ public class BankValidator implements Validator {
                         "required.bankAccountNumber", "Account Number exceeds the maximum value of 10 digits.");
             }
 
+            // TODO: Is this actually necessary? It will fail due to being too short (see two if's above)
             if (rvBean.getBankAccountNumber().equals("0")) {
                 errors.rejectValue("bankAccountNumber",
                         "required.bankAccountNumber", "Account Number cannot be 0.");
             }
-
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(

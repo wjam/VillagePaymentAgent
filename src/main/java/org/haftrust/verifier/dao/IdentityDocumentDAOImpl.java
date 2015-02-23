@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.haftrust.verifier.model.IdentityDocument;
 import org.haftrust.verifier.model.Verifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
@@ -16,21 +18,23 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  */
 public class IdentityDocumentDAOImpl extends HibernateDaoSupport implements IdentityDocumentDAO {
 
+    private static final Logger LOG = LoggerFactory.getLogger(IdentityDocumentDAOImpl.class);
+
     public IdentityDocument saveIdentityDocument(IdentityDocument identityDocument) {
         try {
             if (identityDocument.getId() < 1) {
                 getHibernateTemplate().save(identityDocument);
-                System.out.println("------------------------ identity Document saved");
-                System.out.println("------------------------ identity Document save id: " + identityDocument.getId());
+                LOG.debug("------------------------ identity Document saved");
+                LOG.debug("------------------------ identity Document save id: {}", identityDocument.getId());
             } else {
                 getHibernateTemplate().saveOrUpdate(identityDocument);
-                System.out.println("------------------------ identity Document saved or updated");
-                System.out.println("------------------------ identity Document save id: " + identityDocument.getId());
+                LOG.debug("------------------------ identity Document saved or updated");
+                LOG.debug("------------------------ identity Document save id: {}", identityDocument.getId());
             }
         } catch (NullPointerException exc) {
             getHibernateTemplate().save(identityDocument);
-            System.out.println("------------------------ address saved NullPointerException");
-            System.out.println("------------------------ address save id: " + identityDocument.getId());
+            LOG.debug("------------------------ address saved NullPointerException");
+            LOG.debug("------------------------ address save id: {}", identityDocument.getId());
         }
 
         return identityDocument;
@@ -40,7 +44,7 @@ public class IdentityDocumentDAOImpl extends HibernateDaoSupport implements Iden
         Object[] param = {ver, employeeType};
         List l = getHibernateTemplate().find("from IdentityDocument i where i.verifier=? and i.employeeType=?", param);
         List<IdentityDocument> identityDocumentList = new ArrayList<IdentityDocument>();
-        System.out.println("identity document list size: " + l.size());
+        LOG.debug("identity document list size: {}", l.size());
         if (l.size() > 0) {
             for (int i = 0; i < l.size(); i++) {
                 IdentityDocument id = (IdentityDocument) l.get(i);

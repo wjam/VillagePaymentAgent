@@ -20,12 +20,12 @@ public class Image implements java.io.Serializable {
     private String verificationComment;
     private String employeeType;
 
-    public Date getVerificationDate() {
-        return verificationDate;
+    public int getId() {
+        return id;
     }
 
-    public void setVerificationDate(Date verificationDate) {
-        this.verificationDate = verificationDate;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Date getDate() {
@@ -36,28 +36,28 @@ public class Image implements java.io.Serializable {
         this.date = date;
     }
 
-    public String getEmployeeType() {
-        return employeeType;
-    }
-
-    public void setEmployeeType(String employeeType) {
-        this.employeeType = employeeType;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public byte[] getPhoto() {
         return photo;
     }
 
     public void setPhoto(byte[] photo) {
         this.photo = photo;
+    }
+
+    public String getVerificationStatus() {
+        return verificationStatus;
+    }
+
+    public void setVerificationStatus(String verificationStatus) {
+        this.verificationStatus = verificationStatus;
+    }
+
+    public Date getVerificationDate() {
+        return verificationDate;
+    }
+
+    public void setVerificationDate(Date verificationDate) {
+        this.verificationDate = verificationDate;
     }
 
     public String getVerificationComment() {
@@ -68,11 +68,16 @@ public class Image implements java.io.Serializable {
         this.verificationComment = verificationComment;
     }
 
-    public String getVerificationStatus() {
-        return verificationStatus;
+    public String getEmployeeType() {
+        return employeeType;
     }
 
-    public void setVerificationStatus(String verificationStatus) {
-        this.verificationStatus = verificationStatus;
+    public void setEmployeeType(String employeeType) {
+        this.employeeType = employeeType;
     }
+
+    @Override
+    public String toString() {
+        return "Image{" + "id=" + id + ", date=" + date + ", photo=" + photo + ", verificationStatus=" + verificationStatus + ", verificationDate=" + verificationDate + ", verificationComment=" + verificationComment + ", employeeType=" + employeeType + '}';
+    }    
 }
