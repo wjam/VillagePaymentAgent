@@ -36,4 +36,8 @@ public class BankValidatorTestBase {
         FieldError error = errors.getFieldError();
         assertThat(error.getDefaultMessage(), containsString(errorMessage));
     }
+
+    protected void validate() {
+        validator.validate(bean, errors);
+    }
 }

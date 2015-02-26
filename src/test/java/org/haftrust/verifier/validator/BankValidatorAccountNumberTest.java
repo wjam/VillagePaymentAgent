@@ -21,7 +21,7 @@ public class BankValidatorAccountNumberTest extends BankValidatorTestBase {
     public void testNonNumericAccountNumber() {
         bean.setBankAccountNumber("33a33333");
 
-        validator.validate(bean, errors);
+        validate();
 
         assertErrorContainingMessage("numeric format");
     }
@@ -31,7 +31,7 @@ public class BankValidatorAccountNumberTest extends BankValidatorTestBase {
         VerifierService service = getVerifierServiceWhichAlwaysFindsABank();
         validator.setVerifierService(service);
 
-        validator.validate(bean, errors);
+        validate();
 
         assertErrorContainingMessage("already registered");
     }
@@ -39,7 +39,7 @@ public class BankValidatorAccountNumberTest extends BankValidatorTestBase {
     @Test
     public void testAccountNumberTooShort() {
         bean.setBankAccountNumber("123456");
-        validator.validate(bean, errors);
+        validate();
 
         assertErrorContainingMessage("less than 7 digits");
     }
@@ -47,7 +47,7 @@ public class BankValidatorAccountNumberTest extends BankValidatorTestBase {
     @Test
     public void testAccountNumberTooLong() {
         bean.setBankAccountNumber("12345678901");
-        validator.validate(bean, errors);
+        validate();
 
         assertErrorContainingMessage("maximum value");
         assertErrorContainingMessage("10 digits");
