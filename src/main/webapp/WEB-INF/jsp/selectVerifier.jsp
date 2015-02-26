@@ -20,7 +20,7 @@
          <%
             if(((VerifyVerifierBean) request.getAttribute("vvBean")).getvBean().size() == 0)
             {
-                response.sendRedirect("noVerifierForVerification.htm");
+                response.sendRedirect(request.getContextPath() + "/noVerifierForVerification.htm");
             }
         %>
        <h1 align="center">Verifier Verification</h1>
