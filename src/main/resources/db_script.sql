@@ -220,7 +220,7 @@ INSERT INTO KJ905.HT_STATIC_DATA ("TYPE", "VALUE", DESCRIPTION) VALUES ('educati
 INSERT INTO KJ905.HT_STATIC_DATA ("TYPE", "VALUE", DESCRIPTION) VALUES ('education type', 'type 1', 'Type 1');
 INSERT INTO KJ905.HT_STATIC_DATA ("TYPE", "VALUE", DESCRIPTION) VALUES ('education type', 'type 2', 'Type 2');
 INSERT INTO KJ905.HT_STATIC_DATA ("TYPE", "VALUE", DESCRIPTION) VALUES ('employment status', 'preregistered', 'Preregistered');
-INSERT INTO KJ905.HT_STATIC_DATA ("TYPE", "VALUE", DESCRIPTION) VALUES ('employment status', 'registered', 'Registered ');
+INSERT INTO KJ905.HT_STATIC_DATA ("TYPE", "VALUE", DESCRIPTION) VALUES ('employment status', 'registered', 'Registered');
 INSERT INTO KJ905.HT_STATIC_DATA ("TYPE", "VALUE", DESCRIPTION) VALUES ('employment status', 'verified', 'Verified');
 INSERT INTO KJ905.HT_STATIC_DATA ("TYPE", "VALUE", DESCRIPTION) VALUES ('employment status', 'employed', 'Employed');
 INSERT INTO KJ905.HT_STATIC_DATA ("TYPE", "VALUE", DESCRIPTION) VALUES ('employment status', 'failed', 'Failed');
