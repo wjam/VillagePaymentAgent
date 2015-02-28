@@ -18,7 +18,6 @@
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
             <props>
-                <prop key="index.htm">indexController</prop>
                 <prop key="noVerifierFound.htm">noVerifierFoundController</prop>
                 <prop key="noDeviceFound.htm">noDeviceFoundController</prop>
                 <prop key="noVerifierForVerification.htm">noVerifierForVerificationController</prop>
@@ -36,13 +35,6 @@
           class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/jsp/"
           p:suffix=".jsp" />
-
-    <!--
-    The index controller.
-    -->
-<bean name="indexController"
-          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
-          p:viewName="index" />
 
 <bean name="noVerifierFoundController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
