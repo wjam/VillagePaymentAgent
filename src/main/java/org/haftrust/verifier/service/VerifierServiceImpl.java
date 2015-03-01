@@ -783,10 +783,6 @@ public class VerifierServiceImpl implements VerifierService {
             e.printStackTrace();
         }
 
-        for (int i = 0; i < bFile.length; i++) {
-            LOG.debug("------------------------------- bFile: {}", bFile[i]);
-        }
-
         this.image.setPhoto(bFile);
     }
 
