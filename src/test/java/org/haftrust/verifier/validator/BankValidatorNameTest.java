@@ -17,7 +17,7 @@ public class BankValidatorNameTest extends BankValidatorTestBase {
     {
         bean.setBankName("Long text that is going to make validation fail because names cannot be this long.");
         
-        validator.validate(bean, errors);
+        validate();
         assertErrorContainingMessage("up to 45 characters");
     }
 }

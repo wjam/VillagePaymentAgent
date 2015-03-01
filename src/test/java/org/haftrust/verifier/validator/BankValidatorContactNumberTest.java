@@ -16,7 +16,7 @@ public class BankValidatorContactNumberTest extends BankValidatorTestBase {
     public void testContactNumberTooLong()
     {
         bean.setBankContactNumber("09218409218484091284092180942180921");
-        validator.validate(bean, errors);
+        validate();
         assertErrorContainingMessage("up to 25 characters");
     }
     
