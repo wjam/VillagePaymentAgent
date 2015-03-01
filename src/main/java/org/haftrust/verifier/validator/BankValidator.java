@@ -114,6 +114,7 @@ public class BankValidator implements Validator {
         }
 
         if (!rvBean.getBankSortCode().equals("")) {
+            // TODO: we should simply check that length is exactly 6...
             if (rvBean.getBankSortCode().length() > 6) {
                 errors.rejectValue("bankSortCode", "required.bankSortCode", "Sort Code is required to be up to 6 numbers long.");
             }
@@ -135,8 +136,10 @@ public class BankValidator implements Validator {
                     errors.rejectValue("bankSortCode",
                             "required.bankSortCode", "Sortcode is required in numeric format.");
                 }
-
-            } catch (NumberFormatException nfe) {
+                 
+            }
+            // TODO: Can anything in the try-block actually throw NFE?
+            catch (NumberFormatException nfe) {
                 errors.rejectValue("bankSortCode",
                         "required.bankSortCode", "Sortcode is required in numeric format.");
 

@@ -19,37 +19,39 @@ public class BankValidatorRequiredFieldsTest extends BankValidatorTestBase {
     @Test
     public void testBankAccountNumber() {
         bean.setBankAccountNumber(null);
-        validateWithMissingField(bean, "bankAccountNumber");
+        validateWithMissingField("bankAccountNumber");
     }
 
     @Test
     public void testBankName() {
         bean.setBankName(null);
-        validateWithMissingField(bean, "bankName");
+        validateWithMissingField("bankName");
     }
 
     @Test
     public void testBankContactNumber() {
         bean.setBankContactNumber(null);
-        validateWithMissingField(bean, "bankContactNumber");
+        validateWithMissingField("bankContactNumber");
     }
 
     @Test
     public void testBankAddress() {
         bean.setBankAddress(null);
-        validateWithMissingField(bean, "bankAddress");
+        validateWithMissingField("bankAddress");
     }
 
     @Test
     public void testBankIban() {
         bean.setBankIban(null);
-        validateWithMissingField(bean, "bankIban");
+        validateWithMissingField("bankIban");
     }
 
-    private void validateWithMissingField(RegisterVerifierBean bean, String field) {
+    private void validateWithMissingField(String field) {
         try {
-            validator.validate(bean, errors);
+            validate();
         } catch (Exception e) {
+            // We don't care about exceptions here
+        } finally {
             assertEquals(1, errors.getErrorCount());
             FieldError fieldError = errors.getFieldError();
             assertEquals(field, fieldError.getField());
