@@ -1,8 +1,9 @@
 package org.haftrust.verifier;
 
 import org.haftrust.verifier.selenium.HomePage;
-import org.haftrust.verifier.selenium.VerifierPreRegistrationConfirmationPage;
-import org.haftrust.verifier.selenium.VerifierPreRegistrationPage;
+import org.haftrust.verifier.selenium.SeleniumUtilities;
+import org.haftrust.verifier.selenium.preregister.VerifierPreRegistrationConfirmationPage;
+import org.haftrust.verifier.selenium.preregister.VerifierPreRegistrationPage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -39,8 +40,8 @@ public class VerifierPreregistrationIntegrationTest {
 
     @Test
     public void shouldRegisterVerifierWhenDetailsAreCorrect() {
-        final String emailAddress = randomAlphanumeric(20) + "@" + randomAlphanumeric(20) + ".com";
-        final String password = "1a" + randomAlphanumeric(18);
+        final String emailAddress = SeleniumUtilities.email();
+        final String password = SeleniumUtilities.password();
 
         final VerifierPreRegistrationConfirmationPage page = HomePage.navigateTo(driver).goToPreRegisterVerifier()
                 .enterEmail(emailAddress).enterPassword(password).renterPassword(password)
@@ -52,8 +53,8 @@ public class VerifierPreregistrationIntegrationTest {
 
     @Test
     public void shouldNotRegisterVerifierDetailsWhenPasswordDoesNotMatch() {
-        final String emailAddress = randomAlphanumeric(20) + "@" + randomAlphanumeric(20) + ".com";
-        final String password = "1a" + randomAlphanumeric(18);
+        final String emailAddress = SeleniumUtilities.email();
+        final String password = SeleniumUtilities.password();
         final String reenteredPassword = "2a" + randomAlphanumeric(18);
 
         final VerifierPreRegistrationPage page = HomePage.navigateTo(driver).goToPreRegisterVerifier()
@@ -66,8 +67,8 @@ public class VerifierPreregistrationIntegrationTest {
     @Test
     public void shouldNotRegisterVerifierDetailsWhenAlreadyRegistered() {
 
-        final String emailAddress = randomAlphanumeric(20) + "@" + randomAlphanumeric(20) + ".com";
-        final String password = "1a" + randomAlphanumeric(18);
+        final String emailAddress = SeleniumUtilities.email();
+        final String password = SeleniumUtilities.password();
 
         HomePage.navigateTo(driver).goToPreRegisterVerifier().enterEmail(emailAddress).enterPassword(password).renterPassword(password).submit();
 
