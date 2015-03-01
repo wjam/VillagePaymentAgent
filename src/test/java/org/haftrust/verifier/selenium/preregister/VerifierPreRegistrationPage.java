@@ -1,4 +1,4 @@
-package org.haftrust.verifier.selenium;
+package org.haftrust.verifier.selenium.preregister;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -29,7 +29,7 @@ public class VerifierPreRegistrationPage {
         this.driver = driver;
 
         if (!driver.getCurrentUrl().endsWith("preregisterverifier.htm")
-                && driver.findElement(By.cssSelector("body h1")).getText().equals("Verifier Pre-Registration")) {
+                || !driver.findElement(By.cssSelector("body h1")).getText().equals("Verifier Pre-Registration")) {
             throw new IllegalStateException("Incorrect page " + driver.getCurrentUrl());
         }
     }

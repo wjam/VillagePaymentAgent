@@ -22,6 +22,7 @@
        <p align="center">
             <b>Select your District</b>
        </p>
+       <form:form commandName="rvBean" method="post">
            <table border="0" align="center">
                <tbody>
                    <tr>
@@ -32,7 +33,6 @@
                        <td>Region : </td>
                        <td><c:out value="${rvBean.region.description}"/></td>
                    </tr>
-       <form:form commandName="rvBean" method="post">
                    <tr>
 
                        <td>District : </td>
