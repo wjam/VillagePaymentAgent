@@ -10,7 +10,6 @@ import org.haftrust.verifier.selenium.register.Reference1Page;
 import org.haftrust.verifier.selenium.register.Reference2Page;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -26,7 +25,6 @@ import java.util.concurrent.TimeUnit;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 @Category(Integration.class)
 public class VerifierRegistrationIntegrationTest {
@@ -181,9 +179,57 @@ public class VerifierRegistrationIntegrationTest {
     }
 
     @Test
-    @Ignore("Currently not implemented as hibernate throws NonUniqueObjectException: a different object with the same identifier value was already associated with the session: [org.haftrust.verifier.model.Country#3]")
     public void shouldSuccessfullyRegisterVerifier() throws Exception {
-        fail();
+
+        final String emailAddress = SeleniumUtilities.email();
+        final String password = SeleniumUtilities.password();
+
+        preregisterVerifier(emailAddress, password);
+
+        HomePage.navigateTo(driver).goToRegisterVerifier().enterEmail(emailAddress).enterPassword(password).submit()
+                .selectCountry("Uganda").next()
+                .selectRegion("Central").next()
+                .selectDistrict("Greenwich").next()
+                .firstName(randomAlphanumeric(20)).lastName(randomAlphanumeric(20)).telephoneNumber(randomNumeric(10)).postCode(randomAlphanumeric(10))
+                .photo(photo()).dateOfBirth(LocalDate.now().minusYears(23)).next()
+                .issueDate(LocalDate.now().minusDays(1)).expiryDate(LocalDate.now().plusYears(1)).selectDocumentType("Passport")
+                .documentNumber(randomAlphanumeric(20)).next()
+                .accountNumber(randomNumeric(10)).bankName(randomAlphanumeric(20)).contactNumber(randomAlphanumeric(20))
+                .address(randomAlphanumeric(20)).iban(randomAlphanumeric(20)).next()
+                .name(randomAlphanumeric(20)).organisation(randomAlphanumeric(20)).designation(randomAlphanumeric(20))
+                .contactNumber(randomAlphanumeric(20)).emailAddress(SeleniumUtilities.email()).address(randomAlphanumeric(20)).next()
+                .name(randomAlphanumeric(20)).organisation(randomAlphanumeric(20)).designation(randomAlphanumeric(20))
+                .contactNumber(randomAlphanumeric(20)).emailAddress(SeleniumUtilities.email()).address(randomAlphanumeric(20)).next();
+    }
+
+    @Test
+    public void shouldSuccessfullyRegisterVerifierWhenSavingPartWayThroughThenCompleting() throws Exception {
+
+        final String emailAddress = SeleniumUtilities.email();
+        final String password = SeleniumUtilities.password();
+
+        preregisterVerifier(emailAddress, password);
+
+        HomePage.navigateTo(driver).goToRegisterVerifier().enterEmail(emailAddress).enterPassword(password).submit()
+                .selectCountry("Uganda").next()
+                .selectRegion("Central").next()
+                .selectDistrict("Greenwich").next()
+                .firstName(randomAlphanumeric(20)).lastName(randomAlphanumeric(20)).telephoneNumber(randomNumeric(10)).postCode(randomAlphanumeric(10))
+                .photo(photo()).dateOfBirth(LocalDate.now().minusYears(23)).save().yes();
+
+        HomePage.navigateTo(driver).goToRegisterVerifier().enterEmail(emailAddress).enterPassword(password).submit()
+                .selectCountry("Uganda").next()
+                .selectRegion("Central").next()
+                .selectDistrict("Greenwich").next()
+                .photo(photo()).next()
+                .issueDate(LocalDate.now().minusDays(1)).expiryDate(LocalDate.now().plusYears(1)).selectDocumentType("Passport")
+                .documentNumber(randomAlphanumeric(20)).next()
+                .accountNumber(randomNumeric(10)).bankName(randomAlphanumeric(20)).contactNumber(randomAlphanumeric(20))
+                .address(randomAlphanumeric(20)).iban(randomAlphanumeric(20)).next()
+                .name(randomAlphanumeric(20)).organisation(randomAlphanumeric(20)).designation(randomAlphanumeric(20))
+                .contactNumber(randomAlphanumeric(20)).emailAddress(SeleniumUtilities.email()).address(randomAlphanumeric(20)).next()
+                .name(randomAlphanumeric(20)).organisation(randomAlphanumeric(20)).designation(randomAlphanumeric(20))
+                .contactNumber(randomAlphanumeric(20)).emailAddress(SeleniumUtilities.email()).address(randomAlphanumeric(20)).next();
     }
 
     private void preregisterVerifier(final String emailAddress, final String password) {

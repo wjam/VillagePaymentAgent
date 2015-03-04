@@ -1,44 +1,59 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.haftrust.verifier.controller;
 
 import org.haftrust.verifier.service.VerifierService;
+import org.haftrust.verifier.validator.PreRegisterVerifierValidator;
 import org.haftrust.verifier.view.PreRegisterVerifierBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.SimpleFormController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-/**
- *
- * @author Miroslav
- */
-public class PreRegisterVerifierController extends SimpleFormController {
+@Controller
+@RequestMapping("preregisterverifier.htm")
+public class PreRegisterVerifierController {
 
     private static final Logger LOG = LoggerFactory.getLogger(PreRegisterVerifierController.class);
+    protected static final String FORM_JSP_PAGE = "preregisterverifier";
+    protected static final String RESULT_JSP_PAGE = "preregisterverifierconfirmation";
 
-    private VerifierService verifierService;
+    private final PreRegisterVerifierValidator validator;
+    private final VerifierService verifierService;
 
-    public VerifierService getVerifierService() {
-        return verifierService;
-    }
-
-    public void setVerifierService(VerifierService verifierService) {
+    @Autowired
+    public PreRegisterVerifierController(final PreRegisterVerifierValidator validator, final VerifierService verifierService) {
+        this.validator = validator;
         this.verifierService = verifierService;
     }
 
-    protected ModelAndView onSubmit(Object command) throws Exception {
+    @ModelAttribute("prvBean")
+    public PreRegisterVerifierBean formBean() {
+        return new PreRegisterVerifierBean();
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String initialisePage() {
+        return FORM_JSP_PAGE;
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String onSubmit(@ModelAttribute("prvBean") PreRegisterVerifierBean command, final BindingResult result) {
+
+        validator.validate(command, result);
+
+        if (result.hasErrors()) {
+            return FORM_JSP_PAGE;
+        }
+
         LOG.debug("------------------------ controller preregister verifier onSubmit");
 
-        PreRegisterVerifierBean prvBean = (PreRegisterVerifierBean) command;
-        int id = 0;
+        int id = verifierService.preRegisterVerifier(command.getEmail(), command.getPassword());
 
-        id = verifierService.preRegisterVerifier(prvBean.getEmail(), prvBean.getPassword());
+        command.setIdVerifier(id);
 
-        prvBean.setIdVerifier(id);
-
-        return new ModelAndView(getSuccessView(), "prvBean", prvBean);
+        return RESULT_JSP_PAGE;
     }
 }

@@ -134,10 +134,10 @@ public class Reference2Page {
         return PageFactory.initElements(driver, Reference1Page.class);
     }
 
-    public void next() {
+    public ConfirmationPage next() {
         registerButton.click();
 
-        // TODO where is this supposed to go to when it doesn't crash?
+        return PageFactory.initElements(driver, ConfirmationPage.class);
     }
 
     public Reference2Page nextExpectingError() {

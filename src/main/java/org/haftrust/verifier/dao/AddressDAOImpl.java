@@ -23,21 +23,7 @@ public class AddressDAOImpl extends HibernateDaoSupport implements AddressDAO {
     private static final Logger LOG = LoggerFactory.getLogger(AddressDAOImpl.class);
 
     public Address saveAddress(Address address) {
-        try {
-            if (address.getId() < 1) {
-                getHibernateTemplate().save(address);
-                LOG.debug("------------------------ address saved");
-                LOG.debug("------------------------ address save id: {}", address.getId());
-            } else {
-                getHibernateTemplate().saveOrUpdate(address);
-                LOG.debug("------------------------ address saved or updated");
-                LOG.debug("------------------------ address save id: {}", address.getId());
-            }
-        } catch (NullPointerException exc) {
-            getHibernateTemplate().save(address);
-            LOG.debug("------------------------ address saved NullPointerException");
-            LOG.debug("------------------------ address save id: {}", address.getId());
-        }
+        getHibernateTemplate().merge(address);
 
         return address;
     }
