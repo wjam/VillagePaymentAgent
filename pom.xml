@@ -409,8 +409,8 @@
     </issueManagement>
 
     <ciManagement>
-        <system>TODO</system>
-        <url>https://localhost/</url>
+        <system>TravisCI</system>
+        <url>https://travis-ci.org/kittylyst/VillagePaymentAgent</url>
     </ciManagement>
 
     <licenses>
