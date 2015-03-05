@@ -162,7 +162,7 @@
                       <td>
                           <!-- XHTML or JSP -->
                             
-                            <img src="image?id=<%=((VerifyVerifierBean) request.getAttribute("vvBean")).getImage().getId() %>" />
+                            <img src="image.htm?id=<%=((VerifyVerifierBean) request.getAttribute("vvBean")).getImage().getId() %>" />
 
 
                           
