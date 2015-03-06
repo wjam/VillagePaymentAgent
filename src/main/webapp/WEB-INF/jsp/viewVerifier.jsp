@@ -21,14 +21,6 @@
         <link href="css/style.css" rel="stylesheet" type="text/css" media="screen" />
         <script language="javascript" type="text/javascript" src="JavaScript/datetimepicker.js"></script>
         <title>HafTrust Verify Verifier Details Page</title>
-        <script type="text/javascript">
-            <!--
-            function myPopup2() {
-            window.open( "imageDisplay.htm", "myWindow",
-            "status = 1, height = 300, width = 300, resizable = 0" )
-            }
-            //-->
-       </script>
     </head>
     <body>
        <h1 align="center">Verifier Verification</h1>
@@ -161,7 +153,7 @@
                       <td>Photo : </td>
                       <td>
                           <!-- XHTML or JSP -->
-                            
+                          <!-- TODO fix having to supply .htm in the URL -->
                             <img src="image.htm?id=<%=((VerifyVerifierBean) request.getAttribute("vvBean")).getImage().getId() %>" />
 
 
