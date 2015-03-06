@@ -32,14 +32,13 @@ public class ImageController {
     }
 
     @RequestMapping(value = "/image", method = RequestMethod.GET)
-    public ResponseEntity<byte[]> doGet(@RequestParam("id") String imageId) {
+    public ResponseEntity<byte[]> doGet(@RequestParam("id") Integer imageId) {
         LOG.debug("Retrieving image with id: {}", imageId);
-        final int id = parseId(imageId);
-        if (id <= -1) {
+        if (imageId == null) {
             return new ResponseEntity<>(new byte[0], HttpStatus.BAD_REQUEST);
         }
 
-        final Image image = imageService.find(id);
+        final Image image = imageService.find(imageId);
         LOG.debug("Retrieved image: {}", image);
 
         if (image == null) {
@@ -48,17 +47,5 @@ public class ImageController {
 
         LOG.debug("Image size: {}", image.getPhoto().length);
         return new ResponseEntity<>(image.getPhoto(), HttpStatus.OK);
-
-    }
-
-    private int parseId(final String imageId) {
-        if (imageId == null) {
-            return -1;
-        }
-        try {
-            return Integer.parseInt(imageId);
-        } catch (NumberFormatException e) {
-            return -1;
-        }
     }
 }

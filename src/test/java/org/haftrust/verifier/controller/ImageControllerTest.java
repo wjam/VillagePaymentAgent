@@ -32,7 +32,7 @@ public class ImageControllerTest {
         image.setPhoto(imageBytes);
         when(imageService.find(1)).thenReturn(image);
 
-        ResponseEntity<byte[]> actual = imageController.doGet("1");
+        ResponseEntity<byte[]> actual = imageController.doGet(1);
 
         Assert.assertArrayEquals(imageBytes, actual.getBody());
         Assert.assertEquals(HttpStatus.OK, actual.getStatusCode());
@@ -51,20 +51,10 @@ public class ImageControllerTest {
     }
 
     @Test
-    public void testIdInvalidReturnsBadRequest() {
-        ResponseEntity<byte[]> actual = imageController.doGet("one");
-
-        Assert.assertArrayEquals(emptyArray, actual.getBody());
-        Assert.assertEquals(HttpStatus.BAD_REQUEST, actual.getStatusCode());
-
-        verifyZeroInteractions(imageService);
-    }
-
-    @Test
     public void testIdNotExistingReturnsNotFound() {
         when(imageService.find(2)).thenReturn(null);
 
-        ResponseEntity<byte[]> actual = imageController.doGet("2");
+        ResponseEntity<byte[]> actual = imageController.doGet(2);
 
         Assert.assertArrayEquals(emptyArray, actual.getBody());
         Assert.assertEquals(HttpStatus.NOT_FOUND, actual.getStatusCode());
