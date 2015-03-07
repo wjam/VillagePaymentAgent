@@ -16,9 +16,7 @@ import org.junit.experimental.categories.Category;
 import org.junit.rules.TestRule;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.springframework.core.io.DefaultResourceLoader;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.concurrent.TimeUnit;
 
@@ -91,7 +89,7 @@ public class VerifierRegistrationIntegrationTest {
                 .selectRegion("Central").next()
                 .selectDistrict("Greenwich").next()
                 .firstName(randomAlphanumeric(20)).lastName(randomAlphanumeric(20)).telephoneNumber(randomNumeric(10)).postCode(randomAlphanumeric(10))
-                .photo(photo()).dateOfBirth(LocalDate.now().minusYears(23)).next()
+                .photo(SeleniumUtilities.photo()).dateOfBirth(LocalDate.now().minusYears(23)).next()
                 .issueDate(LocalDate.now().plusDays(1)).expiryDate(LocalDate.now().plusDays(1)).selectDocumentType("Passport").nextExpectingError();
 
         assertEquals("Number is required.", page.getDocumentNumberErrorMessage());
@@ -112,7 +110,7 @@ public class VerifierRegistrationIntegrationTest {
                 .selectRegion("Central").next()
                 .selectDistrict("Greenwich").next()
                 .firstName(randomAlphanumeric(20)).lastName(randomAlphanumeric(20)).telephoneNumber(randomNumeric(10)).postCode(randomAlphanumeric(10))
-                .photo(photo()).dateOfBirth(LocalDate.now().minusYears(23)).next()
+                .photo(SeleniumUtilities.photo()).dateOfBirth(LocalDate.now().minusYears(23)).next()
                 .issueDate(LocalDate.now().minusDays(1)).expiryDate(LocalDate.now().plusYears(1)).selectDocumentType("Passport")
                 .documentNumber(randomAlphanumeric(20)).next().nextExpectingError();
 
@@ -136,7 +134,7 @@ public class VerifierRegistrationIntegrationTest {
                 .selectRegion("Central").next()
                 .selectDistrict("Greenwich").next()
                 .firstName(randomAlphanumeric(20)).lastName(randomAlphanumeric(20)).telephoneNumber(randomNumeric(10)).postCode(randomAlphanumeric(10))
-                .photo(photo()).dateOfBirth(LocalDate.now().minusYears(23)).next()
+                .photo(SeleniumUtilities.photo()).dateOfBirth(LocalDate.now().minusYears(23)).next()
                 .issueDate(LocalDate.now().minusDays(1)).expiryDate(LocalDate.now().plusYears(1)).selectDocumentType("Passport")
                 .documentNumber(randomAlphanumeric(20)).next()
                 .accountNumber(randomNumeric(10)).bankName(randomAlphanumeric(20)).contactNumber(randomAlphanumeric(20))
@@ -162,7 +160,7 @@ public class VerifierRegistrationIntegrationTest {
                 .selectRegion("Central").next()
                 .selectDistrict("Greenwich").next()
                 .firstName(randomAlphanumeric(20)).lastName(randomAlphanumeric(20)).telephoneNumber(randomNumeric(10)).postCode(randomAlphanumeric(10))
-                .photo(photo()).dateOfBirth(LocalDate.now().minusYears(23)).next()
+                .photo(SeleniumUtilities.photo()).dateOfBirth(LocalDate.now().minusYears(23)).next()
                 .issueDate(LocalDate.now().minusDays(1)).expiryDate(LocalDate.now().plusYears(1)).selectDocumentType("Passport")
                 .documentNumber(randomAlphanumeric(20)).next()
                 .accountNumber(randomNumeric(10)).bankName(randomAlphanumeric(20)).contactNumber(randomAlphanumeric(20))
@@ -191,7 +189,7 @@ public class VerifierRegistrationIntegrationTest {
                 .selectRegion("Central").next()
                 .selectDistrict("Greenwich").next()
                 .firstName(randomAlphanumeric(20)).lastName(randomAlphanumeric(20)).telephoneNumber(randomNumeric(10)).postCode(randomAlphanumeric(10))
-                .photo(photo()).dateOfBirth(LocalDate.now().minusYears(23)).next()
+                .photo(SeleniumUtilities.photo()).dateOfBirth(LocalDate.now().minusYears(23)).next()
                 .issueDate(LocalDate.now().minusDays(1)).expiryDate(LocalDate.now().plusYears(1)).selectDocumentType("Passport")
                 .documentNumber(randomAlphanumeric(20)).next()
                 .accountNumber(randomNumeric(10)).bankName(randomAlphanumeric(20)).contactNumber(randomAlphanumeric(20))
@@ -215,13 +213,13 @@ public class VerifierRegistrationIntegrationTest {
                 .selectRegion("Central").next()
                 .selectDistrict("Greenwich").next()
                 .firstName(randomAlphanumeric(20)).lastName(randomAlphanumeric(20)).telephoneNumber(randomNumeric(10)).postCode(randomAlphanumeric(10))
-                .photo(photo()).dateOfBirth(LocalDate.now().minusYears(23)).save().yes();
+                .photo(SeleniumUtilities.photo()).dateOfBirth(LocalDate.now().minusYears(23)).save().yes();
 
         HomePage.navigateTo(driver).goToRegisterVerifier().enterEmail(emailAddress).enterPassword(password).submit()
                 .selectCountry("Uganda").next()
                 .selectRegion("Central").next()
                 .selectDistrict("Greenwich").next()
-                .photo(photo()).next()
+                .photo(SeleniumUtilities.photo()).next()
                 .issueDate(LocalDate.now().minusDays(1)).expiryDate(LocalDate.now().plusYears(1)).selectDocumentType("Passport")
                 .documentNumber(randomAlphanumeric(20)).next()
                 .accountNumber(randomNumeric(10)).bankName(randomAlphanumeric(20)).contactNumber(randomAlphanumeric(20))
@@ -236,7 +234,4 @@ public class VerifierRegistrationIntegrationTest {
         HomePage.navigateTo(driver).goToPreRegisterVerifier().enterEmail(emailAddress).enterPassword(password).renterPassword(password).submit();
     }
 
-    private String photo() throws IOException {
-        return new DefaultResourceLoader().getResource("/120px-PNG_transparency_demonstration_1.png").getFile().getAbsolutePath();
-    }
 }

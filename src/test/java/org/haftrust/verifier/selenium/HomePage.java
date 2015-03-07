@@ -2,6 +2,7 @@ package org.haftrust.verifier.selenium;
 
 import org.haftrust.verifier.selenium.preregister.VerifierPreRegistrationPage;
 import org.haftrust.verifier.selenium.register.LoginPage;
+import org.haftrust.verifier.selenium.verify.SelectCountryPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,6 +18,9 @@ public class HomePage {
     @FindBy(linkText = "Register Verifier Candidate")
     private WebElement registerVerifierLink;
 
+    @FindBy(linkText = "Verify Verifier Candidate ")
+    private WebElement verifyVerifierLink;
+
     public HomePage(final WebDriver driver) {
         this.driver = driver;
     }
@@ -29,6 +33,11 @@ public class HomePage {
     public LoginPage goToRegisterVerifier() {
         registerVerifierLink.click();
         return PageFactory.initElements(driver, LoginPage.class);
+    }
+
+    public SelectCountryPage goToVerifyVerifier() {
+        verifyVerifierLink.click();
+        return PageFactory.initElements(driver, SelectCountryPage.class);
     }
 
     public static HomePage navigateTo(final WebDriver driver) {

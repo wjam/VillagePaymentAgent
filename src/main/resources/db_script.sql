@@ -244,9 +244,4 @@ INSERT INTO KJ905.HT_STATIC_DATA ("TYPE", "VALUE", DESCRIPTION) VALUES ('intervi
 INSERT INTO KJ905.HT_STATIC_DATA ("TYPE", "VALUE", DESCRIPTION) VALUES ('device allocation', 'yes', 'Yes');
 INSERT INTO KJ905.HT_STATIC_DATA ("TYPE", "VALUE", DESCRIPTION) VALUES ('device allocation', 'no', 'No');
 
-
-
-
-
-
-
+INSERT INTO KJ905.HT_FOM ("FIRST_NAME", "LAST_NAME", "EMAIL", "PASSWORD") VALUES ('First', 'Last', 'fom@example.org', 'password')
