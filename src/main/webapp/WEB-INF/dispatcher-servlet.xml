@@ -24,8 +24,6 @@
                 <prop key="registerVerifier.htm">registerVerifierController</prop>
                 <prop key="verifyVerifier.htm">verifyVerifierController</prop>
                 <prop key="allocateDevice.htm">allocateDeviceController</prop>
-                <prop key="imageDisplay.htm">imageDisplayController</prop>
-
             </props>
         </property>
 
@@ -47,10 +45,6 @@
 <bean name="noVerifierForVerificationController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
           p:viewName="noVerifierForVerification" />
-
-<bean name="imageDisplayController"
-          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
-          p:viewName="imageDisplay" />
 
 <bean class="org.haftrust.verifier.validator.PreRegisterVerifierValidator" >
     <property name="verifierService" ref="verifierService"/>

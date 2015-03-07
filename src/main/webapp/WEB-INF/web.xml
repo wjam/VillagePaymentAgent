@@ -12,14 +12,6 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
-    <servlet>
-    <servlet-name>imageController</servlet-name>
-        <servlet-class>org.haftrust.verifier.controller.ImageController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>imageController</servlet-name>
-        <url-pattern>/image/*</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
