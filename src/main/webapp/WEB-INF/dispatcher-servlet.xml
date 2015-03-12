@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="windows-1252"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-    xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <!-- Enable Autowire, Component, etc -->
     <context:component-scan base-package="org.haftrust.verifier" />
@@ -21,12 +25,10 @@
                 <prop key="noVerifierFound.htm">noVerifierFoundController</prop>
                 <prop key="noDeviceFound.htm">noDeviceFoundController</prop>
                 <prop key="noVerifierForVerification.htm">noVerifierForVerificationController</prop>
-                <prop key="registerVerifier.htm">registerVerifierController</prop>
                 <prop key="verifyVerifier.htm">verifyVerifierController</prop>
                 <prop key="allocateDevice.htm">allocateDeviceController</prop>
             </props>
         </property>
-
     </bean>
 
     <bean id="viewResolver"
@@ -49,44 +51,6 @@
 <bean class="org.haftrust.verifier.validator.PreRegisterVerifierValidator" >
     <property name="verifierService" ref="verifierService"/>
 </bean>
-
- <bean name="registerVerifierController" class="org.haftrust.verifier.controller.RegisterController">
-    <property name="pages">
-        <list>
-            <value>logIn</value>
-            <value>selectCountry</value>
-            <value>selectRegion</value>
-            <value>selectDistrict</value>
-            <value>createVerifier</value>
-            <value>createIdentityDocument</value>
-            <value>createBank</value>
-            <value>createReference</value>
-            <value>saveConfirmation</value>
-            <value>cancelRegister</value>
-            <value>createReference2</value>
-            <value>saveRegister</value>
-        </list>
-    </property>
-    <property name="pageAttribute" value="page"/>
-    <property name="commandName" value="rvBean"/>
-    <property name="commandClass" value="org.haftrust.verifier.view.RegisterVerifierBean"  />
-    <property name="verifierService" ref="verifierService"/>
-    <property name="successView" value="registerConfirmation"/>
-    <property name="cancelView" value="cancelConfirmation"/>
-    <!--<property name="saveView" value="saveConfirmation"/>-->
-     <property name="validators">
-        <list>
-            <ref local="logInValidator"/>
-            <ref local="selectCountryValidator"/>
-            <ref local="bankValidator"/>
-            <ref local="reference1Validator"/>
-            <ref local="verifierValidator"/>
-            <ref local="identityDocumentValidator"/>
-            <ref local="reference2Validator"/>
-        </list>
-     </property>
-     <!--<property name="validateOnBinding" value="true"/>-->
-  </bean>
 
    <bean id="allocateDeviceController" class="org.haftrust.verifier.controller.AllocateDeviceController">
     <property name="pages">
