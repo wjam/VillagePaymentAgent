@@ -7,7 +7,7 @@ Village Payment Agent Backend Code
  * apache-maven-3.0.4 (or greater)
 
 ## Build
-`mvn package`
+`mvn package` or `mvn install`
 
 ## Test
 `mvn test`
