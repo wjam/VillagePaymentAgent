@@ -7,22 +7,20 @@
 <%@page import="org.haftrust.verifier.view.AllocateDeviceBean"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
    <head>
+        <c:if test="${empty adBean.vBean}">
+            <meta http-equiv="refresh" content="0; url=noVerifierFound.htm" />
+        </c:if>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
         <link href="css/style.css" rel="stylesheet" type="text/css" media="screen" />
         <title>HafTrust Allocate Mobile Device - Select Verifier Page</title>
     </head>
     <body>
-        <%
-            if(((AllocateDeviceBean) request.getAttribute("adBean")).getvBean().size() == 0)
-            {
-                response.sendRedirect("noVerifierFound.htm");
-            }
-        %>
        <h1 align="center">Mobile Device Allocation</h1>
        <hr size="5">
        <p align="center">

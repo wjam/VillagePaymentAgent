@@ -12,6 +12,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 public class VerifierServiceImpl implements VerifierService {
 
     private static final Logger LOG = LoggerFactory.getLogger(VerifierServiceImpl.class);
@@ -327,21 +329,17 @@ public class VerifierServiceImpl implements VerifierService {
     }
 
     public List<Verifier> getEmployedVerifiersWithoutDevice() {
-        List<Address> aList = new ArrayList<Address>();
-        this.employedVerifiersList.clear();
+        List<Address> aList;
 
         this.sdVerifierType = this.staticDataDao.getEmployeeType("Verifier");
-        this.sdStatus = this.staticDataDao.getEmploymentStatus("Employed");
+        this.sdStatus = this.staticDataDao.getVerificationStatus("Verified");
         aList = this.addressDao.getAddressByCountryAndRegion(this.verifierCountry, this.verifierRegion, this.sdVerifierType.getValue());
 
-        for (int i = 0; i < aList.size(); i++) {
-            if (aList.get(i).getVerifier().getStatus().equals(this.sdStatus.getValue())) {
-                if (aList.get(i).getVerifier().getMobileDevice() == null) {
-                    this.employedVerifiersList.add(aList.get(i).getVerifier());
-                    LOG.debug("------------------- adsress list, employed verifier id: {}", aList.get(i).getVerifier().getId());
-                }
-            }
-        }
+        this.employedVerifiersList = aList.stream()
+                .filter(a -> a.getVerifier().getStatus().equals(this.sdStatus.getValue()))
+                .filter(a -> a.getVerifier().getMobileDevice() == null)
+                .map(Address::getVerifier)
+                .collect(toList());
 
         LOG.debug("------------------- employed verifier list size: {}", this.employedVerifiersList.size());
 
