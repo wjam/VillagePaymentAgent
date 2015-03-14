@@ -47,7 +47,7 @@ public class AllocateDeviceIntegrationTest {
         registerVerifier(firstName, lastName, dateOfBirth);
 
         HomePage.navigateTo(driver).goToAllocateMobile()
-                .selectCountry("Uganda").next()
+                .selectCountry("Uganda").next().back().selectCountry("Uganda").next()
                 .selectRegion("Central").search()
                 .selectVerifier(SeleniumUtilities.toVerifierText(firstName, lastName, dateOfBirth)).next()
                 .selectMobile("333").allocate();

@@ -42,7 +42,7 @@ public class SelectRegionPage {
     }
 
     public SelectCountryPage back() {
-        cancelButton.click();
+        backButton.click();
         return PageFactory.initElements(driver, SelectCountryPage.class);
     }
 
