@@ -22,9 +22,6 @@
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
             <props>
-                <prop key="noVerifierFound.htm">noVerifierFoundController</prop>
-                <prop key="noDeviceFound.htm">noDeviceFoundController</prop>
-                <prop key="noVerifierForVerification.htm">noVerifierForVerificationController</prop>
                 <prop key="verifyVerifier.htm">verifyVerifierController</prop>
                 <prop key="allocateDevice.htm">allocateDeviceController</prop>
             </props>
@@ -35,18 +32,6 @@
           class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/jsp/"
           p:suffix=".jsp" />
-
-<bean name="noVerifierFoundController"
-          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
-          p:viewName="noVerifierFound" />
-
-<bean name="noDeviceFoundController"
-          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
-          p:viewName="noDeviceFound" />
-
-<bean name="noVerifierForVerificationController"
-          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
-          p:viewName="noVerifierForVerification" />
 
 <bean class="org.haftrust.verifier.validator.PreRegisterVerifierValidator" >
     <property name="verifierService" ref="verifierService"/>
