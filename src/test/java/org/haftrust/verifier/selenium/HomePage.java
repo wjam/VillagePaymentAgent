@@ -21,6 +21,9 @@ public class HomePage {
     @FindBy(linkText = "Verify Verifier Candidate ")
     private WebElement verifyVerifierLink;
 
+    @FindBy(linkText = "Allocate Verifier's Mobile Device")
+    private WebElement allocateDeviceLink;
+
     public HomePage(final WebDriver driver) {
         this.driver = driver;
     }
@@ -38,6 +41,11 @@ public class HomePage {
     public SelectCountryPage goToVerifyVerifier() {
         verifyVerifierLink.click();
         return PageFactory.initElements(driver, SelectCountryPage.class);
+    }
+
+    public org.haftrust.verifier.selenium.allocate.SelectCountryPage goToAllocateMobile() {
+        allocateDeviceLink.click();
+        return PageFactory.initElements(driver, org.haftrust.verifier.selenium.allocate.SelectCountryPage.class);
     }
 
     public static HomePage navigateTo(final WebDriver driver) {
