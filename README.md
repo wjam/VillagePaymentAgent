@@ -14,6 +14,9 @@ Village Payment Agent Backend Code
 
 `mvn integration-test`
 
+If you prefer to run integration tests from your preferred IDE then you might need to get Jetty up and running executing
+next step.
+
 ## Run
 The simplest way to run the application is to run `mvn jetty:run` and the go to `http://localhost:8080/` in your browser.
 
