@@ -76,10 +76,10 @@ public class IdentityDocumentValidator implements Validator {
             gc.set(GregorianCalendar.DATE, day);
 
             gc.getTime(); // exception thrown here
-        } catch (Exception e) {
+        } catch (Exception exception) {
             issueDateOK = false;
             errors.rejectValue("identityDocumentIssueDate", "required.identityDocumentIssueDate", "Issue Date is invalid.");
-            e.printStackTrace();
+            LOG.warn("Issue date is invalid.", exception);
         }
 
         GregorianCalendar gcExpiryDate = new GregorianCalendar();
