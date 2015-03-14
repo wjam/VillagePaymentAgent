@@ -1,10 +1,3 @@
-<%-- 
-    Document   : selectAllocateDeviceVerifier
-    Created on : 29-Sep-2010, 12:24:43
-    Author     : Miroslav
---%>
-
-<%@page import="org.haftrust.verifier.view.AllocateDeviceBean"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -14,6 +7,7 @@
 <html>
    <head>
         <c:if test="${empty adBean.vBean}">
+            <%-- TODO: This redirect should be done in the controller --%>
             <meta http-equiv="refresh" content="0; url=noVerifierFound.htm" />
         </c:if>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
