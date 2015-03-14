@@ -107,10 +107,10 @@ public class VerifierValidator implements Validator {
                 if (currentDate.before(gc)) {
                     errors.rejectValue("dob", "required.dob", "The Verifier has to be over 23 years old.");
                 }
-            } catch (Exception e) {
+            } catch (Exception exception) {
                 //dobOK = false;
                 //errors.rejectValue("dob", "required.dob", "Date of Birth is invalid.");
-                e.printStackTrace();
+                LOG.warn("Have to older than 23 years old.", exception);
             }
         }
 
