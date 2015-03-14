@@ -76,10 +76,10 @@ public class IdentityDocumentValidator implements Validator {
             gc.set(GregorianCalendar.DATE, day);
 
             gc.getTime(); // exception thrown here
-        } catch (Exception e) {
+        } catch (Exception exception) {
             issueDateOK = false;
             errors.rejectValue("identityDocumentIssueDate", "required.identityDocumentIssueDate", "Issue Date is invalid.");
-            e.printStackTrace();
+            LOG.warn("Issue date is invalid.", exception);
         }
 
         GregorianCalendar gcExpiryDate = new GregorianCalendar();
@@ -93,10 +93,10 @@ public class IdentityDocumentValidator implements Validator {
             gcExpiryDate.set(GregorianCalendar.DATE, expiryDateDay);
 
             gc.getTime(); // exception thrown here
-        } catch (Exception e) {
+        } catch (Exception exception) {
             expiryDateOK = false;
             errors.rejectValue("identityDocumentExpiryDate", "required.identityDocumentExpiryDate", "Expiry Date is invalid.");
-            e.printStackTrace();
+            LOG.warn("Expiry date is invalid.", exception);
         }
 
         GregorianCalendar currentDate = new GregorianCalendar();
@@ -108,8 +108,8 @@ public class IdentityDocumentValidator implements Validator {
                 if (currentDate.before(gc)) {
                     errors.rejectValue("identityDocumentIssueDate", "required.identityDocumentIssueDate", "The Issue Date has to be before the current date.");
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception exception) {
+                LOG.warn("The issue date has to be before the current date.", exception);
             }
         }
 
@@ -118,8 +118,8 @@ public class IdentityDocumentValidator implements Validator {
                 if (currentDate.after(gcExpiryDate)) {
                     errors.rejectValue("identityDocumentExpiryDate", "required.identityDocumentExpiryDate", "The Expiry Date has to be after the current date.");
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception exception) {
+                LOG.warn("The expiry date has to be after the current date.", exception);
             }
         }
 
@@ -132,8 +132,8 @@ public class IdentityDocumentValidator implements Validator {
                 if (gc.after(gcExpiryDate)) {
                     errors.rejectValue("identityDocumentExpiryDate", "required.identityDocumentExpiryDate", "The Expiry Date has to be at least one year after the Issue Date.");
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception exception) {
+                LOG.warn("The expiry date has to be at least one year after the issue date.", exception);
             }
         }
     }

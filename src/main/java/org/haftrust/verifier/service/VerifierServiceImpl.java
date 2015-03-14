@@ -1,38 +1,18 @@
 package org.haftrust.verifier.service;
 
-import org.haftrust.verifier.dao.AddressDAO;
-import org.haftrust.verifier.dao.BankDAO;
-import org.haftrust.verifier.dao.CountryDAO;
-import org.haftrust.verifier.dao.DeviceDAO;
-import org.haftrust.verifier.dao.DistrictDAO;
-import org.haftrust.verifier.dao.FomDAO;
-import org.haftrust.verifier.dao.IdentityDocumentDAO;
-import org.haftrust.verifier.dao.ImageDAO;
-import org.haftrust.verifier.dao.InterviewDAO;
-import org.haftrust.verifier.dao.ReferenceDAO;
-import org.haftrust.verifier.dao.RegionDAO;
-import org.haftrust.verifier.dao.StaticDataDAO;
-import org.haftrust.verifier.dao.VerifierDAO;
-import org.haftrust.verifier.model.Address;
-import org.haftrust.verifier.model.Bank;
-import org.haftrust.verifier.model.Country;
-import org.haftrust.verifier.model.Device;
-import org.haftrust.verifier.model.District;
-import org.haftrust.verifier.model.Fom;
-import org.haftrust.verifier.model.IdentityDocument;
-import org.haftrust.verifier.model.Image;
-import org.haftrust.verifier.model.Interview;
-import org.haftrust.verifier.model.Reference;
-import org.haftrust.verifier.model.Region;
-import org.haftrust.verifier.model.StaticData;
-import org.haftrust.verifier.model.Verifier;
+import org.haftrust.verifier.dao.*;
+import org.haftrust.verifier.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 public class VerifierServiceImpl implements VerifierService {
 
@@ -226,706 +206,692 @@ public class VerifierServiceImpl implements VerifierService {
         this.verifierDao = verifierDao;
     }
 
-    @Override
     public void allocateDevice() {
-        StaticData deviceAllocation = staticDataDao.getDeviceAllocation("Yes");
+        StaticData deviceAllocation = this.staticDataDao.getDeviceAllocation("Yes");
 
-        verifierDevice.setAllocation(deviceAllocation.getValue());
-        verifierDevice.setAllocationDate(todaysDate());
-        deviceDao.saveDevice(verifierDevice);
+        this.verifierDevice.setAllocation(deviceAllocation.getValue());
+        this.verifierDevice.setAllocationDate(this.getCurrentDate());
+        this.deviceDao.saveDevice(this.verifierDevice);
 
-        verifier.setMobileDevice(verifierDevice);
-        verifier = verifierDao.setVerifier(verifier);
+        this.verifier.setMobileDevice(this.verifierDevice);
+        this.verifier = this.verifierDao.setVerifier(this.verifier);
     }
 
-    @Override
     public void failVerification(String strVerifierVerificationComment) {
-        sdStatus = staticDataDao.getEmploymentStatus("Failed");
+        this.sdStatus = this.staticDataDao.getEmploymentStatus("Failed");
         //this.verifier.setStatus(this.sdStatus.getValue());
-        verifier.setVerificationComment(strVerifierVerificationComment);
-        //this.verifier.setStatusDate(todaysDate());
+        this.verifier.setVerificationComment(strVerifierVerificationComment);
+        //this.verifier.setStatusDate(this.todaysDate());
 
-        saveVerifier();
+        this.saveVerifier();
     }
 
-    @Override
     public Fom setVerifyVerifierDetils(String strVerifierVerificationStatus,
-                                       String strVerifierVerificationComment,
-                                       String strAddressVerificationStatus,
-                                       String strAddressVerificationComment,
-                                       String strImageVerificationStatus,
-                                       String strImageVerificationComment,
-                                       String strIdentityDocumentVerificationStatus,
-                                       String strIdentityDocumentVerificationComment,
-                                       String strBankVerificationStatus,
-                                       String strBankVerificationComment,
-                                       String strReference1VerificationStatus,
-                                       String strReference1VerificationComment,
-                                       String strReference2VerificationStatus,
-                                       String strReference2VerificationComment,
-                                       int idFom,
-                                       boolean verified) {
+            String strVerifierVerificationComment,
+            String strAddressVerificationStatus,
+            String strAddressVerificationComment,
+            String strImageVerificationStatus,
+            String strImageVerificationComment,
+            String strIdentityDocumentVerificationStatus,
+            String strIdentityDocumentVerificationComment,
+            String strBankVerificationStatus,
+            String strBankVerificationComment,
+            String strReference1VerificationStatus,
+            String strReference1VerificationComment,
+            String strReference2VerificationStatus,
+            String strReference2VerificationComment,
+            int idFom,
+            boolean verified) {
         if (verified) {
-            sdStatus = staticDataDao.getEmploymentStatus("Verified");
-            verifier.setStatus(sdStatus.getValue());
+            this.sdStatus = this.staticDataDao.getEmploymentStatus("Verified");
+            this.verifier.setStatus(this.sdStatus.getValue());
 
-            for (Fom aFomList : fomList) {
-                if (idFom == aFomList.getId()) {
-                    fom = aFomList;
+            for (int i = 0; i < this.fomList.size(); i++) {
+                if (idFom == this.fomList.get(i).getId()) {
+                    this.fom = this.fomList.get(i);
                 }
             }
         }
 
-        verifier.setVerificationStatus(strVerifierVerificationStatus);
-        verifier.setVerificationComment(strVerifierVerificationComment);
-        verifier.setVerificationDate(todaysDate());
-        verifier.setStatusDate(todaysDate());
+        this.verifier.setVerificationStatus(strVerifierVerificationStatus);
+        this.verifier.setVerificationComment(strVerifierVerificationComment);
+        this.verifier.setVerificationDate(this.todaysDate());
+        this.verifier.setStatusDate(this.todaysDate());
 
-        address.setVerificationStatus(strAddressVerificationStatus);
-        address.setVerificationComment(strAddressVerificationComment);
-        address.setVerificationDate(todaysDate());
+        this.address.setVerificationStatus(strAddressVerificationStatus);
+        this.address.setVerificationComment(strAddressVerificationComment);
+        this.address.setVerificationDate(this.todaysDate());
 
-        image.setVerificationStatus(strImageVerificationStatus);
-        image.setVerificationComment(strImageVerificationComment);
-        image.setVerificationDate(todaysDate());
+        this.image.setVerificationStatus(strImageVerificationStatus);
+        this.image.setVerificationComment(strImageVerificationComment);
+        this.image.setVerificationDate(this.todaysDate());
 
-        identityDocument.setVerificationStatus(strIdentityDocumentVerificationStatus);
-        identityDocument.setVerificationComment(strIdentityDocumentVerificationComment);
-        identityDocument.setVerificationDate(todaysDate());
+        this.identityDocument.setVerificationStatus(strIdentityDocumentVerificationStatus);
+        this.identityDocument.setVerificationComment(strIdentityDocumentVerificationComment);
+        this.identityDocument.setVerificationDate(this.todaysDate());
 
-        bank.setVerificationStatus(strBankVerificationStatus);
-        bank.setVerificationComment(strBankVerificationComment);
-        bank.setVerificationDate(todaysDate());
+        this.bank.setVerificationStatus(strBankVerificationStatus);
+        this.bank.setVerificationComment(strBankVerificationComment);
+        this.bank.setVerificationDate(this.todaysDate());
 
-        reference1.setVerificationStatus(strReference1VerificationStatus);
-        reference1.setVerificationComment(strReference1VerificationComment);
-        reference1.setVerificationDate(todaysDate());
+        this.reference1.setVerificationStatus(strReference1VerificationStatus);
+        this.reference1.setVerificationComment(strReference1VerificationComment);
+        this.reference1.setVerificationDate(this.todaysDate());
 
-        reference2.setVerificationStatus(strReference2VerificationStatus);
-        reference2.setVerificationComment(strReference2VerificationComment);
-        reference2.setVerificationDate(todaysDate());
+        this.reference2.setVerificationStatus(strReference2VerificationStatus);
+        this.reference2.setVerificationComment(strReference2VerificationComment);
+        this.reference2.setVerificationDate(this.todaysDate());
 
-        return fom;
+        return this.fom;
     }
 
-    @Override
     public void getEmployedVerifierDetails(int id) {
         // set verifier details
-        for (Verifier anEmployedVerifiersList : employedVerifiersList) {
-            if (anEmployedVerifiersList.getId() == id) {
-                verifier = anEmployedVerifiersList;
+        for (int i = 0; i < this.employedVerifiersList.size(); i++) {
+            if (this.employedVerifiersList.get(i).getId() == id) {
+                this.verifier = this.employedVerifiersList.get(i);
             }
         }
     }
 
-    @Override
     public void getRegisteredVerifierDetails(int id) {
         // set verifier details
-        for (Verifier aRegisteredVerifiersList : registeredVerifiersList) {
-            if (aRegisteredVerifiersList.getId() == id) {
-                verifier = aRegisteredVerifiersList;
+        for (int i = 0; i < this.registeredVerifiersList.size(); i++) {
+            if (this.registeredVerifiersList.get(i).getId() == id) {
+                this.verifier = this.registeredVerifiersList.get(i);
             }
         }
 
         //set address details
-        for (Address aRegisteredVerifierAddressList : registeredVerifierAddressList) {
-            if (aRegisteredVerifierAddressList.getVerifier().getId() == id) {
-                address = aRegisteredVerifierAddressList;
+        for (int i = 0; i < this.registeredVerifierAddressList.size(); i++) {
+            if (this.registeredVerifierAddressList.get(i).getVerifier().getId() == id) {
+                this.address = this.registeredVerifierAddressList.get(i);
             }
         }
 
-        address = addressDao.getAddress(verifier, sdVerifierType.getValue());
-        verifierDistrict = address.getDistrict();
+        this.address = this.addressDao.getAddress(this.verifier, this.sdVerifierType.getValue());
+        this.verifierDistrict = this.address.getDistrict();
 
-        image = verifier.getImage();
-        identityDocument = identityDocumentDao.getIdentityDocument(verifier, sdVerifierType.getValue());
-        bank = bankDao.getBank(verifier, sdVerifierType.getValue());
+        this.image = this.verifier.getImage();
+        this.identityDocument = this.identityDocumentDao.getIdentityDocument(this.verifier, this.sdVerifierType.getValue());
+        this.bank = this.bankDao.getBank(this.verifier, this.sdVerifierType.getValue());
 
-        List<Reference> r = referenceDao.getReferences(verifier, sdVerifierType.getValue());
-        reference1 = r.get(0);
-        reference2 = r.get(1);
+        List<Reference> r = new ArrayList<Reference>();
+        r = this.referenceDao.getReferences(this.verifier, this.sdVerifierType.getValue());
+        this.reference1 = r.get(0);
+        this.reference2 = r.get(1);
     }
 
-    @Override
     public List<Fom> getFoms() {
-        fomList = fomDao.getFom();
+        this.fomList = this.fomDao.getFom();
 
-        return fomList;
+        return this.fomList;
     }
 
-    @Override
     public List<Verifier> getEmployedVerifiersWithoutDevice() {
-        employedVerifiersList.clear();
+        List<Address> aList;
 
-        sdVerifierType = staticDataDao.getEmployeeType("Verifier");
-        sdStatus = staticDataDao.getEmploymentStatus("Employed");
-        List<Address> aList = addressDao.getAddressByCountryAndRegion(verifierCountry, verifierRegion,
-                                                                      sdVerifierType.getValue());
+        this.sdVerifierType = this.staticDataDao.getEmployeeType("Verifier");
+        this.sdStatus = this.staticDataDao.getVerificationStatus("Verified");
+        aList = this.addressDao.getAddressByCountryAndRegion(this.verifierCountry, this.verifierRegion, this.sdVerifierType.getValue());
 
-        for (Address anAList : aList) {
-            if (anAList.getVerifier().getStatus().equals(sdStatus.getValue())) {
-                if (anAList.getVerifier().getMobileDevice() == null) {
-                    employedVerifiersList.add(anAList.getVerifier());
-                    LOG.debug("------------------- adsress list, employed verifier id: {}",
-                              anAList.getVerifier().getId());
-                }
-            }
-        }
+        this.employedVerifiersList = aList.stream()
+                .filter(a -> a.getVerifier().getStatus().equals(this.sdStatus.getValue()))
+                .filter(a -> a.getVerifier().getMobileDevice() == null)
+                .map(Address::getVerifier)
+                .collect(toList());
 
-        LOG.debug("------------------- employed verifier list size: {}", employedVerifiersList.size());
+        LOG.debug("------------------- employed verifier list size: {}", this.employedVerifiersList.size());
 
-        employedVerifierAddressList = aList;
+        this.employedVerifierAddressList = aList;
 
-        return employedVerifiersList;
+        return this.employedVerifiersList;
     }
 
-    @Override
     public List<Verifier> getRegisteredVerifiers() {
-        registeredVerifiersList.clear();
+        List<Address> aList = new ArrayList<Address>();
+        this.registeredVerifiersList.clear();
 
-        sdVerifierType = staticDataDao.getEmployeeType("Verifier");
-        sdStatus = staticDataDao.getEmploymentStatus("Registered");
-        List<Address> aList = addressDao.getAddressByCountryAndRegion(verifierCountry, verifierRegion,
-                                                                      sdVerifierType.getValue());
+        this.sdVerifierType = this.staticDataDao.getEmployeeType("Verifier");
+        this.sdStatus = this.staticDataDao.getEmploymentStatus("Registered");
+        aList = this.addressDao.getAddressByCountryAndRegion(this.verifierCountry, this.verifierRegion, this.sdVerifierType.getValue());
 
-        for (Address anAList : aList) {
-            if (anAList.getVerifier().getStatus().equals(sdStatus.getValue())) {
-                registeredVerifiersList.add(anAList.getVerifier());
-                LOG.debug("------------------- adsress list, registered verifier id: {}",
-                          anAList.getVerifier().getId());
+        for (int i = 0; i < aList.size(); i++) {
+            if (aList.get(i).getVerifier().getStatus().equals(this.sdStatus.getValue())) {
+                this.registeredVerifiersList.add(aList.get(i).getVerifier());
+                LOG.debug("------------------- adsress list, registered verifier id: {}", aList.get(i).getVerifier().getId());
             }
         }
 
-        LOG.debug("------------------- registered verifier list size: {}", registeredVerifiersList.size());
+        LOG.debug("------------------- registered verifier list size: {}", this.registeredVerifiersList.size());
 
-        registeredVerifierAddressList = aList;
+        this.registeredVerifierAddressList = aList;
 
-        return registeredVerifiersList;
+        return this.registeredVerifiersList;
     }
 
-    @Override
     public List<Verifier> isVerifier(String email, String password) {
-        StaticData sdPreregistered = staticDataDao.getEmploymentStatus("Preregistered");
-        return verifierDao.getPreRegisteredVerifierByEmailAndPassword(email, password, sdPreregistered.getValue());
+        StaticData sdPreregistered = new StaticData();
+        sdPreregistered = this.staticDataDao.getEmploymentStatus("Preregistered");
+        return this.verifierDao.getPreRegisteredVerifierByEmailAndPassword(email, password, sdPreregistered.getValue());
     }
 
-    @Override
     public Verifier logInVerifier(String email, String password) {
-        verifierCountry = new Country();
-        verifierRegion = new Region();
-        verifierDistrict = new District();
-        verifier = new Verifier();
-        address = new Address();
-        image = new Image();
-        identityDocument = new IdentityDocument();
-        bank = new Bank();
-        reference1 = new Reference();
-        reference2 = new Reference();
+        this.verifierCountry = new Country();
+        this.verifierRegion = new Region();
+        this.verifierDistrict = new District();
+        this.verifier = new Verifier();
+        this.address = new Address();
+        this.image = new Image();
+        this.identityDocument = new IdentityDocument();
+        this.bank = new Bank();
+        this.reference1 = new Reference();
+        this.reference2 = new Reference();
 
-        StaticData sdPreregistered = staticDataDao.getEmploymentStatus("Preregistered");
-        List<Verifier> verifierList = verifierDao.getPreRegisteredVerifierByEmailAndPassword(email, password,
-                                                                                             sdPreregistered.getValue());
+        List<Verifier> verifierList = new ArrayList<Verifier>();
+        StaticData sdPreregistered = new StaticData();
+        sdPreregistered = this.staticDataDao.getEmploymentStatus("Preregistered");
+        verifierList = this.verifierDao.getPreRegisteredVerifierByEmailAndPassword(email, password, sdPreregistered.getValue());
 
         if (verifierList.isEmpty()) {
             return null;
-        }
-        else {
-            verifier = verifierList.get(0);
-            sdVerifierType = staticDataDao.getEmployeeType("Verifier");
+        } else {
+            this.verifier = verifierList.get(0);
+            this.sdVerifierType = this.staticDataDao.getEmployeeType("Verifier");
 
             LOG.debug("------------- LogInVerifier in verifierService verifier id: {}", verifier.getId());
 
-            if (verifier.getImage() != null) {
-                image = verifier.getImage();
+            if (this.verifier.getImage() != null) {
+                this.image = this.verifier.getImage();
             }
 
-            address = addressDao.getAddress(verifier, sdVerifierType.getValue());
+            this.address = this.addressDao.getAddress(this.verifier, this.sdVerifierType.getValue());
 
-            if (address == null) {
-                address = new Address();
-            }
-            else {
-                verifierCountry = address.getCountry();
-                verifierRegion = address.getRegion();
-                verifierDistrict = address.getDistrict();
-            }
-
-            identityDocument = identityDocumentDao.getIdentityDocument(verifier, sdVerifierType.getValue());
-            if (identityDocument == null) {
-                identityDocument = new IdentityDocument();
+            if (this.address == null) {
+                this.address = new Address();
+            } else {
+                this.verifierCountry = this.address.getCountry();
+                this.verifierRegion = this.address.getRegion();
+                this.verifierDistrict = this.address.getDistrict();
             }
 
-            bank = bankDao.getBank(verifier, sdVerifierType.getValue());
-            if (bank == null) {
-                bank = new Bank();
+            this.identityDocument = this.identityDocumentDao.getIdentityDocument(this.verifier, this.sdVerifierType.getValue());
+            if (this.identityDocument == null) {
+                this.identityDocument = new IdentityDocument();
             }
 
-            LOG.debug("------------- LogInVerifier in verifierService before reference verifier id: {}",
-                      verifier.getId());
-            LOG.debug("------------- LogInVerifier in verifierService before reference verifier employee type: {}",
-                      sdVerifierType.getValue());
-            List<Reference> referenceList = referenceDao.getReferences(verifier, sdVerifierType.getValue());
+            this.bank = this.bankDao.getBank(this.verifier, this.sdVerifierType.getValue());
+            if (this.bank == null) {
+                this.bank = new Bank();
+            }
 
-            LOG.debug("------------- LogInVerifier in verifierService before referenceList size: {}",
-                      referenceList.size());
+            LOG.debug("------------- LogInVerifier in verifierService before reference verifier id: {}", verifier.getId());
+            LOG.debug("------------- LogInVerifier in verifierService before reference verifier employee type: {}", this.sdVerifierType.getValue());
+            List<Reference> referenceList = new ArrayList<Reference>();
+            referenceList = this.referenceDao.getReferences(this.verifier, this.sdVerifierType.getValue());
+
+            LOG.debug("------------- LogInVerifier in verifierService before referenceList size: {}", referenceList.size());
             if (!referenceList.isEmpty()) {
                 if (referenceList.size() == 2) {
-                    reference1 = referenceList.get(0);
-                    reference2 = referenceList.get(1);
-                }
-                else {
+                    this.reference1 = referenceList.get(0);
+                    this.reference2 = referenceList.get(1);
+                } else {
                     if (referenceList.size() == 1) {
-                        reference1 = referenceList.get(0);
+                        this.reference1 = referenceList.get(0);
                     }
                 }
             }
 
             LOG.debug("------------------ end of LoginVerifier in verifierService");
 
-            return verifier;
+            return this.verifier;
         }
     }
 
-    @Override
     public int preRegisterVerifier(String email, String password) {
         Verifier ver = new Verifier();
 
         ver.setEmail(email);
         ver.setPassword(password);
 
-        StaticData sdPreregistered = staticDataDao.getEmploymentStatus("Preregistered");
+        StaticData sdPreregistered = new StaticData();
+        sdPreregistered = this.staticDataDao.getEmploymentStatus("Preregistered");
         ver.setStatus(sdPreregistered.getValue());
-        ver.setStatusDate(todaysDate());
 
-        ver = verifierDao.setVerifier(ver);
+        Calendar cal = Calendar.getInstance();
+        Date today = cal.getTime();
+        SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd");
+        java.sql.Date sqlDate = java.sql.Date.valueOf(dateFmt.format(today));
+        LOG.debug("------------------------sql date = {}", sqlDate);
+
+        ver.setStatusDate(sqlDate);
+
+        ver = this.verifierDao.setVerifier(ver);
         return ver.getId();
     }
 
-    @Override
     public void save(int page) {
-        sdAwaitingVerificationType = staticDataDao.getVerificationStatus("Awaiting Verification");
-        sdStatus = staticDataDao.getEmploymentStatus("Preregistered");
+        this.sdAwaitingVerificationType = this.staticDataDao.getVerificationStatus("Awaiting Verification");
+        this.sdStatus = this.staticDataDao.getEmploymentStatus("Preregistered");
 
         // save verifier personal, address and image details
         if (page == 4) {
-            image.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveImage();
-            verifier.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveVerifier();
-            address.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveAddress();
+            this.image.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveImage();
+            this.verifier.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveVerifier();
+            this.address.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveAddress();
         }
 
         //save verifier identity document, personal, address and image details
         if (page == 5) {
-            image.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveImage();
-            verifier.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveVerifier();
-            address.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveAddress();
-            identityDocument.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveIdentityDocument();
+            this.image.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveImage();
+            this.verifier.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveVerifier();
+            this.address.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveAddress();
+            this.identityDocument.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveIdentityDocument();
         }
 
         // save verifier bank, personal, address and image details
         if (page == 6) {
-            image.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveImage();
-            verifier.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveVerifier();
-            address.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveAddress();
-            identityDocument.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveIdentityDocument();
-            bank.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveBank();
+            this.image.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveImage();
+            this.verifier.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveVerifier();
+            this.address.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveAddress();
+            this.identityDocument.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveIdentityDocument();
+            this.bank.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveBank();
         }
 
         //save verifier reference, personal, bank, address and image details
         if (page == 7) {
-            image.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveImage();
-            verifier.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveVerifier();
-            address.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveAddress();
-            identityDocument.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveIdentityDocument();
-            bank.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveBank();
-            reference1.setVerificationStatus(sdAwaitingVerificationType.getValue());
+            this.image.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveImage();
+            this.verifier.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveVerifier();
+            this.address.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveAddress();
+            this.identityDocument.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveIdentityDocument();
+            this.bank.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveBank();
+            this.reference1.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
             //this.reference2.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
-            saveReference1();
+            this.saveReference1();
         }
 
         if (page == 10) {
-            image.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveImage();
-            verifier.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveVerifier();
-            address.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveAddress();
-            identityDocument.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveIdentityDocument();
-            bank.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveBank();
-            reference1.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveReference1();
-            reference2.setVerificationStatus(sdAwaitingVerificationType.getValue());
-            saveReference2();
+            this.image.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveImage();
+            this.verifier.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveVerifier();
+            this.address.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveAddress();
+            this.identityDocument.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveIdentityDocument();
+            this.bank.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveBank();
+            this.reference1.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveReference1();
+            this.reference2.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+            this.saveReference2();
         }
     }
 
-    @Override
+    public java.sql.Date todaysDate() {
+        Calendar cal = Calendar.getInstance();
+        Date today = cal.getTime();
+        SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd");
+        java.sql.Date sqlDate = java.sql.Date.valueOf(dateFmt.format(today));
+        LOG.debug("------------------------sql date = {}", sqlDate);
+        return sqlDate;
+    }
+
+    public void saveImage() {
+        LOG.debug("------------------------save image = {}", this.image);
+
+        this.image.setVerificationDate(this.todaysDate());
+        this.image.setEmployeeType(this.sdVerifierType.getValue());
+
+        //this.image.setId(1);
+        this.image = this.imageDao.saveImage(image);
+    }
+
+    public void saveVerifier() {
+        this.verifier.setStatus(this.sdStatus.getValue());
+        this.verifier.setStatusDate(this.todaysDate());
+
+        this.verifier.setVerificationDate(this.todaysDate());
+        this.verifier.setImage(this.image);
+
+        this.verifier = this.verifierDao.setVerifier(verifier);
+    }
+
+    public void saveAddress() {
+        this.address.setVerificationDate(this.todaysDate());
+        this.address.setEmployeeType(this.sdVerifierType.getValue());
+        this.address.setVerifier(this.verifier);
+
+        LOG.debug("----------- save address, address country id: {}", address.getCountry().getId());
+        this.address = this.addressDao.saveAddress(this.address);
+    }
+
+    public void saveIdentityDocument() {
+        this.identityDocument.setVerificationDate(this.todaysDate());
+        this.identityDocument.setEmployeeType(this.sdVerifierType.getValue());
+        this.identityDocument.setVerifier(this.verifier);
+
+        this.identityDocument = this.identityDocumentDao.saveIdentityDocument(this.identityDocument);
+    }
+
+    public void saveInterview() {
+        this.sdInterviewStatus = this.staticDataDao.getInterviewStatus("Awaiting Arrangement");
+        this.sdVerifierType = this.staticDataDao.getEmployeeType("Verifier");
+        this.interview.setFom(fom);
+        this.interview.setVerifier(verifier);
+        this.interview.setStatus(this.sdInterviewStatus.getValue());
+        this.interview.setEmployeeType(this.sdVerifierType.getValue());
+
+        this.interview = this.interviewDao.saveInterview(this.interview);
+    }
+
+    public void saveBank() {
+        this.bank.setVerificationDate(this.todaysDate());
+        this.bank.setEmployeeType(this.sdVerifierType.getValue());
+        this.bank.setVerifier(this.verifier);
+
+        this.bank = this.bankDao.saveBank(this.bank);
+    }
+
+    public void saveReference1() {
+        this.reference1.setVerificationDate(this.todaysDate());
+        this.reference1.setEmployeeType(this.sdVerifierType.getValue());
+        this.reference1.setVerifier(this.verifier);
+
+        this.reference1 = this.referenceDao.saveReference(this.reference1);
+    }
+
+    public void saveReference2() {
+        this.reference2.setVerificationDate(this.todaysDate());
+        this.reference2.setEmployeeType(this.sdVerifierType.getValue());
+        this.reference2.setVerifier(this.verifier);
+
+        this.reference2 = this.referenceDao.saveReference(this.reference2);
+    }
+
     public Interview verifyVerifier() {
-        saveImage();
-        saveVerifier();
-        saveAddress();
-        saveIdentityDocument();
-        saveBank();
-        saveReference1();
-        saveReference2();
-        saveInterview();
+        this.saveImage();
+        this.saveVerifier();
+        this.saveAddress();
+        this.saveIdentityDocument();
+        this.saveBank();
+        this.saveReference1();
+        this.saveReference2();
+        this.saveInterview();
 
         return interview;
     }
 
-    @Override
     public void saveVerifyVerifier() {
-        saveImage();
-        saveVerifier();
-        saveAddress();
-        saveIdentityDocument();
-        saveBank();
-        saveReference1();
-        saveReference2();
+        this.saveImage();
+        this.saveVerifier();
+        this.saveAddress();
+        this.saveIdentityDocument();
+        this.saveBank();
+        this.saveReference1();
+        this.saveReference2();
     }
 
-    @Override
     public Verifier registerVerifier() {
-        sdAwaitingVerificationType = staticDataDao.getVerificationStatus("Awaiting Verification");
+        this.sdAwaitingVerificationType = this.staticDataDao.getVerificationStatus("Awaiting Verification");
 
-        image.setVerificationStatus(sdAwaitingVerificationType.getValue());
-        saveImage();
+        this.image.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+        this.saveImage();
 
-        sdStatus = staticDataDao.getEmploymentStatus("Registered");
+        this.sdStatus = this.staticDataDao.getEmploymentStatus("Registered");
 
-        verifier.setVerificationStatus(sdAwaitingVerificationType.getValue());
-        saveVerifier();
-        address.setVerificationStatus(sdAwaitingVerificationType.getValue());
-        saveAddress();
-        identityDocument.setVerificationStatus(sdAwaitingVerificationType.getValue());
-        saveIdentityDocument();
-        bank.setVerificationStatus(sdAwaitingVerificationType.getValue());
-        saveBank();
-        reference1.setVerificationStatus(sdAwaitingVerificationType.getValue());
-        saveReference1();
-        reference2.setVerificationStatus(sdAwaitingVerificationType.getValue());
-        saveReference2();
+        this.verifier.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+        this.saveVerifier();
+        this.address.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+        this.saveAddress();
+        this.identityDocument.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+        this.saveIdentityDocument();
+        this.bank.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+        this.saveBank();
+        this.reference1.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+        this.saveReference1();
+        this.reference2.setVerificationStatus(this.sdAwaitingVerificationType.getValue());
+        this.saveReference2();
 
         return verifier;
     }
 
-    @Override
     public void setVerifierDetails(String strFirstName,
-                                   String strMiddleName,
-                                   String strLastName,
-                                   String strGender,
-                                   java.sql.Date sqlDob,
-                                   String strTelephoneNumber,
-                                   String strEducationLevel,
-                                   String strEducationType) {
-        verifier.setFirstName(strFirstName);
-        verifier.setMiddleName(strMiddleName);
-        verifier.setLastName(strLastName);
-        verifier.setGender(strGender);
-        verifier.setDob(sqlDob);
+            String strMiddleName,
+            String strLastName,
+            String strGender,
+            java.sql.Date sqlDob,
+            String strTelephoneNumber,
+            String strEducationLevel,
+            String strEducationType) {
+        this.verifier.setFirstName(strFirstName);
+        this.verifier.setMiddleName(strMiddleName);
+        this.verifier.setLastName(strLastName);
+        this.verifier.setGender(strGender);
+        this.verifier.setDob(sqlDob);
 
-        verifier.setTelephoneNumber(strTelephoneNumber);
-        verifier.setEducationLevel(strEducationLevel);
-        verifier.setEducationType(strEducationType);
+        this.verifier.setTelephoneNumber(strTelephoneNumber);
+        this.verifier.setEducationLevel(strEducationLevel);
+        this.verifier.setEducationType(strEducationType);
     }
 
-    @Override
     public void setIdentityDocumentDetails(String strType,
-                                           String strNumber,
-                                           java.sql.Date sqlIssueDate,
-                                           java.sql.Date sqlExpiryDate) {
-        identityDocument.setType(strType);
-        identityDocument.setNumber(strNumber);
-        identityDocument.setIssueDate(sqlIssueDate);
-        identityDocument.setExpiryDate(sqlExpiryDate);
+            String strNumber,
+            java.sql.Date sqlIssueDate,
+            java.sql.Date sqlExpiryDate) {
+        this.identityDocument.setType(strType);
+        this.identityDocument.setNumber(strNumber);
+        this.identityDocument.setIssueDate(sqlIssueDate);
+        this.identityDocument.setExpiryDate(sqlExpiryDate);
     }
 
-    @Override
     public void setBankDetails(String strAccountNumber,
-                               String strBankName,
-                               String strBankContactNumber,
-                               String strBankAddress,
-                               String strBankSortCode,
-                               String strBankIban) {
-        bank.setAccountNumber(strAccountNumber);
-        bank.setBankName(strBankName);
-        bank.setContactNumber(strBankContactNumber);
-        bank.setAddress(strBankAddress);
-        bank.setSortcode(strBankSortCode);
-        bank.setIban(strBankIban);
+            String strBankName,
+            String strBankContactNumber,
+            String strBankAddress,
+            String strBankSortCode,
+            String strBankIban) {
+        this.bank.setAccountNumber(strAccountNumber);
+        this.bank.setBankName(strBankName);
+        this.bank.setContactNumber(strBankContactNumber);
+        this.bank.setAddress(strBankAddress);
+        this.bank.setSortcode(strBankSortCode);
+        this.bank.setIban(strBankIban);
     }
 
-    @Override
     public void setReference1Details(String strReference1Title,
-                                     String strReference1FullName,
-                                     String strReference1OrganisationName,
-                                     String strReference1Designation,
-                                     String strReference1ContactNumber,
-                                     String strReference1Email,
-                                     String strReference1Address) {
-        reference1.setTitle(strReference1Title);
-        reference1.setFullName(strReference1FullName);
-        reference1.setOrganisationName(strReference1OrganisationName);
-        reference1.setDesignation(strReference1Designation);
-        reference1.setContactNumber(strReference1ContactNumber);
-        reference1.setEmail(strReference1Email);
-        reference1.setAddress(strReference1Address);
+            String strReference1FullName,
+            String strReference1OrganisationName,
+            String strReference1Designation,
+            String strReference1ContactNumber,
+            String strReference1Email,
+            String strReference1Address) {
+        this.reference1.setTitle(strReference1Title);
+        this.reference1.setFullName(strReference1FullName);
+        this.reference1.setOrganisationName(strReference1OrganisationName);
+        this.reference1.setDesignation(strReference1Designation);
+        this.reference1.setContactNumber(strReference1ContactNumber);
+        this.reference1.setEmail(strReference1Email);
+        this.reference1.setAddress(strReference1Address);
     }
 
-    @Override
     public void setReference2Details(String strReference2Title,
-                                     String strReference2FullName,
-                                     String strReference2OrganisationName,
-                                     String strReference2Designation,
-                                     String strReference2ContactNumber,
-                                     String strReference2Email,
-                                     String strReference2Address) {
-        reference2.setTitle(strReference2Title);
-        reference2.setFullName(strReference2FullName);
-        reference2.setOrganisationName(strReference2OrganisationName);
-        reference2.setDesignation(strReference2Designation);
-        reference2.setContactNumber(strReference2ContactNumber);
-        reference2.setEmail(strReference2Email);
-        reference2.setAddress(strReference2Address);
+            String strReference2FullName,
+            String strReference2OrganisationName,
+            String strReference2Designation,
+            String strReference2ContactNumber,
+            String strReference2Email,
+            String strReference2Address) {
+        this.reference2.setTitle(strReference2Title);
+        this.reference2.setFullName(strReference2FullName);
+        this.reference2.setOrganisationName(strReference2OrganisationName);
+        this.reference2.setDesignation(strReference2Designation);
+        this.reference2.setContactNumber(strReference2ContactNumber);
+        this.reference2.setEmail(strReference2Email);
+        this.reference2.setAddress(strReference2Address);
     }
 
-    @Override
     public void setAddressDetails(String strStreet,
-                                  String strVillage,
-                                  String strPostcode,
-                                  String strTown,
-                                  String strCity) {
-        address.setStreet(strStreet);
-        address.setVillage(strVillage);
-        address.setPostcode(strPostcode);
-        address.setTown(strTown);
-        address.setCity(strCity);
-        address.setDistrict(verifierDistrict);
-        address.setRegion(verifierRegion);
-        address.setCountry(verifierCountry);
+            String strVillage,
+            String strPostcode,
+            String strTown,
+            String strCity) {
+        this.address.setStreet(strStreet);
+        this.address.setVillage(strVillage);
+        this.address.setPostcode(strPostcode);
+        this.address.setTown(strTown);
+        this.address.setCity(strCity);
+        this.address.setDistrict(this.verifierDistrict);
+        this.address.setRegion(this.verifierRegion);
+        this.address.setCountry(this.verifierCountry);
     }
 
-    @Override
     public void setImageDetails(MultipartFile mFile) {
+        Calendar cal = Calendar.getInstance();
+        Date today = cal.getTime();
+        SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd");
+        java.sql.Date sqlDate = java.sql.Date.valueOf(dateFmt.format(today));
+        LOG.debug("------------------------sql date = {}", sqlDate);
 
-        image.setDate(todaysDate());
+        this.image.setDate(sqlDate);
+        LOG.debug("------------------------verifier service set image details mFile: = {}", mFile);
 
-        byte[] bFile = new byte[(int)mFile.getSize()];
+        byte[] bFile = new byte[(int) mFile.getSize()];
+
         try {
             mFile.getInputStream().read(bFile);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catch (Exception e) {
-            LOG.warn("Error while reading image file", e);
-        }
-        image.setPhoto(bFile);
+
+        this.image.setPhoto(bFile);
     }
 
-    @Override
     public List<StaticData> getVerificationStatusList() {
-        return staticDataDao.getVerificationStatusTypes();
+        return this.staticDataDao.getVerificationStatusTypes();
     }
 
-    @Override
     public List<StaticData> getIdentityDocumentTypeList() {
-        return staticDataDao.getIdentityDocumentTypes();
+        return this.staticDataDao.getIdentityDocumentTypes();
     }
 
-    @Override
     public List<StaticData> getTitleList() {
-        return staticDataDao.getTitles();
+        return this.staticDataDao.getTitles();
     }
 
-    @Override
     public List<StaticData> getGenderList() {
-        return staticDataDao.getGenders();
+        return this.staticDataDao.getGenders();
     }
 
-    @Override
     public List<StaticData> getEducationLevelList() {
-        return staticDataDao.getEducationLevels();
+        return this.staticDataDao.getEducationLevels();
     }
 
-    @Override
     public List<StaticData> getEducationTypeList() {
-        return staticDataDao.getEducationTypes();
+        return this.staticDataDao.getEducationTypes();
     }
 
-    @Override
     public List<Country> getCountryList() {
-        countryList = countryDao.getCountries();
+        this.countryList = this.countryDao.getCountries();
         return countryList;
     }
 
-    @Override
     public List<Device> getUnallocatedDeviceList() {
-        StaticData deviceAllocation = staticDataDao.getDeviceAllocation("No");
-        deviceList = deviceDao.getDevicesByAllocation(deviceAllocation.getValue());
+        StaticData deviceAllocation = this.staticDataDao.getDeviceAllocation("No");
+        this.deviceList = this.deviceDao.getDevicesByAllocation(deviceAllocation.getValue());
 
-        return deviceList;
+        return this.deviceList;
     }
 
-    @Override
-    public List<Region> getRegionList() {
-        LOG.debug("---------------- verifier country: {}", verifierCountry.getDescription());
-        regionList = regionDao.getRegions(verifierCountry);
+    public List<Region> getRegionList(/*Country c*/) {
+        LOG.debug("---------------- verifier country: {}", this.verifierCountry.getDescription());
+        this.regionList = this.regionDao.getRegions(this.verifierCountry);
         return regionList;
     }
 
-    @Override
     public List<District> getDistrictList() {
-        LOG.debug("---------------- verifier region: {}", verifierRegion.getDescription());
-        districtList = districtDao.getDistricts(verifierRegion);
+        LOG.debug("---------------- verifier region: {}", this.verifierRegion.getDescription());
+        this.districtList = this.districtDao.getDistricts(this.verifierRegion);
         return districtList;
     }
 
-    @Override
     public Device setVerifierDevice(long imei) {
-        for (Device aDeviceList : deviceList) {
-            if (imei == aDeviceList.getImei()) {
-                verifierDevice = aDeviceList;
+        for (int i = 0; i < this.deviceList.size(); i++) {
+            if (imei == this.deviceList.get(i).getImei()) {
+                this.verifierDevice = this.deviceList.get(i);
             }
         }
 
-        return verifierDevice;
+        return this.verifierDevice;
     }
 
-    @Override
     public Country setVerifierCountry(int id) {
-        for (Country aCountryList : countryList) {
-            if (id == aCountryList.getId()) {
-                verifierCountry = aCountryList;
+        for (int i = 0; i < this.countryList.size(); i++) {
+            if (id == this.countryList.get(i).getId()) {
+                this.verifierCountry = this.countryList.get(i);
             }
         }
 
-        return verifierCountry;
+        return this.verifierCountry;
     }
 
-    @Override
     public Region setVerifierRegion(int idRegion) {
         LOG.debug("---------------- verifier region id: {}", idRegion);
-        for (Region aRegionList : regionList) {
-            if (idRegion == aRegionList.getId()) {
-                verifierRegion = aRegionList;
+        for (int i = 0; i < this.regionList.size(); i++) {
+            if (idRegion == this.regionList.get(i).getId()) {
+                this.verifierRegion = this.regionList.get(i);
             }
         }
 
-        return verifierRegion;
+        return this.verifierRegion;
     }
 
-    @Override
     public District setVerifierDistrict(int idDistrict) {
         LOG.debug("---------------- verifier district id: {}", idDistrict);
-        for (District aDistrictList : districtList) {
-            if (idDistrict == aDistrictList.getId()) {
-                verifierDistrict = aDistrictList;
+        for (int i = 0; i < this.districtList.size(); i++) {
+            if (idDistrict == this.districtList.get(i).getId()) {
+                this.verifierDistrict = this.districtList.get(i);
             }
         }
 
-        return verifierDistrict;
+        return this.verifierDistrict;
     }
 
-    @Override
     public boolean checkEmail(String email) {
-        return verifierDao.getVerifierByEmail(email);
+        return this.verifierDao.getVerifierByEmail(email);
     }
 
-    @Override
+    public java.sql.Date getCurrentDate() {
+        Calendar cal = Calendar.getInstance();
+        Date today = cal.getTime();
+        SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy-MM-dd");
+        java.sql.Date sqlDate = java.sql.Date.valueOf(dateFmt.format(today));
+        LOG.debug("------------------------sql date = {}", sqlDate);
+
+        return sqlDate;
+    }
+
     public List<Bank> getBanksWhereAccountIsRegistered(String account) {
-        return bankDao.getBankByAccountNumber(account);
+        List<Bank> bankList = new ArrayList<Bank>();
+        bankList = this.bankDao.getBankByAccountNumber(account);
+
+        return bankList;
     }
-
-    private static java.sql.Date todaysDate() {
-        return java.sql.Date.valueOf(LocalDate.now());
-    }
-
-    private void saveImage() {
-        LOG.debug("------------------------save image = {}", image);
-
-        image.setVerificationDate(todaysDate());
-        image.setEmployeeType(sdVerifierType.getValue());
-
-        //this.image.setId(1);
-        image = imageDao.saveImage(image);
-    }
-
-    private void saveVerifier() {
-        verifier.setStatus(sdStatus.getValue());
-        verifier.setStatusDate(todaysDate());
-
-        verifier.setVerificationDate(todaysDate());
-        verifier.setImage(image);
-
-        verifier = verifierDao.setVerifier(verifier);
-    }
-
-    private void saveAddress() {
-        address.setVerificationDate(todaysDate());
-        address.setEmployeeType(sdVerifierType.getValue());
-        address.setVerifier(verifier);
-
-        LOG.debug("----------- save address, address country id: {}", address.getCountry().getId());
-        address = addressDao.saveAddress(address);
-    }
-
-    private void saveIdentityDocument() {
-        identityDocument.setVerificationDate(todaysDate());
-        identityDocument.setEmployeeType(sdVerifierType.getValue());
-        identityDocument.setVerifier(verifier);
-
-        identityDocument = identityDocumentDao.saveIdentityDocument(identityDocument);
-    }
-
-    private void saveInterview() {
-        sdInterviewStatus = staticDataDao.getInterviewStatus("Awaiting Arrangement");
-        sdVerifierType = staticDataDao.getEmployeeType("Verifier");
-        interview.setFom(fom);
-        interview.setVerifier(verifier);
-        interview.setStatus(sdInterviewStatus.getValue());
-        interview.setEmployeeType(sdVerifierType.getValue());
-
-        interview = interviewDao.saveInterview(interview);
-    }
-
-    private void saveBank() {
-        bank.setVerificationDate(todaysDate());
-        bank.setEmployeeType(sdVerifierType.getValue());
-        bank.setVerifier(verifier);
-
-        bank = bankDao.saveBank(bank);
-    }
-
-    private void saveReference1() {
-        reference1.setVerificationDate(todaysDate());
-        reference1.setEmployeeType(sdVerifierType.getValue());
-        reference1.setVerifier(verifier);
-
-        reference1 = referenceDao.saveReference(reference1);
-    }
-
-    private void saveReference2() {
-        reference2.setVerificationDate(todaysDate());
-        reference2.setEmployeeType(sdVerifierType.getValue());
-        reference2.setVerifier(verifier);
-
-        reference2 = referenceDao.saveReference(reference2);
-    }
-
 }
