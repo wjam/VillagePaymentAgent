@@ -118,8 +118,8 @@ public class IdentityDocumentValidator implements Validator {
                 if (currentDate.after(gcExpiryDate)) {
                     errors.rejectValue("identityDocumentExpiryDate", "required.identityDocumentExpiryDate", "The Expiry Date has to be after the current date.");
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception exception) {
+                LOG.warn("The expiry date has to be after the current date.", exception);
             }
         }
 
