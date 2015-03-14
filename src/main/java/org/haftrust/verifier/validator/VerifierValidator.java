@@ -88,10 +88,10 @@ public class VerifierValidator implements Validator {
             gc.set(GregorianCalendar.DATE, day);
 
             gc.getTime(); // exception thrown here
-        } catch (Exception e) {
+        } catch (Exception exception) {
             dobOK = false;
             errors.rejectValue("dob", "required.dob", "Date of Birth is invalid.");
-            e.printStackTrace();
+            LOG.warn("Date of birth is invalid.", exception);
         }
 
         if (dobOK) {
