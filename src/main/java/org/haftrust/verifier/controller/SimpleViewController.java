@@ -11,11 +11,6 @@ public class SimpleViewController {
         return "index";
     }
 
-    @RequestMapping("noVerifierFound.htm")
-    public String noVerifierFound() {
-        return "noVerifierFound";
-    }
-
     @RequestMapping("noDeviceFound.htm")
     public String noDeviceFound() {
         return "noDeviceFound";

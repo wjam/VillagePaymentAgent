@@ -6,10 +6,6 @@
 
 <html>
    <head>
-        <c:if test="${empty adBean.vBean}">
-            <%-- TODO: This redirect should be done in the controller --%>
-            <meta http-equiv="refresh" content="0; url=noVerifierFound.htm" />
-        </c:if>
         <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
         <link href="css/style.css" rel="stylesheet" type="text/css" media="screen" />
         <title>HafTrust Allocate Mobile Device - Select Verifier Page</title>

@@ -23,7 +23,6 @@
         <property name="mappings">
             <props>
                 <prop key="verifyVerifier.htm">verifyVerifierController</prop>
-                <prop key="allocateDevice.htm">allocateDeviceController</prop>
             </props>
         </property>
     </bean>
@@ -36,24 +35,6 @@
 <bean class="org.haftrust.verifier.validator.PreRegisterVerifierValidator" >
     <property name="verifierService" ref="verifierService"/>
 </bean>
-
-   <bean id="allocateDeviceController" class="org.haftrust.verifier.controller.AllocateDeviceController">
-    <property name="pages">
-        <list>
-            <value>selectAllocateDeviceCountry</value>
-            <value>searchAllocateDeviceVerifier</value>
-            <value>selectAllocateDeviceVerifier</value>
-            <value>allocateDeviceVerifier</value>
-            <value>cancelAllocateDevice</value>
-        </list>
-    </property>
-    <property name="pageAttribute" value="page"/>
-    <property name="commandName" value="adBean"/>
-    <property name="commandClass" value="org.haftrust.verifier.view.AllocateDeviceBean"  />
-    <property name="verifierService" ref="verifierService"/>
-    <property name="successView" value="allocateDeviceConfirmation"/>
-    <property name="cancelView" value="cancelAllocateDeviceConfirmation"/>
-   </bean>
 
   <bean name="verifyVerifierController" class="org.haftrust.verifier.controller.VerifyVerifierController">
     <property name="pages">
@@ -81,10 +62,6 @@
      </property>
   </bean>
 
- <!-- <bean name="imageController" class="org.haftrust.verifier.controller.ImageController">
-     <property name="imageService" ref="imageService"/>
-  </bean>
--->
   <bean id="logInValidator" class="org.haftrust.verifier.validator.LogInValidator">
       <property name="verifierService" ref="verifierService"/>
   </bean>
@@ -95,6 +72,5 @@
   <bean id="reference2Validator" class="org.haftrust.verifier.validator.Reference2Validator"/>
   <bean id="identityDocumentValidator" class="org.haftrust.verifier.validator.IdentityDocumentValidator"/>
   <bean id="verifyVerifierValidator" class="org.haftrust.verifier.validator.VerifyVerifierValidator"/>
-  <!--<bean id="fileValidator" class="org.haftrust.verifier.validator.FileValidator"/>-->
 
 </beans>
