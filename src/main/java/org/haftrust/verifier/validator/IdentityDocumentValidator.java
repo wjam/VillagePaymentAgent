@@ -132,8 +132,8 @@ public class IdentityDocumentValidator implements Validator {
                 if (gc.after(gcExpiryDate)) {
                     errors.rejectValue("identityDocumentExpiryDate", "required.identityDocumentExpiryDate", "The Expiry Date has to be at least one year after the Issue Date.");
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception exception) {
+                LOG.warn("The expiry date has to be at least one year after the issue date.", exception);
             }
         }
     }
