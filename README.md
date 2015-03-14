@@ -25,7 +25,7 @@ The simplest way to run the application is to run `mvn jetty:run` and the go to 
 
 Previously know as Sonar, SonarQube is an open platform to manage code quality.  As such, it covers the seven axes of code quality also know as the "developers' seven deadly sins".
 
-To run Sonarqube locally:
+### Installation
  1. Download LTS version and install from [SonarQube](http://www.sonarqube.org/downloads/) website.  You can install it in the directory of your own choosing.  We refer to this directory as `<sonarqube>`.
  2. The application binaries are installed in an OS-dependent folder under `<sonarqube>/bin`. For example, the OS X binaries will be in the `<sonarqube>/bin/macosx-universal-64` sub-directory.
  3. Using the command line, cd the directory as outlined in step 2. Start sonarqube from your command line using `./sonar start` or if you prefer to tail `./sonar console`;
@@ -46,7 +46,8 @@ To run Sonarqube locally:
 </settings>
 ```
 
- 5. As sonarqube is running on port 9000 open a browser tab and navigate to `http://localhost:9000` to make sure it is working.
- 6. From your project path run `mvn clean install`.
- 7. If previous step is successful run `mvn sonar:sonar` or you can have it in one go `mvn clean install sonar:sonar`.
- 8. Refresh the browser tab from step 5.  You should see the current project metrics.
+### Run
+ 1. As sonarqube is running on port 9000 open a browser tab and navigate to `http://localhost:9000` to make sure it is working.
+ 2. From your project path run `mvn clean install`.
+ 3. If previous step is successful run `mvn sonar:sonar` or you can have it in one go `mvn clean install sonar:sonar`.
+ 4. Refresh the browser tab from step 1.  You should see the current project metrics.
