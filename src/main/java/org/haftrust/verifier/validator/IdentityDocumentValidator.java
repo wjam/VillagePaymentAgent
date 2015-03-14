@@ -108,8 +108,8 @@ public class IdentityDocumentValidator implements Validator {
                 if (currentDate.before(gc)) {
                     errors.rejectValue("identityDocumentIssueDate", "required.identityDocumentIssueDate", "The Issue Date has to be before the current date.");
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception exception) {
+                LOG.warn("The issue date has to be before the current date.", exception);
             }
         }
 
