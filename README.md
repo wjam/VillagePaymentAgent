@@ -18,7 +18,7 @@ Village Payment Agent Backend Code
 The simplest way to run the application is to run `mvn jetty:run` and the go to `http://localhost:8080/` in your browser.
 
 
-Sonarqube
+## Sonarqube
 
 Previously know as Sonar, Sonarqube is an open platform to manage code quality.
 As such, it covers the seven axes of code quality also know as the Developers seven deadly sins.
