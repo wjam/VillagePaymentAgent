@@ -93,10 +93,10 @@ public class IdentityDocumentValidator implements Validator {
             gcExpiryDate.set(GregorianCalendar.DATE, expiryDateDay);
 
             gc.getTime(); // exception thrown here
-        } catch (Exception e) {
+        } catch (Exception exception) {
             expiryDateOK = false;
             errors.rejectValue("identityDocumentExpiryDate", "required.identityDocumentExpiryDate", "Expiry Date is invalid.");
-            e.printStackTrace();
+            LOG.warn("Expiry date is invalid.", exception);
         }
 
         GregorianCalendar currentDate = new GregorianCalendar();
