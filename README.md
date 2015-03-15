@@ -7,7 +7,6 @@ Village Payment Agent Backend Code
  * Java 1.8
  * db-derby-10.11.1.1 (or greater)
  * apache-maven-3.0.4 (or greater)
- * SonarQube (if you want to run code metrics)
 
 ## Build
 `mvn package` or `mvn install`
@@ -24,32 +23,33 @@ next step.
 The simplest way to run the application is to run `mvn jetty:run` and the go to `http://localhost:8080/` in your browser.
 
 
-## SonarQube
+## Code Quality via SonarQube
 
-Previously know as Sonar, Sonarqube is an open platform to manage code quality.
-As such, it covers the seven axes of code quality also know as the Developers seven deadly sins.
+Previously know as Sonar, SonarQube is an open platform to manage code quality.  As such, it covers the seven axes of code quality also know as the "developers' seven deadly sins".
 
-To run SonarQube locally:
- 1. Download LTS version and install from [Sonarqube](http://www.sonarqube.org/downloads/) website;
- 2. From sonarqube path go to .../sonarqube/bin/macosx-universal-64 if your OS is MacOS;
- 2.1. Otherwise find the relevant OS folder in .../sonarqube/bin;
- 3. Start sonarqube from your command line using `./sonar start` or if you prefer to tail `./sonar console`;
- 4. Setup a Maven profile for sonar. Optionally if you would like to use an external database then within sonar profile 
-    properties you'll have to provide this. Your Maven settings.xml must look something similar as bellow;
+### Installation
+ 1. Download LTS version and install from [SonarQube](http://www.sonarqube.org/downloads/) website.  You can install it in the directory of your own choosing.  We refer to this directory as `<sonarqube>`.
+ 2. The application binaries are installed in an OS-dependent folder under `<sonarqube>/bin`. For example, the OS X binaries will be in the `<sonarqube>/bin/macosx-universal-64` sub-directory.
+ 3. Using the command line, cd the directory as outlined in step 2. Start sonarqube from your command line using `./sonar start` or if you prefer to tail `./sonar console`;
+ 4. Setup a Maven profile for sonar.  You'll need to add the following to your Maven `settings.xml` file.  Usually this will be in `$HOME/.m2`.
 
 ```
 <settings>
+...
     <profiles>
+       ...
         <profile>
             <id>sonar</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
         </profile>
-     </profiles>
+    </profiles>
 </settings>
 ```
 
- 5. As sonarqube is running on port 9000 go to your `http://localhost:9000` to make sure it is working;
- 6. From your project path run `mvn clean install`;
- 7. If previous step is successful run `mvn sonar:sonar` or you can have it in one go `mvn clean install sonar:sonar`;
+### Run
+ 1. As sonarqube is running on port 9000 open a browser tab and navigate to `http://localhost:9000` to make sure it is working.
+ 2. From your project path run `mvn clean install`.
+ 3. If previous step is successful run `mvn sonar:sonar` or you can have it in one go `mvn clean install sonar:sonar`.
+ 4. Refresh the browser tab from step 1.  You should see the current project metrics.
