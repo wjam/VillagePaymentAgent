@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/njacobs5074/VillagePaymentAgent.svg?branch=master)](https://travis-ci.org/njacobs5074/VillagePaymentAgent)
+
 # VillagePaymentAgent #
 Village Payment Agent Backend Code
 
@@ -5,6 +7,7 @@ Village Payment Agent Backend Code
  * Java 1.8
  * db-derby-10.11.1.1 (or greater)
  * apache-maven-3.0.4 (or greater)
+ * SonarQube (if you want to run code metrics)
 
 ## Build
 `mvn package` or `mvn install`
@@ -21,12 +24,12 @@ next step.
 The simplest way to run the application is to run `mvn jetty:run` and the go to `http://localhost:8080/` in your browser.
 
 
-## Sonarqube
+## SonarQube
 
 Previously know as Sonar, Sonarqube is an open platform to manage code quality.
 As such, it covers the seven axes of code quality also know as the Developers seven deadly sins.
 
-To run Sonarqube locally:
+To run SonarQube locally:
  1. Download LTS version and install from [Sonarqube](http://www.sonarqube.org/downloads/) website;
  2. From sonarqube path go to .../sonarqube/bin/macosx-universal-64 if your OS is MacOS;
  2.1. Otherwise find the relevant OS folder in .../sonarqube/bin;
