@@ -29,7 +29,7 @@ public class Interview {
     @Column(length = 100)
     private String comment;
 
-    @Column(name = "EMPLOYEE_TYPE", nullable = false, length = 25)
+    @Column(nullable = false, length = 25)
     private String employeeType;
 
     @ManyToOne(cascade = CascadeType.ALL, optional = false)

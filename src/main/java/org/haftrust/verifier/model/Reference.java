@@ -19,10 +19,10 @@ public class Reference {
     @GeneratedValue
     private Integer id;
 
-    @Column(name = "ORGANISATION_NAME", nullable = false, length = 45)
+    @Column(nullable = false, length = 45)
     private String organisationName;
 
-    @Column(name = "CONTACT_NUMBER", nullable = false, length = 25)
+    @Column(nullable = false, length = 25)
     private String contactNumber;
 
     @Column(nullable = false, length = 100)
@@ -31,7 +31,7 @@ public class Reference {
     @Column(length = 10)
     private String title;
 
-    @Column(name = "FULL_NAME", length = 45)
+    @Column(length = 45)
     private String fullName;
 
     @Column(length = 45)
@@ -40,16 +40,14 @@ public class Reference {
     @Column(length = 45)
     private String email;
 
-    @Column(name = "VERIFICATION_STATUS", length = 45)
+    @Column(length = 45)
     private String verificationStatus;
-
-    @Column(name = "VERIFICATION_DATE")
     private Date verificationDate;
 
-    @Column(name = "VERIFICATION_COMMENT", length = 100)
+    @Column(length = 100)
     private String verificationComment;
 
-    @Column(name = "EMPLOYEE_TYPE", length = 25, nullable = false)
+    @Column(length = 25, nullable = false)
     private String employeeType;
 
     @ManyToOne(cascade = CascadeType.ALL, optional = false)

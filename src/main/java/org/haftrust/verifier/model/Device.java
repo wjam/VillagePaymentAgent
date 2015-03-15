@@ -16,19 +16,19 @@ public class Device {
     @GeneratedValue
     private Long imei;
 
-    @Column(name = "PRODUCT_NUMBER", nullable = false, length = 45)
+    @Column(nullable = false, length = 45)
     private String productNumber;
 
-    @Column(name = "MODEL_NUMBER", nullable = false, length = 45)
+    @Column(nullable = false, length = 45)
     private String modelNumber;
 
-    @Column(name = "HT_MOBILE_NUMBER", nullable = false, length = 25)
+    @Column(nullable = false, length = 25)
     private String htMobileNumber;
 
     @Column(nullable = false, length = 4)
     private String allocation;
 
-    @Column(name = "ALLOCATION_DATE", nullable = false)
+    @Column(nullable = false)
     private Date allocationDate;
 
     public Long getImei() {

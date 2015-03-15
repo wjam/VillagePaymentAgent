@@ -25,22 +25,20 @@ public class IdentityDocument {
     @Column(nullable = false, length = 25)
     private String type;
 
-    @Column(name = "ISSUE_DATE", nullable = false)
+    @Column(nullable = false)
     private Date issueDate;
 
-    @Column(name = "EXPIRY_DATE", nullable = false)
+    @Column(nullable = false)
     private Date expiryDate;
 
-    @Column(name = "VERIFICATION_STATUS", length = 45)
+    @Column(length = 45)
     private String verificationStatus;
-
-    @Column(name = "VERIFICATION_DATE")
     private Date verificationDate;
 
-    @Column(name = "VERIFICATION_COMMENT", length = 100)
+    @Column(length = 100)
     private String verificationComment;
 
-    @Column(name = "EMPLOYEE_TYPE", length = 25, nullable = false)
+    @Column(length = 25, nullable = false)
     private String employeeType;
 
     @ManyToOne(cascade = CascadeType.ALL, optional = false)

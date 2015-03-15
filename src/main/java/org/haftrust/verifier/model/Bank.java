@@ -19,10 +19,10 @@ public class Bank {
     @GeneratedValue
     private Integer id;
 
-    @Column(nullable = false, length = 15)
+    @Column(name = "ACCOUNTNUMBER", nullable = false, length = 15)
     private String accountNumber;
 
-    @Column(name = "BANK_NAME", nullable = false, length = 45)
+    @Column(nullable = false, length = 45)
     private String bankName;
 
     @Column(nullable = false, length = 100)
@@ -34,19 +34,17 @@ public class Bank {
     @Column(length = 45)
     private String iban;
 
-    @Column(name = "CONTACT_NUMBER", length = 25)
+    @Column(length = 25)
     private String contactNumber;
 
-    @Column(name = "VERIFICATION_STATUS", length = 45)
+    @Column(length = 45)
     private String verificationStatus;
-
-    @Column(name = "VERIFICATION_DATE")
     private Date verificationDate;
 
-    @Column(name = "VERIFICATION_COMMENT", length = 100)
+    @Column(length = 100)
     private String verificationComment;
 
-    @Column(name = "EMPLOYEE_TYPE", nullable = false, length = 25)
+    @Column(nullable = false, length = 25)
     private String employeeType;
 
     @ManyToOne(cascade = CascadeType.ALL)

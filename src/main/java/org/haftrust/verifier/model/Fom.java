@@ -15,16 +15,16 @@ public class Fom {
     @GeneratedValue
     private Integer id;
 
-    @Column(name = "FIRST_NAME", nullable = false, length = 45)
+    @Column(nullable = false, length = 45)
     private String firstName;
 
-    @Column(name = "LAST_NAME", nullable = false, length = 45)
+    @Column(nullable = false, length = 45)
     private String lastName;
 
     @Column(nullable = false, length = 45)
     private String email;
 
-    @Column(name = "PASSWORD", nullable = false, length = 45)
+    @Column(nullable = false, length = 45)
     private String password;
 
     public Integer getId() {

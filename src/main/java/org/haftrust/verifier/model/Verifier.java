@@ -19,13 +19,13 @@ public class Verifier {
     @GeneratedValue
     private Integer id;
 
-    @Column(name = "FIRST_NAME", length = 45)
+    @Column(length = 45)
     private String firstName;
 
-    @Column(name = "MIDDLE_NAME", length = 45)
+    @Column(length = 45)
     private String middleName;
 
-    @Column(name = "LAST_NAME", length = 45)
+    @Column(length = 45)
     private String lastName;
 
     @Column(length = 1)
@@ -35,37 +35,33 @@ public class Verifier {
     @Column(length = 45, nullable = false)
     private String email;
 
-    @Column(name = "TELEPHONE_NUMBER", length = 25)
+    @Column(length = 25)
     private String telephoneNumber;
 
     @Column(length = 45)
     private String password;
 
-    @Column(name = "EDUCATION_TYPE", length = 45)
+    @Column(length = 45)
     private String educationType;
 
-    @Column(name = "EDUCATION_LEVEL", length = 45)
+    @Column(length = 45)
     private String educationLevel;
 
     @Column(length = 45, nullable = false)
     private String status;
 
-    @Column(name = "STATUS_DATE", nullable = false)
+    @Column(nullable = false)
     private Date statusDate;
-
-    @Column(name = "START_DATE")
     private Date startDate;
 
     @Column(name = "HT_VACANCY_IDVACANCY")
     private Integer vacancyId;
 
-    @Column(name = "VERIFICATION_STATUS", length = 45)
+    @Column(length = 45)
     private String verificationStatus;
-
-    @Column(name = "VERIFICATION_DATE")
     private Date verificationDate;
 
-    @Column(name = "VERIFICATION_COMMENT", length = 100)
+    @Column(length = 100)
     private String verificationComment;
 
     @ManyToOne(cascade = CascadeType.ALL)

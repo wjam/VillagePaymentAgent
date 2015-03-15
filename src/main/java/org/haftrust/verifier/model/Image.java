@@ -22,16 +22,14 @@ public class Image {
     @Column(nullable = false)
     private byte[] photo;
 
-    @Column(name = "VERIFICATION_STATUS", length = 45)
+    @Column(length = 45)
     private String verificationStatus;
-
-    @Column(name = "VERIFICATION_DATE")
     private Date verificationDate;
 
-    @Column(name = "VERIFICATION_COMMENT", length = 100)
+    @Column(length = 100)
     private String verificationComment;
 
-    @Column(name = "EMPLOYEE_TYPE", length = 25, nullable = false)
+    @Column(length = 25, nullable = false)
     private String employeeType;
 
     public int getId() {

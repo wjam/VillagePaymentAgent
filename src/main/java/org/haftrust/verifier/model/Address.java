@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.haftrust.verifier.model;
 
 import javax.persistence.CascadeType;
@@ -38,16 +34,14 @@ public class Address {
     @Column(length = 45)
     private String city;
 
-    @Column(name = "VERIFICATION_STATUS", length = 45)
+    @Column(length = 45)
     private String verificationStatus;
-
-    @Column(name = "VERIFICATION_DATE")
     private Date verificationDate;
 
-    @Column(name = "VERIFICATION_COMMENT", length = 100)
+    @Column(length = 100)
     private String verificationComment;
 
-    @Column(name = "EMPLOYEE_TYPE", nullable = false, length = 25)
+    @Column(nullable = false, length = 25)
     private String employeeType;
 
     @ManyToOne(cascade = CascadeType.ALL)
