@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/njacobs5074/VillagePaymentAgent.svg?branch=master)](https://travis-ci.org/njacobs5074/VillagePaymentAgent)
+[![Build Status](https://travis-ci.org/njacobs5074/VillagePaymentAgent.svg?branch=master)](https://travis-ci.org/njacobs5074/VillagePaymentAgent) (Need to fix this once Travis enabled here)
 
 # VillagePaymentAgent #
 Village Payment Agent Backend Code
