@@ -1,25 +1,38 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.haftrust.verifier.model;
 
-/**
- *
- * @author LabClass
- */
-public class District implements java.io.Serializable {
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-    private int id;
+@Entity
+@Table(name = "HT_DISTRICT", schema = "kj905")
+public class District {
+
+    @Id
+    @Column(name = "IDDISTRICT", nullable = false)
+    @GeneratedValue
+    private Integer id;
+
+    @Column(length = 45, nullable = false)
     private String title;
+
+    @Column(length = 45, nullable = false)
     private String description;
+
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "HT_REGION_IDREGION", nullable = false)
     private Region region;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

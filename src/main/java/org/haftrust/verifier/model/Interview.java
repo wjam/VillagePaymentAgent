@@ -1,31 +1,50 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.haftrust.verifier.model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.sql.Date;
 
-/**
- *
- * @author LabClass
- */
-public class Interview implements java.io.Serializable {
+@Entity
+@Table(name = "HT_INTERVIEW", schema = "kj905")
+public class Interview {
 
-    private int id;
+    @Id
+    @Column(name = "IDINTERVIEW", nullable = false)
+    @GeneratedValue
+    private Integer id;
     private Date date;
+
+    @Column(length = 100)
     private String address;
+
+    @Column(nullable = false, length = 45)
     private String status;
+
+    @Column(length = 100)
     private String comment;
+
+    @Column(name = "EMPLOYEE_TYPE", nullable = false, length = 25)
     private String employeeType;
+
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "EMP_ID", nullable = false)
     private Verifier verifier;
+
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "HT_FOM_IDFOM", nullable = false)
     private Fom fom;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

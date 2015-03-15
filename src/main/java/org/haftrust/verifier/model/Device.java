@@ -1,29 +1,41 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.haftrust.verifier.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.sql.Date;
 
-/**
- *
- * @author LabClass
- */
-public class Device implements java.io.Serializable {
+@Entity
+@Table(name = "HT_DEVICE", schema = "kj905")
+public class Device {
 
-    private long imei;
+    @Id
+    @Column(name = "IMEI", nullable = false)
+    @GeneratedValue
+    private Long imei;
+
+    @Column(name = "PRODUCT_NUMBER", nullable = false, length = 45)
     private String productNumber;
+
+    @Column(name = "MODEL_NUMBER", nullable = false, length = 45)
     private String modelNumber;
+
+    @Column(name = "HT_MOBILE_NUMBER", nullable = false, length = 25)
     private String htMobileNumber;
+
+    @Column(nullable = false, length = 4)
     private String allocation;
+
+    @Column(name = "ALLOCATION_DATE", nullable = false)
     private Date allocationDate;
 
-    public long getImei() {
+    public Long getImei() {
         return imei;
     }
 
-    public void setImei(long imei) {
+    public void setImei(Long imei) {
         this.imei = imei;
     }
 

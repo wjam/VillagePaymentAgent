@@ -1,33 +1,57 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.haftrust.verifier.model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.sql.Date;
 
-/**
- *
- * @author LabClass
- */
-public class IdentityDocument implements java.io.Serializable {
+@Entity
+@Table(name = "HT_IDENTITY_DOCUMENT", schema = "kj905")
+public class IdentityDocument {
 
-    private int id;
+    @Id
+    @Column(name = "IDIDENTITYDOCUMENT", nullable = false)
+    @GeneratedValue
+    private Integer id;
+
+    @Column(nullable = false, length = 25)
     private String number;
+
+    @Column(nullable = false, length = 25)
     private String type;
+
+    @Column(name = "ISSUE_DATE", nullable = false)
     private Date issueDate;
+
+    @Column(name = "EXPIRY_DATE", nullable = false)
     private Date expiryDate;
+
+    @Column(name = "VERIFICATION_STATUS", length = 45)
     private String verificationStatus;
+
+    @Column(name = "VERIFICATION_DATE")
     private Date verificationDate;
+
+    @Column(name = "VERIFICATION_COMMENT", length = 100)
     private String verificationComment;
+
+    @Column(name = "EMPLOYEE_TYPE", length = 25, nullable = false)
     private String employeeType;
+
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "EMP_ID", nullable = false)
     private Verifier verifier;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

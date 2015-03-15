@@ -1,24 +1,31 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.haftrust.verifier.model;
 
-/**
- *
- * @author LabClass
- */
-public class Country implements java.io.Serializable {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-    private int id;
+@Entity
+@Table(name = "HT_COUNTRY", schema = "kj905")
+public class Country {
+
+    @Id
+    @Column(name = "IDCOUNTRY", nullable = false)
+    @GeneratedValue
+    private Integer id;
+
+    @Column(nullable = false, length = 45)
     private String title;
+
+    @Column(nullable = false, length = 45)
     private String description;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -1,26 +1,37 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.haftrust.verifier.model;
 
-/**
- *
- * @author LabClass
- */
-public class Fom implements java.io.Serializable {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-    private int id;
+@Entity
+@Table(name = "HT_FOM", schema = "kj905")
+public class Fom {
+
+    @Id
+    @Column(name = "IDFOM", nullable = false)
+    @GeneratedValue
+    private Integer id;
+
+    @Column(name = "FIRST_NAME", nullable = false, length = 45)
     private String firstName;
+
+    @Column(name = "LAST_NAME", nullable = false, length = 45)
     private String lastName;
+
+    @Column(nullable = false, length = 45)
     private String email;
+
+    @Column(name = "PASSWORD", nullable = false, length = 45)
     private String password;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

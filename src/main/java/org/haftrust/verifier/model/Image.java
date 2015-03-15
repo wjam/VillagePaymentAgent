@@ -1,23 +1,37 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.haftrust.verifier.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.sql.Date;
 
-/**
- *
- * @author LabClass
- */
-public class Image implements java.io.Serializable {
+@Entity
+@Table(name = "HT_IMAGE", schema = "kj905")
+public class Image {
 
-    private int id;
+    @Id
+    @Column(name = "IDIMAGE", nullable = false)
+    @GeneratedValue
+    private Integer id;
+
+    @Column(nullable = false)
     private Date date;
+
+    @Column(nullable = false)
     private byte[] photo;
+
+    @Column(name = "VERIFICATION_STATUS", length = 45)
     private String verificationStatus;
+
+    @Column(name = "VERIFICATION_DATE")
     private Date verificationDate;
+
+    @Column(name = "VERIFICATION_COMMENT", length = 100)
     private String verificationComment;
+
+    @Column(name = "EMPLOYEE_TYPE", length = 25, nullable = false)
     private String employeeType;
 
     public int getId() {

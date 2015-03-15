@@ -1,35 +1,63 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.haftrust.verifier.model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.sql.Date;
 
-/**
- *
- * @author LabClass
- */
-public class Bank implements java.io.Serializable {
+@Entity
+@Table(name = "HT_BANK", schema = "kj905")
+public class Bank {
 
-    private int id;
+    @Id
+    @Column(name = "IDBANK", nullable = false)
+    @GeneratedValue
+    private Integer id;
+
+    @Column(nullable = false, length = 15)
     private String accountNumber;
+
+    @Column(name = "BANK_NAME", nullable = false, length = 45)
     private String bankName;
+
+    @Column(nullable = false, length = 100)
     private String address;
+
+    @Column(name = "SORT_CODE", length = 10)
     private String sortcode;
+
+    @Column(length = 45)
     private String iban;
+
+    @Column(name = "CONTACT_NUMBER", length = 25)
     private String contactNumber;
+
+    @Column(name = "VERIFICATION_STATUS", length = 45)
     private String verificationStatus;
+
+    @Column(name = "VERIFICATION_DATE")
     private Date verificationDate;
+
+    @Column(name = "VERIFICATION_COMMENT", length = 100)
     private String verificationComment;
+
+    @Column(name = "EMPLOYEE_TYPE", nullable = false, length = 25)
     private String employeeType;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "EMP_ID", nullable = false)
     private Verifier verifier;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

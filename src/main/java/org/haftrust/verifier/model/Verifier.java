@@ -1,43 +1,86 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.haftrust.verifier.model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.sql.Date;
 
-/**
- *
- * @author LabClass
- */
-public class Verifier implements java.io.Serializable {
+@Entity
+@Table(name = "HT_VERIFIER", schema = "kj905")
+public class Verifier {
 
-    private int id;
+    @Id
+    @Column(name = "IDVERIFIER", nullable = false)
+    @GeneratedValue
+    private Integer id;
+
+    @Column(name = "FIRST_NAME", length = 45)
     private String firstName;
+
+    @Column(name = "MIDDLE_NAME", length = 45)
     private String middleName;
+
+    @Column(name = "LAST_NAME", length = 45)
     private String lastName;
+
+    @Column(length = 1)
     private String gender;
     private Date dob;
+
+    @Column(length = 45, nullable = false)
     private String email;
+
+    @Column(name = "TELEPHONE_NUMBER", length = 25)
     private String telephoneNumber;
+
+    @Column(length = 45)
     private String password;
+
+    @Column(name = "EDUCATION_TYPE", length = 45)
     private String educationType;
+
+    @Column(name = "EDUCATION_LEVEL", length = 45)
     private String educationLevel;
+
+    @Column(length = 45, nullable = false)
     private String status;
+
+    @Column(name = "STATUS_DATE", nullable = false)
     private Date statusDate;
+
+    @Column(name = "START_DATE")
     private Date startDate;
-    private int vacancyId;
+
+    @Column(name = "HT_VACANCY_IDVACANCY")
+    private Integer vacancyId;
+
+    @Column(name = "VERIFICATION_STATUS", length = 45)
     private String verificationStatus;
+
+    @Column(name = "VERIFICATION_DATE")
     private Date verificationDate;
+
+    @Column(name = "VERIFICATION_COMMENT", length = 100)
     private String verificationComment;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "HT_DEVICE_IMEI")
     private Device mobileDevice;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "HT_IMAGE_IDIMAGE")
     private Image image;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -198,5 +241,4 @@ public class Verifier implements java.io.Serializable {
         return "Verifier{" + "id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName + ", gender=" + gender + ", dob=" + dob + ", email=" + email + ", telephoneNumber=" + telephoneNumber + ", password=" + password + ", educationType=" + educationType + ", educationLevel=" + educationLevel + ", status=" + status + ", statusDate=" + statusDate + ", startDate=" + startDate + ", vacancyId=" + vacancyId + ", verificationStatus=" + verificationStatus + ", verificationDate=" + verificationDate + ", verificationComment=" + verificationComment + ", mobileDevice=" + mobileDevice + ", image=" + image + '}';
     }
 
-    
 }

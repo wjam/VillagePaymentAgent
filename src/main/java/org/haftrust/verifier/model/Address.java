@@ -4,34 +4,73 @@
  */
 package org.haftrust.verifier.model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.sql.Date;
 
-/**
- *
- * @author LabClass
- */
-public class Address implements java.io.Serializable {
+@Entity
+@Table(name = "HT_ADDRESS", schema = "kj905")
+public class Address {
 
-    private int id;
+    @Id
+    @Column(name = "IDADDRESS", nullable = false)
+    @GeneratedValue
+    private Integer id;
+
+    @Column(length = 45)
     private String street;
+
+    @Column(length = 45)
     private String village;
+
+    @Column(nullable = false)
     private String postcode;
+
+    @Column(length = 45)
     private String town;
+
+    @Column(length = 45)
     private String city;
+
+    @Column(name = "VERIFICATION_STATUS", length = 45)
     private String verificationStatus;
+
+    @Column(name = "VERIFICATION_DATE")
     private Date verificationDate;
+
+    @Column(name = "VERIFICATION_COMMENT", length = 100)
     private String verificationComment;
+
+    @Column(name = "EMPLOYEE_TYPE", nullable = false, length = 25)
     private String employeeType;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "EMP_ID", nullable = false)
     private Verifier verifier;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "HT_COUNTRY_IDCOUNTRY", nullable = false)
     private Country country;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "HT_REGION_IDREGION", nullable = false)
     private Region region;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "HT_DISTRICT_IDDISTRICT", nullable = false)
     private District district;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
