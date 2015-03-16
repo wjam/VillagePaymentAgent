@@ -11,4 +11,14 @@ public class SimpleViewController {
         return "index";
     }
 
+    @RequestMapping("noDeviceFound.htm")
+    public String noDeviceFound() {
+        return "noDeviceFound";
+    }
+
+    @RequestMapping("noVerifierForVerification.htm")
+    public String noVerifierForVerification() {
+        return "noVerifierForVerification";
+    }
+
 }

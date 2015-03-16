@@ -5,10 +5,16 @@ import org.openqa.selenium.WebDriver;
 
 public class SaveConfirmationPage {
 
-    public SaveConfirmationPage(final WebDriver driver) {
-        if (!driver.getCurrentUrl().endsWith("registerVerifier.htm")
-                || !driver.findElement(By.cssSelector("body p")).getText().equals("Verifier Candidate details have been saved successfully")) {
-            throw new IllegalStateException("Incorrect page " + driver.getCurrentUrl());
-        }
+    public SaveConfirmationPage(WebDriver driver) {
+        String errMsg = null;
+        if (!driver.getCurrentUrl().endsWith("registerVerifier.htm"))
+            errMsg = "Current URL does not end with 'registerVerifier.htm'";
+
+        String resultText = driver.findElement(By.cssSelector("body p")).getText();
+        if (!resultText.equals("Verifier Candidate details have been saved successfully"))
+            errMsg = String.format("'body p' text is '%s'", resultText);
+
+        if (errMsg != null)
+            throw new IllegalStateException(String.format("Incorrect page: %s: %s", errMsg, driver.getCurrentUrl()));
     }
 }

@@ -22,13 +22,13 @@
        <p align="center">
             <b>Select Verifier's Region</b>
        </p>
+       <form:form commandName="adBean" method="post">
            <table border="0" align="center">
                <tbody>
                    <tr>
                        <td>Country : </td>
                        <td><c:out value="${adBean.country.description}"/></td>
                    </tr>
-       <form:form commandName="adBean" method="post">
                    <tr>
 
                        <td>Region : </td>

@@ -88,10 +88,10 @@ public class VerifierValidator implements Validator {
             gc.set(GregorianCalendar.DATE, day);
 
             gc.getTime(); // exception thrown here
-        } catch (Exception e) {
+        } catch (Exception exception) {
             dobOK = false;
             errors.rejectValue("dob", "required.dob", "Date of Birth is invalid.");
-            e.printStackTrace();
+            LOG.warn("Date of birth is invalid.", exception);
         }
 
         if (dobOK) {
@@ -107,10 +107,8 @@ public class VerifierValidator implements Validator {
                 if (currentDate.before(gc)) {
                     errors.rejectValue("dob", "required.dob", "The Verifier has to be over 23 years old.");
                 }
-            } catch (Exception e) {
-                //dobOK = false;
-                //errors.rejectValue("dob", "required.dob", "Date of Birth is invalid.");
-                e.printStackTrace();
+            } catch (Exception exception) {
+                LOG.warn("Have to older than 23 years old.", exception);
             }
         }
 
