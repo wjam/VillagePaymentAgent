@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/kittylyst/VillagePaymentAgent.svg?branch=master)](https://travis-ci.org/kittylyst/VillagePaymentAgent)
+
 # VillagePaymentAgent #
 Village Payment Agent Backend Code
 

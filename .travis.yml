@@ -1,3 +1,4 @@
+# Simple travis script to automate build on GitHub.
 language: java
 jdk:
   - oraclejdk8
